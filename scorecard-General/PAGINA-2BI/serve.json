@@ -5,12 +5,7 @@
     { "source": "/PAGINA-2BI/", "destination": "/", "type": 301 },
     { "source": "/PAGINA-2BI/:slug", "destination": "/:slug", "type": 301 },
     { "source": "/PAGINA-2BI/:slug.html", "destination": "/:slug", "type": 301 },
-    { "source": "/demos", "destination": "/demos/", "type": 301 },
-    { "source": "/demos/eventos", "destination": "/demos/eventos/", "type": 301 }
-  ],
-  "rewrites": [
-    { "source": "/demos/", "destination": "/demos/eventos/index.html" },
-    { "source": "/demos/eventos/", "destination": "/demos/eventos/index.html" }
+    { "source": "/demos", "destination": "/demos/eventos/", "type": 301 }
   ],
   "headers": [
     {
