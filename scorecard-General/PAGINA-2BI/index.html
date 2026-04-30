@@ -412,6 +412,11 @@ section{position:relative;z-index:3}
 .cta-h .strong{font-weight:900}
 .cta-sub{font-family:var(--sans);font-size:16px;line-height:1.65;margin-bottom:48px;max-width:540px;margin-left:auto;margin-right:auto;color:rgba(237,232,222,.7)}
 .cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.cta-emails{margin-top:38px;display:flex;justify-content:center;align-items:center;gap:14px;flex-wrap:wrap;font-family:var(--mono);font-size:12px;letter-spacing:.05em}
+.cta-emails a{color:rgba(237,232,222,.85);text-decoration:none;border-bottom:1px dashed rgba(237,232,222,.3);padding-bottom:2px;transition:all .25s}
+.cta-emails a:hover{color:var(--electric);border-bottom-color:var(--electric)}
+.cta-sep{color:rgba(237,232,222,.3)}
+@media(max-width:768px){.cta-emails{font-size:11px;flex-direction:column;gap:8px}.cta-sep{display:none}}
 #cta .btn-primary{background:var(--electric);color:var(--white)}
 #cta .btn-primary::after{background:var(--volt)}
 #cta .btn-ghost{color:var(--cream);border-color:var(--cream)}
@@ -428,10 +433,13 @@ section{position:relative;z-index:3}
 
 /* FOOTER */
 footer{background:var(--ink);color:rgba(237,232,222,.5);padding:48px;border-top:1px solid rgba(237,232,222,.1);position:relative;z-index:3}
-.footer-top{display:grid;grid-template-columns:1fr 1fr 1fr;gap:48px;margin-bottom:40px;padding-bottom:40px;border-bottom:1px solid rgba(237,232,222,.1);max-width:1300px;margin-left:auto;margin-right:auto}
+.footer-top{display:grid;grid-template-columns:1.4fr 1fr 1.2fr 1fr;gap:40px;margin-bottom:40px;padding-bottom:40px;border-bottom:1px solid rgba(237,232,222,.1);max-width:1300px;margin-left:auto;margin-right:auto}
 .footer-brand .brand{font-size:32px;color:var(--cream);margin-bottom:12px}
 .footer-brand .brand .bi{color:var(--cream)}
-.footer-tagline{font-family:var(--mono);font-size:11px;color:rgba(237,232,222,.5);letter-spacing:.1em;line-height:1.6}
+.footer-tagline{font-family:var(--mono);font-size:11px;color:rgba(237,232,222,.5);letter-spacing:.1em;line-height:1.6;margin-bottom:18px}
+.footer-emails{display:flex;flex-direction:column;gap:6px;margin-top:14px}
+.footer-emails a{font-family:var(--mono);font-size:11px;color:rgba(237,232,222,.7);text-decoration:none;transition:color .25s;letter-spacing:.02em;word-break:break-all}
+.footer-emails a:hover{color:var(--electric)}
 .footer-col-title{font-family:var(--mono);font-size:10px;color:var(--volt);letter-spacing:.25em;text-transform:uppercase;margin-bottom:18px}
 .footer-links{display:flex;flex-direction:column;gap:10px}
 .footer-links a{font-family:var(--sans);font-size:13px;color:rgba(237,232,222,.7);text-decoration:none;transition:color .25s}
@@ -570,7 +578,7 @@ footer{background:var(--ink);color:rgba(237,232,222,.5);padding:48px;border-top:
     <a href="ecosistema.html">Ecosistema</a>
     <a href="contacto.html">Contacto</a>
   </div>
-  <a class="nav-cta" href="contacto.html"><span class="ndot"></span><span>Hablemos</span></a>
+  <a class="nav-cta" href="mailto:guillermorc44@gmail.com,alvaropalma87@gmail.com,chdominiel@gmail.com?subject=Contacto%202BI%20Technology%20Solutions&amp;body=Hola%20equipo%202BI%2C%0A%0AMe%20gustaria%20conversar%20sobre%3A%0A%0A"><span class="ndot"></span><span>Hablemos</span></a>
 </nav>
 
 <section id="hero">
@@ -584,7 +592,7 @@ footer{background:var(--ink);color:rgba(237,232,222,.5);padding:48px;border-top:
       </h1>
       <p class="hero-p">Arquitectura analítica, tableros con <strong>sentido de negocio</strong>, automatización inteligente y cultura de medición — sin humo, con trazabilidad y ROI claro. Proyectos desde <strong>$22K MXN</strong> con garantía real.</p>
       <div class="hero-btns">
-        <a class="btn btn-primary magnet" href="contacto.html"><span>Agendar conversación</span><span class="arr">→</span></a>
+        <a class="btn btn-primary magnet" href="mailto:guillermorc44@gmail.com,alvaropalma87@gmail.com,chdominiel@gmail.com?subject=Contacto%202BI%20Technology%20Solutions&amp;body=Hola%20equipo%202BI%2C%0A%0AMe%20gustaria%20conversar%20sobre%3A%0A%0A"><span>Agendar conversación</span><span class="arr">→</span></a>
         <a class="btn btn-ghost magnet" href="soluciones.html"><span>Explorar soluciones</span></a>
       </div>
       <div class="hero-stats">
@@ -817,8 +825,15 @@ footer{background:var(--ink);color:rgba(237,232,222,.5);padding:48px;border-top:
     <h2 class="cta-h">Hagamos que tus<br><em>datos</em> trabajen <span class="strong">para ti</span></h2>
     <p class="cta-sub">Sin compromisos a largo plazo. Sin letra chica. Primer entregable en menos de 72 horas. Garantía real o te devolvemos el dinero.</p>
     <div class="cta-btns">
-      <a class="btn btn-primary magnet" href="contacto.html"><span>Agendar conversación</span><span class="arr">→</span></a>
-      <a class="btn btn-ghost magnet" href="https://wa.me/528112345678?text=Hola%202BI" target="_blank" rel="noopener"><span>WhatsApp directo</span></a>
+      <a class="btn btn-primary magnet" href="mailto:guillermorc44@gmail.com,alvaropalma87@gmail.com,chdominiel@gmail.com?subject=Contacto%202BI%20Technology%20Solutions&amp;body=Hola%20equipo%202BI%2C%0A%0AMe%20gustaria%20conversar%20sobre%3A%0A%0A"><span>Agendar conversación</span><span class="arr">→</span></a>
+      <a class="btn btn-ghost magnet" href="contacto.html"><span>Formulario completo</span></a>
+    </div>
+    <div class="cta-emails">
+      <a href="mailto:guillermorc44@gmail.com">guillermorc44@gmail.com</a>
+      <span class="cta-sep">·</span>
+      <a href="mailto:alvaropalma87@gmail.com">alvaropalma87@gmail.com</a>
+      <span class="cta-sep">·</span>
+      <a href="mailto:chdominiel@gmail.com">chdominiel@gmail.com</a>
     </div>
   </div>
 </section>
@@ -828,9 +843,15 @@ footer{background:var(--ink);color:rgba(237,232,222,.5);padding:48px;border-top:
     <div class="footer-brand">
       <a class="brand" href="index.html"><span class="two">2</span><span class="bi">BI</span><span class="dot"></span></a>
       <p class="footer-tagline">Beyond Business Intelligence<br>Monterrey, Nuevo León, México</p>
+      <div class="footer-emails">
+        <a href="mailto:guillermorc44@gmail.com">guillermorc44@gmail.com</a>
+        <a href="mailto:alvaropalma87@gmail.com">alvaropalma87@gmail.com</a>
+        <a href="mailto:chdominiel@gmail.com">chdominiel@gmail.com</a>
+      </div>
     </div>
     <div><div class="footer-col-title">Navegación</div><div class="footer-links"><a href="nosotros.html">Nosotros</a><a href="soluciones.html">Soluciones</a><a href="portafolio.html">Portafolio</a><a href="valores.html">Valores</a><a href="ecosistema.html">Ecosistema</a><a href="contacto.html">Contacto</a></div></div>
-    <div><div class="footer-col-title">Soluciones</div><div class="footer-links"><a href="solucion-bi.html">Business Intelligence</a><a href="solucion-datos.html">Datos & Analytics</a><a href="solucion-comercial.html">Automatización Comercial</a><a href="solucion-activacion.html">Activación Digital</a><a href="solucion-performance.html">Performance</a><a href="solucion-gobernanza.html">Gobernanza</a></div></div>
+    <div><div class="footer-col-title">Soluciones</div><div class="footer-links"><a href="solucion-bi.html">Business Intelligence</a><a href="solucion-datos.html">Datos &amp; Analytics</a><a href="solucion-comercial.html">Automatización Comercial</a><a href="solucion-activacion.html">Activación Digital</a><a href="solucion-performance.html">Performance</a><a href="solucion-gobernanza.html">Gobernanza</a></div></div>
+    <div><div class="footer-col-title">Demos</div><div class="footer-links"><a href="/demos/eventos/">2BI-Orquesta · Salón eventos</a><a href="portafolio.html">Casos completos</a></div></div>
   </div>
   <div class="footer-bottom">
     <span>© 2024 2BI Technology Solutions. Todos los derechos reservados.</span>
