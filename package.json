@@ -4,7 +4,7 @@
   "private": true,
   "description": "2BI — Beyond Business Intelligence. Sitio estático multi-página servido con `serve`.",
   "scripts": {
-    "start": "serve scorecard-General -l tcp://0.0.0.0:${PORT:-3000} --no-clipboard --no-port-switching --single"
+    "start": "serve scorecard-General -l tcp://0.0.0.0:${PORT:-3000} --no-clipboard --no-port-switching"
   },
   "dependencies": {
     "serve": "14.2.4"
