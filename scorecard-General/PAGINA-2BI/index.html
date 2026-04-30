@@ -1,441 +1,973 @@
 <!DOCTYPE html>
 <html lang="es" data-page="index">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#0a4a7c">
-  <meta name="description" content="2BI — El sistema operativo completo para tu empresa. BI · IA · Automatización · Web · IoT. Monterrey, MX. Proyectos desde $22K MXN con garantía real.">
-  <meta name="keywords" content="Power BI Monterrey, automatización n8n, bot WhatsApp México, Claude AI, API Microsip, desarrollo web Monterrey, IoT LILYGO, consultor BI">
-  <meta name="author" content="2BI - Monterrey, Nuevo León, México">
-  <meta name="robots" content="index, follow">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://2bi.dev/">
-  <meta property="og:site_name" content="2BI">
-  <meta property="og:title" content="2BI — Beyond Business Intelligence">
-  <meta property="og:description" content="BI · IA · Automatización · Web · IoT. Todo bajo el mismo techo. Proyectos desde $22K MXN. Monterrey, México.">
-  <meta property="og:locale" content="es_MX">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="2BI — Beyond Business Intelligence">
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    "name": "2BI",
-    "description": "Consultoría en Business Intelligence, Inteligencia Artificial, Automatización, Desarrollo Web e IoT para PyMEs en México.",
-    "url": "https://2bi.dev",
-    "address": { "@type": "PostalAddress", "addressLocality": "Monterrey", "addressRegion": "Nuevo León", "addressCountry": "MX" },
-    "priceRange": "$15,000 - $229,000 MXN",
-    "serviceType": ["Business Intelligence", "AI Development", "Process Automation", "Web Development", "IoT Solutions"]
-  }
-  </script>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a4a7c'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='22' font-weight='900' font-style='italic' fill='%235eb8ff' text-anchor='middle'%3E2%3C/text%3E%3Ccircle cx='26' cy='26' r='3' fill='%23ff6a00'/%3E%3C/svg%3E">
-  <title>2BI — Beyond Business Intelligence</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,700;1,9..144,900&family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./assets/theme.css">
-  <link rel="stylesheet" href="./assets/pagina-2bi-toolbar.css">
-  <link rel="stylesheet" href="./assets/effects.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#ede8de">
+<meta name="description" content="2BI — El sistema operativo completo para tu empresa. BI · IA · Automatización · Web · IoT. Monterrey, MX. Proyectos desde $22K MXN con garantía real.">
+<meta name="keywords" content="Power BI Monterrey, automatización n8n, bot WhatsApp México, Claude AI, API Microsip, desarrollo web Monterrey, IoT LILYGO, consultor BI">
+<meta name="author" content="2BI - Monterrey, Nuevo León, México">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://2bi.dev/">
+<meta property="og:site_name" content="2BI">
+<meta property="og:title" content="2BI — Beyond Business Intelligence">
+<meta property="og:description" content="BI · IA · Automatización · Web · IoT. Todo bajo el mismo techo. Monterrey, México.">
+<meta property="og:locale" content="es_MX">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "2BI",
+  "description": "Consultoría en Business Intelligence, Inteligencia Artificial, Automatización, Desarrollo Web e IoT.",
+  "url": "https://2bi.dev",
+  "address": { "@type": "PostalAddress", "addressLocality": "Monterrey", "addressRegion": "Nuevo León", "addressCountry": "MX" },
+  "priceRange": "$15,000 - $229,000 MXN"
+}
+</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23ede8de'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='22' font-weight='900' font-style='italic' fill='%231d3aff' text-anchor='middle'%3E2%3C/text%3E%3Ccircle cx='26' cy='26' r='3' fill='%23ff6a00'/%3E%3C/svg%3E">
+<title>2BI — Beyond Business Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,700;1,9..144,900&family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#ede8de; --cream-2:#f4f1ea; --paper:#faf8f3; --white:#fff;
+  --ink:#0a0a0a; --ink-2:#2a2a2a; --muted:#6b665d; --muted-2:#9a958c;
+  --border:rgba(10,10,10,.08); --border-2:rgba(10,10,10,.15);
+  --electric:#1d3aff; --electric-2:#4258ff; --electric-soft:rgba(29,58,255,.08);
+  --volt:#ff6a00; --volt-soft:rgba(255,106,0,.08);
+  --green:#0d9b50; --green-soft:rgba(13,155,80,.08);
+  --pink:#e91e63; --pink-soft:rgba(233,30,99,.08);
+  --shadow-xs:0 1px 2px rgba(10,10,10,.04);
+  --shadow-sm:0 2px 8px rgba(10,10,10,.05),0 1px 2px rgba(10,10,10,.04);
+  --shadow-md:0 8px 24px rgba(10,10,10,.06),0 2px 8px rgba(10,10,10,.04);
+  --shadow-lg:0 24px 60px rgba(10,10,10,.1),0 8px 20px rgba(10,10,10,.06);
+  --shadow-xl:0 40px 100px rgba(10,10,10,.15),0 12px 40px rgba(10,10,10,.08);
+  --serif:'Fraunces',serif; --sans:'Manrope',sans-serif; --mono:'JetBrains Mono',monospace;
+  --ease:cubic-bezier(.16,1,.3,1); --ease2:cubic-bezier(.65,0,.35,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--cream);color:var(--ink);font-family:var(--sans);overflow-x:hidden;-webkit-font-smoothing:antialiased;font-feature-settings:"ss01"}
+::selection{background:var(--electric);color:#fff}
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:var(--cream)}
+::-webkit-scrollbar-thumb{background:var(--ink);border-radius:4px}
+
+/* PAPER TEXTURE */
+body::before{content:'';position:fixed;inset:0;z-index:1;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");opacity:.05;mix-blend-mode:multiply}
+
+/* GRADIENT MESH */
+.mesh{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.35;mix-blend-mode:multiply;will-change:transform}
+.blob-1{width:600px;height:600px;background:radial-gradient(circle,#1d3aff,transparent 70%);top:-100px;left:-200px;animation:blobA 22s infinite alternate ease-in-out}
+.blob-2{width:500px;height:500px;background:radial-gradient(circle,#ff6a00,transparent 70%);top:30%;right:-150px;animation:blobB 18s infinite alternate ease-in-out}
+.blob-3{width:550px;height:550px;background:radial-gradient(circle,#0d9b50,transparent 70%);bottom:-200px;left:30%;animation:blobC 25s infinite alternate ease-in-out}
+@keyframes blobA{to{transform:translate(120px,80px) scale(1.15)}}
+@keyframes blobB{to{transform:translate(-100px,150px) scale(.9)}}
+@keyframes blobC{to{transform:translate(80px,-120px) scale(1.1)}}
+
+/* CURSOR */
+#cur{position:fixed;width:8px;height:8px;background:var(--ink);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .18s,background .2s,opacity .2s;mix-blend-mode:difference}
+#cur-ring{position:fixed;width:36px;height:36px;border:1.2px solid var(--ink);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform .35s var(--ease),width .25s,height .25s,opacity .25s,border-color .25s;opacity:.4}
+#cur-ring.big{width:80px;height:80px;opacity:.7;border-color:var(--electric);border-width:1.5px}
+.trail{position:fixed;width:5px;height:5px;background:var(--electric);border-radius:50%;pointer-events:none;z-index:9997;mix-blend-mode:multiply;animation:trailFade .7s linear forwards}
+@keyframes trailFade{from{opacity:.5;transform:translate(-50%,-50%) scale(1)}to{opacity:0;transform:translate(-50%,-50%) scale(.2)}}
+
+/* LIGHTNING */
+.lightning-stage{position:fixed;inset:0;z-index:2;pointer-events:none;overflow:hidden;mix-blend-mode:multiply}
+.bolt-svg{position:absolute;opacity:0;filter:drop-shadow(0 0 8px var(--electric))}
+.bolt-svg path{stroke:var(--electric);stroke-width:1.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.bolt-svg.flash{animation:boltFlash .55s ease-out}
+@keyframes boltFlash{0%{opacity:0;transform:scale(.85)}15%{opacity:.85}30%{opacity:.4}45%{opacity:.7}100%{opacity:0;transform:scale(1)}}
+
+/* SCROLL PROGRESS */
+.scroll-prog{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--electric),var(--volt));z-index:9999;width:0;transition:width .1s linear;box-shadow:0 0 10px var(--electric)}
+
+/* LOADER */
+#loader{position:fixed;inset:0;z-index:10000;background:var(--cream);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:24px;transition:opacity .7s,transform .7s}
+#loader.gone{opacity:0;pointer-events:none;transform:scale(1.02)}
+.ld-mark{font-family:var(--serif);font-size:120px;line-height:1;font-weight:900;letter-spacing:-.04em;display:flex;align-items:baseline;gap:0}
+.ld-two{color:var(--electric);font-style:italic;font-weight:400}
+.ld-bi{color:var(--ink)}
+.ld-dot{width:18px;height:18px;background:var(--volt);border-radius:50%;margin-left:8px;align-self:flex-end;margin-bottom:24px;animation:dotPulse 1s infinite}
+@keyframes dotPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.5)}}
+.ld-bar{width:280px;height:1px;background:var(--border-2);position:relative;overflow:hidden}
+.ld-fill{height:100%;background:var(--electric);position:absolute;left:0;animation:ldFill 1.6s var(--ease) forwards;box-shadow:0 0 12px var(--electric)}
+@keyframes ldFill{from{width:0}to{width:100%}}
+.ld-tag{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.3em;text-transform:uppercase;animation:blink 1.4s infinite}
+@keyframes blink{50%{opacity:.4}}
+
+/* NAV */
+nav.topnav{position:fixed;top:0;inset-x:0;z-index:100;padding:18px 48px;display:flex;justify-content:space-between;align-items:center;transition:all .35s var(--ease)}
+nav.topnav.s{background:rgba(237,232,222,.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);box-shadow:var(--shadow-xs)}
+.brand{font-family:var(--serif);font-size:32px;font-weight:900;letter-spacing:-.04em;line-height:1;display:flex;align-items:baseline;cursor:pointer;text-decoration:none}
+.brand .two{color:var(--electric);font-style:italic;font-weight:400;display:inline-block;transition:transform .4s var(--ease)}
+.brand:hover .two{transform:rotate(-12deg) scale(1.1)}
+.brand .bi{color:var(--ink)}
+.brand .dot{width:7px;height:7px;background:var(--volt);border-radius:50%;margin-left:5px;align-self:flex-end;margin-bottom:7px}
+.nav-links{display:flex;gap:32px}
+.nav-links a{font-family:var(--mono);font-size:11px;color:var(--ink-2);text-decoration:none;letter-spacing:.1em;text-transform:uppercase;transition:color .2s;position:relative;padding:6px 0}
+.nav-links a::before{content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--electric);transition:width .35s var(--ease)}
+.nav-links a:hover{color:var(--electric)}
+.nav-links a:hover::before{width:100%}
+.nav-cta{font-family:var(--mono);font-size:10px;padding:11px 20px;background:var(--ink);color:var(--cream);text-decoration:none;letter-spacing:.15em;text-transform:uppercase;transition:all .25s;display:flex;align-items:center;gap:8px;border-radius:2px;position:relative;overflow:hidden}
+.nav-cta::before{content:'';position:absolute;inset:0;background:var(--electric);transform:translateY(100%);transition:transform .35s var(--ease);z-index:0}
+.nav-cta:hover::before{transform:translateY(0)}
+.nav-cta>*{position:relative;z-index:1}
+.nav-cta .ndot{width:5px;height:5px;background:var(--volt);border-radius:50%;animation:dotPulse 2s infinite}
+
+/* HERO */
+#hero{position:relative;min-height:100vh;display:flex;align-items:center;padding:120px 48px 80px;z-index:3}
+.hero-inner{max-width:1400px;margin:0 auto;width:100%;display:grid;grid-template-columns:1.4fr 1fr;gap:60px;align-items:center}
+.hero-tag{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.3em;text-transform:uppercase;margin-bottom:32px;display:flex;align-items:center;gap:14px;opacity:0;animation:fUp .8s .3s forwards}
+.hero-tag .live{position:relative;width:8px;height:8px;background:var(--green);border-radius:50%}
+.hero-tag .live::before{content:'';position:absolute;inset:-4px;border:1px solid var(--green);border-radius:50%;animation:livePulse 2s infinite}
+@keyframes livePulse{0%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(2)}}
+.hero-tag::before{content:'';width:32px;height:1px;background:var(--electric)}
+.hero-h1{font-family:var(--serif);font-size:clamp(58px,7.8vw,116px);line-height:.9;letter-spacing:-.045em;margin-bottom:36px;font-weight:400;opacity:0;animation:fUp .9s .5s forwards}
+.hero-h1 .l1{display:block;color:var(--ink);font-weight:400}
+.hero-h1 .l2{display:block;color:var(--ink);font-style:italic;font-weight:400}
+.hero-h1 .l2 em{color:var(--electric);font-style:italic;position:relative;padding:0 4px}
+.hero-h1 .l2 em::after{content:'';position:absolute;bottom:6px;left:0;right:0;height:10px;background:var(--volt);z-index:-1;opacity:.4;transform:skewX(-12deg)}
+.hero-h1 .l3{display:block;color:var(--ink);font-weight:900;letter-spacing:-.05em}
+.hero-p{font-family:var(--sans);font-size:17px;color:var(--muted);line-height:1.65;max-width:480px;margin-bottom:42px;font-weight:400;opacity:0;animation:fUp .8s 1s forwards}
+.hero-p strong{color:var(--ink);font-weight:600;background:linear-gradient(120deg,var(--electric-soft) 0%,var(--electric-soft) 100%);background-size:100% .35em;background-position:0 88%;background-repeat:no-repeat;padding:0 2px}
+.hero-btns{display:flex;gap:16px;opacity:0;animation:fUp .8s 1.2s forwards}
+.btn{font-family:var(--sans);font-size:14px;padding:18px 34px;font-weight:600;letter-spacing:.01em;border:none;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:12px;transition:transform .3s var(--ease);position:relative;overflow:hidden;border-radius:3px;will-change:transform}
+.btn-primary{background:var(--ink);color:var(--cream)}
+.btn-primary::after{content:'';position:absolute;inset:0;background:var(--electric);transform:translateY(100%);transition:transform .4s var(--ease);z-index:0}
+.btn-primary:hover::after{transform:translateY(0)}
+.btn-primary>*{position:relative;z-index:1}
+.btn-primary:hover{box-shadow:var(--shadow-md),0 0 24px rgba(29,58,255,.25)}
+.btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--ink)}
+.btn-ghost:hover{background:var(--ink);color:var(--cream)}
+.btn .arr{transition:transform .35s var(--ease);display:inline-flex}
+.btn:hover .arr{transform:translateX(6px)}
+.hero-stats{display:flex;gap:48px;margin-top:64px;padding-top:32px;border-top:1px solid var(--border-2);opacity:0;animation:fUp .8s 1.4s forwards}
+.hs{display:flex;flex-direction:column;gap:4px}
+.hs-n{font-family:var(--serif);font-size:46px;font-weight:700;line-height:1;letter-spacing:-.03em;color:var(--ink);font-feature-settings:"tnum"}
+.hs-n .ac{color:var(--electric);font-style:italic;font-weight:400}
+.hs-l{font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:.2em;text-transform:uppercase}
+
+/* HERO VISUAL */
+.hero-visual{position:relative;height:600px;display:flex;align-items:center;justify-content:center;opacity:0;animation:fUp 1s 1.4s forwards;perspective:1200px}
+.hv-stage{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .8s var(--ease)}
+.hv-card{position:absolute;background:var(--white);border:1px solid var(--border);box-shadow:var(--shadow-md);border-radius:8px;padding:18px 22px;font-family:var(--mono);font-size:11px;animation:floatY 5s ease-in-out infinite;will-change:transform;cursor:pointer;transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
+.hv-card:hover{transform:translateY(-8px) scale(1.05);box-shadow:var(--shadow-lg);z-index:5}
+.hv-card .lbl{color:var(--muted);font-size:9px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.hv-card .lbl-icn{width:14px;height:14px;display:inline-flex;align-items:center;justify-content:center;color:var(--electric)}
+.hv-card .val{font-family:var(--serif);font-size:26px;font-weight:700;color:var(--ink);letter-spacing:-.02em}
+.hv-card .val .ac{color:var(--electric)}
+.hv-card .delta{font-size:10px;color:var(--green);margin-top:4px;font-family:var(--mono);display:flex;align-items:center;gap:4px}
+.hv-card .mini-chart{display:flex;align-items:flex-end;gap:3px;height:24px;margin-top:8px}
+.hv-card .mini-chart i{display:inline-block;width:6px;background:var(--electric);border-radius:1px;animation:barRise 2s ease-out infinite}
+@keyframes barRise{0%,100%{transform:scaleY(.7)}50%{transform:scaleY(1)}}
+.hv-c1{top:30px;left:0;animation-delay:0s}
+.hv-c1 .mini-chart i:nth-child(1){height:40%;animation-delay:0s}
+.hv-c1 .mini-chart i:nth-child(2){height:60%;animation-delay:.2s}
+.hv-c1 .mini-chart i:nth-child(3){height:80%;animation-delay:.4s}
+.hv-c1 .mini-chart i:nth-child(4){height:50%;animation-delay:.6s;background:var(--volt)}
+.hv-c1 .mini-chart i:nth-child(5){height:90%;animation-delay:.8s;background:var(--volt)}
+.hv-c2{top:140px;right:10px;animation-delay:1.2s}
+.hv-c3{bottom:140px;left:30px;animation-delay:2.2s}
+.hv-c4{bottom:30px;right:30px;animation-delay:1.6s}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+.hv-orbit{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:300px;height:300px}
+.hv-orbit svg{width:100%;height:100%}
+.hv-orbit .orb-line{stroke:var(--border-2);stroke-width:1;fill:none;stroke-dasharray:3 5}
+.orb-dot{filter:drop-shadow(0 0 4px currentColor)}
+.orb-rotate{transform-origin:center;animation:spin 30s linear infinite}
+.orb-rotate-rev{transform-origin:center;animation:spin 24s linear infinite reverse}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hv-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:120px;height:120px;background:var(--ink);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 0 60px rgba(29,58,255,.4),var(--shadow-xl);overflow:hidden}
+.hv-center::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 30%,rgba(29,58,255,.4),transparent 60%);animation:centerGlow 4s ease-in-out infinite}
+@keyframes centerGlow{0%,100%{opacity:.6}50%{opacity:1}}
+.hv-center .bolt{font-family:var(--serif);font-size:46px;font-weight:900;font-style:italic;color:var(--electric);line-height:1;position:relative;z-index:1}
+.hv-center::after{content:'';position:absolute;inset:-32px;border:1px solid var(--electric);border-radius:50%;opacity:.2;animation:ringBeat 3s ease-in-out infinite}
+@keyframes ringBeat{0%,100%{transform:scale(1);opacity:.2}50%{transform:scale(1.15);opacity:.5}}
+
+/* TERMINAL */
+.term{position:absolute;background:#0d0d0d;color:#a8e8a8;border-radius:8px;padding:14px 16px;font-family:var(--mono);font-size:10.5px;line-height:1.7;width:240px;box-shadow:var(--shadow-lg);border:1px solid rgba(255,255,255,.06);z-index:6;left:-10px;bottom:-20px}
+.term-bar{display:flex;gap:5px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,.06);align-items:center}
+.term-bar i{width:8px;height:8px;border-radius:50%;background:#ff5f56;display:inline-block}
+.term-bar i:nth-child(2){background:#ffbd2e}
+.term-bar i:nth-child(3){background:#27c93f}
+.term-bar span{margin-left:auto;font-size:8px;color:rgba(255,255,255,.4);letter-spacing:.1em}
+.term-line{display:block;color:#a8e8a8;white-space:nowrap;overflow:hidden}
+.term-line .pr{color:var(--volt);margin-right:6px}
+.term-line.t{color:rgba(255,255,255,.55)}
+.term-cursor{display:inline-block;width:6px;height:11px;background:#a8e8a8;animation:termBlink 1s steps(2) infinite;vertical-align:-1px;margin-left:2px}
+@keyframes termBlink{50%{opacity:0}}
+
+/* MARQUEE */
+.marquee{padding:22px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;background:var(--cream-2);position:relative;z-index:3}
+.marquee-track{display:flex;animation:scroll 32s linear infinite;width:max-content;will-change:transform}
+.marquee:hover .marquee-track{animation-play-state:paused}
+.mq-item{font-family:var(--serif);font-size:38px;font-style:italic;font-weight:400;color:var(--ink);padding:0 36px;display:flex;align-items:center;gap:36px;white-space:nowrap;letter-spacing:-.02em}
+.mq-item .star{color:var(--electric);font-style:normal;font-weight:900;font-size:18px}
+.mq-item .star.alt{color:var(--volt)}
+@keyframes scroll{to{transform:translateX(-50%)}}
+
+/* SECTIONS */
+section{position:relative;z-index:3}
+.wrap{max-width:1300px;margin:0 auto;padding:140px 48px}
+.sec-tag{font-family:var(--mono);font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--electric);display:flex;align-items:center;gap:14px;margin-bottom:24px}
+.sec-tag::before{content:'';width:24px;height:1px;background:var(--electric)}
+.sec-h{font-family:var(--serif);font-size:clamp(48px,5.5vw,84px);line-height:.95;letter-spacing:-.04em;font-weight:400;margin-bottom:24px}
+.sec-h em{font-style:italic;color:var(--electric);font-weight:400;position:relative;display:inline-block}
+.sec-h .strong{font-weight:900}
+.sec-h .underline{position:relative;display:inline-block}
+.sec-h .underline::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:4px;background:var(--volt);transform:scaleX(0);transform-origin:left;transition:transform 1s var(--ease) .3s}
+.sec-h.on .underline::after{transform:scaleX(1)}
+.sec-sub{font-family:var(--sans);font-size:17px;color:var(--muted);line-height:1.6;max-width:580px;font-weight:400}
+
+/* SERVICES */
+#services{background:var(--paper)}
+.sv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:24px;margin-top:64px}
+.sv-card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:36px;position:relative;overflow:hidden;cursor:pointer;transition:transform .5s var(--ease),box-shadow .5s var(--ease),border-color .3s;box-shadow:var(--shadow-xs);transform-style:preserve-3d;will-change:transform}
+.sv-card:hover{box-shadow:var(--shadow-lg);border-color:var(--electric);transform:translateY(-6px)}
+.sv-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:var(--electric);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease)}
+.sv-card:hover::before{transform:scaleX(1)}
+.hover-grad{position:absolute;inset:0;background:radial-gradient(circle 280px at var(--rx,50%) var(--ry,50%),rgba(29,58,255,.09),transparent);opacity:0;transition:opacity .35s;border-radius:inherit;pointer-events:none;z-index:0}
+.sv-card:hover .hover-grad{opacity:1}
+.sv-card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;position:relative;z-index:1}
+.sv-label{font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;padding:5px 11px;border-radius:2px;display:inline-flex;align-items:center;gap:6px}
+.sv-label::before{content:'';width:5px;height:5px;border-radius:50%;background:currentColor}
+.lbl-h{background:var(--green-soft);color:var(--green)}
+.lbl-m{background:var(--volt-soft);color:var(--volt)}
+.lbl-n{background:var(--electric-soft);color:var(--electric)}
+.sv-num{font-family:var(--serif);font-size:14px;color:var(--muted);font-weight:500;font-feature-settings:"tnum"}
+.sv-icon{width:64px;height:64px;background:var(--cream-2);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:24px;transition:all .4s var(--ease);position:relative;overflow:hidden;z-index:1}
+.sv-icon::after{content:'';position:absolute;inset:0;background:var(--electric);transform:translateY(100%);transition:transform .4s var(--ease)}
+.sv-icon svg{width:30px;height:30px;color:var(--ink);position:relative;z-index:1;transition:color .35s var(--ease) .05s}
+.sv-card:hover .sv-icon{transform:rotate(-8deg) scale(1.05)}
+.sv-card:hover .sv-icon::after{transform:translateY(0)}
+.sv-card:hover .sv-icon svg{color:var(--white)}
+.sv-title{font-family:var(--serif);font-size:30px;font-weight:700;line-height:1.05;letter-spacing:-.025em;margin-bottom:12px;position:relative;z-index:1}
+.sv-desc{font-family:var(--sans);font-size:14px;color:var(--muted);line-height:1.65;margin-bottom:22px;position:relative;z-index:1}
+.sv-stack{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:24px;position:relative;z-index:1}
+.sv-tech{font-family:var(--mono);font-size:10px;letter-spacing:.05em;padding:4px 10px;background:var(--cream-2);color:var(--ink-2);border-radius:2px;border:1px solid var(--border);transition:all .25s}
+.sv-tech:hover{background:var(--ink);color:var(--cream)}
+.sv-cta{margin-top:8px;width:100%;padding:14px;background:var(--cream-2);border:1px solid var(--border-2);font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink);cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:all .35s var(--ease);border-radius:3px;position:relative;overflow:hidden;text-decoration:none}
+.sv-cta::before{content:'';position:absolute;inset:0;background:var(--ink);transform:translateX(-100%);transition:transform .4s var(--ease);z-index:0}
+.sv-cta:hover::before{transform:translateX(0)}
+.sv-cta:hover{color:var(--cream);border-color:var(--ink)}
+.sv-cta>*{position:relative;z-index:1}
+.sv-cta .arr{transition:transform .35s var(--ease);display:inline-flex}
+.sv-cta:hover .arr{transform:translateX(6px)}
+
+/* MINI DEMOS */
+.mini-demo{position:relative;width:100%;height:160px;background:var(--cream-2);border:1px solid var(--border);border-radius:10px;margin-bottom:24px;overflow:hidden;transition:all .4s var(--ease)}
+.sv-card:hover .mini-demo{border-color:var(--electric);transform:scale(1.01)}
+.md-tag{position:absolute;top:10px;right:12px;font-family:var(--mono);font-size:8px;letter-spacing:.2em;color:var(--electric);background:rgba(29,58,255,.1);padding:3px 9px;border-radius:99px;z-index:5;font-weight:600;display:flex;align-items:center;gap:5px}
+.md-tag::before{content:'';width:5px;height:5px;background:var(--electric);border-radius:50%;animation:dotPulse 1.5s infinite}
+.demo-bi{padding:14px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#f8f6ef,#ede8de)}
+.bi-mock{width:100%;height:100%;display:flex;flex-direction:column;gap:10px}
+.bi-kpis{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.bi-kpi{background:var(--white);border:1px solid var(--border);border-radius:5px;padding:6px 10px;display:flex;flex-direction:column;gap:2px}
+.bi-kpi-l{font-family:var(--mono);font-size:7px;color:var(--muted);letter-spacing:.15em;text-transform:uppercase}
+.bi-kpi-v{font-family:var(--serif);font-size:14px;font-weight:700;color:var(--ink);letter-spacing:-.02em}
+.bi-kpi-v b{font-weight:900}
+.bi-kpi-v.ac{color:var(--green)}
+.bi-bars{display:flex;align-items:flex-end;gap:4px;height:50px;background:var(--white);border:1px solid var(--border);border-radius:5px;padding:4px 6px;flex:1}
+.bi-bars i{flex:1;background:linear-gradient(180deg,var(--electric),rgba(29,58,255,.4));border-radius:2px 2px 0 0;animation:biBar 2.4s ease-in-out infinite}
+.bi-bars i.hi{background:linear-gradient(180deg,var(--volt),rgba(255,106,0,.4))}
+.bi-bars i:nth-child(1){animation-delay:0s}.bi-bars i:nth-child(2){animation-delay:.1s}.bi-bars i:nth-child(3){animation-delay:.2s}.bi-bars i:nth-child(4){animation-delay:.3s}.bi-bars i:nth-child(5){animation-delay:.4s}.bi-bars i:nth-child(6){animation-delay:.5s}.bi-bars i:nth-child(7){animation-delay:.6s}.bi-bars i:nth-child(8){animation-delay:.7s}
+@keyframes biBar{0%,100%{transform:scaleY(.8)}50%{transform:scaleY(1)}}
+.demo-chat{padding:18px 16px;display:flex;flex-direction:column;gap:6px;justify-content:center}
+.md-row{display:flex;gap:6px;align-items:flex-end;opacity:0}
+.md-row.right{justify-content:flex-end}
+.md-row.b1{animation:mdShow 5s ease-in-out infinite}
+.md-row.b2{animation:mdShow 5s ease-in-out infinite;animation-delay:1s}
+.md-row.b3{animation:mdShow 5s ease-in-out infinite;animation-delay:2s}
+@keyframes mdShow{0%,8%{opacity:0;transform:translateY(8px)}15%,75%{opacity:1;transform:translateY(0)}90%,100%{opacity:0;transform:translateY(-4px)}}
+.md-avatar{width:22px;height:22px;background:var(--ink);color:var(--electric);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:11px;font-weight:900;font-style:italic;flex-shrink:0}
+.md-bubble{padding:6px 11px;border-radius:12px;font-family:var(--sans);font-size:11px;line-height:1.3;max-width:78%}
+.md-bubble.bot{background:var(--white);color:var(--ink);border:1px solid var(--border);border-bottom-left-radius:3px}
+.md-bubble.user{background:var(--electric);color:var(--white);border-bottom-right-radius:3px;font-weight:500}
+.demo-flow{padding:0;display:flex;align-items:center;justify-content:center}
+.demo-flow svg{width:100%;height:100%;max-width:280px}
+.md-link{stroke:var(--border-2);stroke-width:1.5;fill:none;stroke-dasharray:3 4;animation:wfDash 2s linear infinite}
+@keyframes wfDash{to{stroke-dashoffset:-14}}
+.md-node-c{fill:var(--white);stroke-width:1.5}
+.md-node-c.dark{fill:var(--ink)}
+.md-node-t{font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:.05em}
+.demo-app{padding:14px;display:flex;align-items:center;justify-content:center}
+.md-window{background:var(--white);border:1px solid var(--border);border-radius:6px;width:100%;height:100%;box-shadow:var(--shadow-sm);overflow:hidden;display:flex;flex-direction:column}
+.md-bar{background:var(--cream-2);padding:5px 8px;display:flex;gap:4px;border-bottom:1px solid var(--border)}
+.md-bar i{width:6px;height:6px;border-radius:50%;background:#ff5f56}
+.md-bar i:nth-child(2){background:#ffbd2e}
+.md-bar i:nth-child(3){background:#27c93f}
+.md-app-grid{display:grid;grid-template-columns:50px 1fr;flex:1;overflow:hidden}
+.md-side{background:var(--paper);padding:8px 6px;display:flex;flex-direction:column;gap:5px;border-right:1px solid var(--border)}
+.md-side-item{height:6px;background:var(--border-2);border-radius:2px;animation:sidePulse 4s ease-in-out infinite}
+.md-side-item.active{background:var(--electric)}
+.md-side-item:nth-child(2){animation-delay:.5s}.md-side-item:nth-child(3){animation-delay:1s}
+@keyframes sidePulse{0%,100%{opacity:.5}50%{opacity:1}}
+.md-main{padding:10px 12px;display:flex;flex-direction:column;gap:8px}
+.md-card-row{display:flex;gap:6px}
+.md-card-row::before,.md-card-row::after{content:'';flex:1;height:14px;background:var(--cream-2);border-radius:3px;border:1px solid var(--border)}
+.md-card-row::after{background:var(--electric-soft)}
+.md-bars{display:flex;align-items:flex-end;gap:4px;height:36px;margin-top:auto}
+.md-bars i{flex:1;background:var(--electric);border-radius:2px 2px 0 0;animation:barPulse 2.5s ease-in-out infinite}
+.md-bars i:nth-child(1){height:30%}.md-bars i:nth-child(2){height:60%;animation-delay:.2s;background:var(--volt)}.md-bars i:nth-child(3){height:80%;animation-delay:.4s}.md-bars i:nth-child(4){height:55%;animation-delay:.6s}.md-bars i:nth-child(5){height:90%;animation-delay:.8s;background:var(--volt)}
+@keyframes barPulse{0%,100%{transform:scaleY(.7)}50%{transform:scaleY(1)}}
+.demo-map{padding:0;background:linear-gradient(135deg,var(--cream-2),var(--paper));position:relative}
+.demo-map svg{width:100%;height:100%}
+.map-grid path{stroke:rgba(10,10,10,.06);stroke-width:1;fill:none}
+.pin-core{filter:drop-shadow(0 0 4px currentColor)}
+.pin-ring{fill:none;stroke:currentColor;stroke-width:1;opacity:.5;transform-origin:center}
+@keyframes pinRing{0%{r:4;opacity:.7}100%{r:14;opacity:0}}
+.demo-doc{padding:18px 16px;display:flex;align-items:center;justify-content:center}
+.md-paper{background:var(--white);border:1px solid var(--border);border-radius:5px;padding:14px 16px;width:100%;max-width:240px;height:100%;display:flex;flex-direction:column;gap:6px;box-shadow:var(--shadow-xs);position:relative}
+.md-line{height:5px;background:var(--cream-2);border-radius:2px}
+.md-line.w70{width:70%}.md-line.w50{width:50%}.md-line.w40{width:40%}.md-line.w60{width:60%}.md-line.w35{width:35%}
+.md-checkrow{display:flex;align-items:center;gap:8px}
+.md-checkrow .md-line{flex:1}
+.md-check{width:14px;height:14px;border-radius:50%;background:var(--green-soft);color:var(--green);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;flex-shrink:0;opacity:0;transform:scale(.5)}
+.md-check.c1{animation:checkPop 4s ease-in-out infinite}
+.md-check.c2{animation:checkPop 4s ease-in-out infinite;animation-delay:.5s}
+.md-check.c3{animation:checkPop 4s ease-in-out infinite;animation-delay:1s}
+@keyframes checkPop{0%,8%{opacity:0;transform:scale(.3)}15%,80%{opacity:1;transform:scale(1)}90%,100%{opacity:0;transform:scale(.5)}}
+.md-stamp{position:absolute;bottom:12px;right:12px;font-family:var(--mono);font-size:8px;letter-spacing:.2em;color:var(--volt);border:1.5px solid var(--volt);padding:3px 8px;border-radius:3px;font-weight:700;transform:rotate(-12deg);opacity:0;animation:stampIn 4s ease-in-out infinite;animation-delay:1.5s}
+@keyframes stampIn{0%,30%{opacity:0;transform:rotate(-25deg) scale(1.5)}40%,80%{opacity:1;transform:rotate(-12deg) scale(1)}90%,100%{opacity:0}}
+
+/* STATS STRIP */
+.stats-strip{background:var(--ink);color:var(--cream);padding:80px 48px;position:relative;z-index:3;overflow:hidden}
+.stats-strip::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 50% 50%,rgba(29,58,255,.15),transparent 70%)}
+.stats-inner{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:40px;position:relative;z-index:1}
+.stat-card{text-align:left;position:relative}
+.stat-card::before{content:'';position:absolute;top:0;left:0;width:28px;height:1.5px;background:var(--electric)}
+.stat-v{font-family:var(--serif);font-size:60px;font-weight:900;letter-spacing:-.04em;line-height:1;color:var(--cream);margin-top:18px;font-feature-settings:"tnum"}
+.stat-v .ac{color:var(--electric);font-style:italic;font-weight:400}
+.stat-v .vlt{color:var(--volt)}
+.stat-v sup{font-size:22px;font-weight:400;color:var(--muted-2);margin-left:4px;font-style:italic}
+.stat-l{font-family:var(--mono);font-size:10px;color:rgba(237,232,222,.55);letter-spacing:.15em;text-transform:uppercase;margin-top:14px;line-height:1.5}
+.stat-l b{color:var(--cream);font-weight:500}
+
+/* DASHBOARD */
+#dashboard-preview{background:var(--cream)}
+.dash-stage{margin-top:60px;background:linear-gradient(180deg,var(--ink) 0%,#181818 100%);border-radius:14px;padding:24px;position:relative;overflow:hidden;box-shadow:var(--shadow-xl);border:1px solid rgba(255,255,255,.05)}
+.dash-stage::before{content:'';position:absolute;top:-100px;left:-100px;width:400px;height:400px;background:radial-gradient(circle,rgba(29,58,255,.2),transparent 60%);pointer-events:none}
+.dash-stage::after{content:'';position:absolute;bottom:-100px;right:-100px;width:400px;height:400px;background:radial-gradient(circle,rgba(255,106,0,.1),transparent 60%);pointer-events:none}
+.dash-bar{display:flex;align-items:center;gap:14px;padding:8px 14px 16px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:24px;position:relative;z-index:1;flex-wrap:wrap}
+.dash-dot{display:flex;gap:6px}
+.dash-dot i{width:10px;height:10px;border-radius:50%;background:#ff5f56}
+.dash-dot i:nth-child(2){background:#ffbd2e}
+.dash-dot i:nth-child(3){background:#27c93f}
+.dash-title{font-family:var(--mono);font-size:11px;color:rgba(255,255,255,.6);letter-spacing:.1em}
+.dash-title b{color:var(--cream);font-weight:600}
+.dash-live{margin-left:auto;font-family:var(--mono);font-size:9px;color:var(--green);letter-spacing:.2em;display:flex;align-items:center;gap:6px}
+.dash-live::before{content:'';width:6px;height:6px;background:var(--green);border-radius:50%;animation:dotPulse 1.5s infinite}
+.dash-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px;position:relative;z-index:1}
+.dash-kpi{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:18px;transition:all .3s}
+.dash-kpi:hover{background:rgba(255,255,255,.07);transform:translateY(-2px)}
+.dash-kpi-l{font-family:var(--mono);font-size:9px;color:rgba(255,255,255,.5);letter-spacing:.15em;text-transform:uppercase;margin-bottom:8px}
+.dash-kpi-v{font-family:var(--serif);font-size:28px;font-weight:700;color:var(--cream);letter-spacing:-.02em;line-height:1;font-feature-settings:"tnum"}
+.dash-kpi-v .ac{color:var(--electric);font-style:italic;font-weight:400}
+.dash-kpi-d{font-family:var(--mono);font-size:9px;color:var(--green);margin-top:6px;letter-spacing:.05em}
+.dash-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;position:relative;z-index:1}
+.dash-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:18px;min-height:200px}
+.dash-card-h{font-family:var(--mono);font-size:10px;color:rgba(255,255,255,.6);letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center}
+.dash-card-h b{color:var(--cream)}
+.dash-bars{display:flex;align-items:flex-end;gap:8px;height:130px;padding:6px 0}
+.dash-bars .bar{flex:1;background:linear-gradient(180deg,var(--electric),rgba(29,58,255,.3));border-radius:3px 3px 0 0;animation:barGrow 1.2s var(--ease) backwards;position:relative;cursor:pointer;transition:all .25s}
+.dash-bars .bar:hover{background:linear-gradient(180deg,var(--volt),rgba(255,106,0,.3))}
+.dash-bars .bar::after{content:attr(data-v);position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:9px;color:rgba(255,255,255,.7);opacity:0;transition:opacity .2s}
+.dash-bars .bar:hover::after{opacity:1}
+@keyframes barGrow{from{height:0}}
+.dash-bar-labels{display:flex;justify-content:space-between;margin-top:8px;font-family:var(--mono);font-size:8px;color:rgba(255,255,255,.4);letter-spacing:.1em}
+.dash-line-svg{width:100%;height:130px}
+.dash-line-area{fill:url(#dashGrad);opacity:.4}
+.dash-line-stroke{stroke:var(--electric);stroke-width:2;fill:none;stroke-dasharray:600;stroke-dashoffset:600;animation:dashLineDraw 2.5s var(--ease) forwards}
+@keyframes dashLineDraw{to{stroke-dashoffset:0}}
+.dash-pt{fill:var(--electric);animation:fUp .4s var(--ease) backwards}
+
+/* RESULTS */
+#results{background:var(--paper);overflow:hidden}
+.results-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-top:60px;border-radius:8px;overflow:hidden;box-shadow:var(--shadow-sm)}
+.res-box{background:var(--white);padding:42px 32px;position:relative;overflow:hidden;transition:all .4s var(--ease)}
+.res-box:hover{background:var(--cream-2)}
+.res-box::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--electric);transform:scaleX(0);transition:transform .55s var(--ease);transform-origin:left}
+.res-box:hover::after{transform:scaleX(1)}
+.res-icon{width:32px;height:32px;color:var(--electric);margin-bottom:14px;transition:transform .4s var(--ease)}
+.res-box:hover .res-icon{transform:scale(1.15) rotate(-8deg)}
+.res-n{font-family:var(--serif);font-size:64px;font-weight:900;letter-spacing:-.04em;line-height:1;color:var(--ink);position:relative;z-index:1}
+.res-n .ac{color:var(--electric);font-style:italic;font-weight:400}
+.res-l{font-family:var(--sans);font-size:12px;color:var(--muted);margin-top:10px;line-height:1.5;font-weight:500;position:relative;z-index:1;white-space:pre-line}
+.res-deco{position:absolute;bottom:-20px;right:-12px;font-family:var(--serif);font-size:104px;font-weight:900;font-style:italic;color:var(--cream-2);letter-spacing:-.03em;line-height:1;z-index:0}
+
+/* CTA */
+#cta{background:var(--ink);color:var(--cream);position:relative;overflow:hidden}
+#cta::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 100%,rgba(29,58,255,.2),transparent 70%)}
+#cta::after{content:'';position:absolute;top:-100px;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(255,106,0,.1),transparent 60%);animation:floatY 8s ease-in-out infinite}
+.cta-inner{text-align:center;padding:140px 48px;max-width:1000px;margin:0 auto;position:relative;z-index:1}
+.cta-tag{font-family:var(--mono);font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--volt);margin-bottom:24px;display:flex;align-items:center;justify-content:center;gap:14px}
+.cta-tag::before,.cta-tag::after{content:'';width:24px;height:1px;background:var(--volt)}
+.cta-h{font-family:var(--serif);font-size:clamp(56px,8vw,120px);line-height:.92;letter-spacing:-.04em;margin-bottom:30px;font-weight:400}
+.cta-h em{font-style:italic;color:var(--electric);font-weight:400}
+.cta-h .strong{font-weight:900}
+.cta-sub{font-family:var(--sans);font-size:16px;line-height:1.65;margin-bottom:48px;max-width:540px;margin-left:auto;margin-right:auto;color:rgba(237,232,222,.7)}
+.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+#cta .btn-primary{background:var(--electric);color:var(--white)}
+#cta .btn-primary::after{background:var(--volt)}
+#cta .btn-ghost{color:var(--cream);border-color:var(--cream)}
+#cta .btn-ghost:hover{background:var(--cream);color:var(--ink)}
+
+/* TRUST */
+.trust-strip{background:var(--cream);padding:36px 48px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;z-index:3}
+.trust-inner{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:auto 1fr;align-items:center;gap:48px}
+.trust-label{font-family:var(--mono);font-size:10px;letter-spacing:.3em;color:var(--muted);text-transform:uppercase;line-height:1.5}
+.trust-label b{display:block;color:var(--ink);font-family:var(--serif);font-size:18px;font-style:italic;font-weight:700;letter-spacing:-.02em;text-transform:none;margin-top:4px}
+.trust-list{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+.trust-item{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink-2);transition:all .3s var(--ease);cursor:default;font-style:italic}
+.trust-item:hover{color:var(--electric);transform:translateY(-2px)}
+
+/* FOOTER */
+footer{background:var(--ink);color:rgba(237,232,222,.5);padding:48px;border-top:1px solid rgba(237,232,222,.1);position:relative;z-index:3}
+.footer-top{display:grid;grid-template-columns:1fr 1fr 1fr;gap:48px;margin-bottom:40px;padding-bottom:40px;border-bottom:1px solid rgba(237,232,222,.1);max-width:1300px;margin-left:auto;margin-right:auto}
+.footer-brand .brand{font-size:32px;color:var(--cream);margin-bottom:12px}
+.footer-brand .brand .bi{color:var(--cream)}
+.footer-tagline{font-family:var(--mono);font-size:11px;color:rgba(237,232,222,.5);letter-spacing:.1em;line-height:1.6}
+.footer-col-title{font-family:var(--mono);font-size:10px;color:var(--volt);letter-spacing:.25em;text-transform:uppercase;margin-bottom:18px}
+.footer-links{display:flex;flex-direction:column;gap:10px}
+.footer-links a{font-family:var(--sans);font-size:13px;color:rgba(237,232,222,.7);text-decoration:none;transition:color .25s}
+.footer-links a:hover{color:var(--electric)}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:11px;letter-spacing:.05em;max-width:1300px;margin:0 auto}
+.fb-r{display:flex;align-items:center;gap:12px}
+.fb-r .star{color:var(--volt);font-size:14px;animation:starSpin 6s linear infinite}
+@keyframes starSpin{to{transform:rotate(360deg)}}
+
+/* WHATSAPP */
+.wa-fab{position:fixed;bottom:28px;right:28px;z-index:599;width:54px;height:54px;background:#25D366;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(37,211,102,.35);transition:all .3s var(--ease);cursor:pointer;text-decoration:none;border:none}
+.wa-fab::before{content:'';position:absolute;inset:0;border-radius:50%;border:2px solid #25D366;opacity:0;animation:botRing 2.8s infinite}
+@keyframes botRing{0%{opacity:.5;transform:scale(1)}100%{opacity:0;transform:scale(1.6)}}
+.wa-fab:hover{transform:scale(1.1) rotate(-6deg);box-shadow:0 12px 30px rgba(37,211,102,.5)}
+.wa-fab svg{width:26px;height:26px}
+
+/* BACK TOP */
+.back-top{position:fixed;bottom:100px;right:28px;width:42px;height:42px;background:var(--white);border:1px solid var(--border-2);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:var(--shadow-md);transition:all .4s var(--ease);z-index:400;opacity:0;transform:translateY(20px) scale(.8);pointer-events:none;color:var(--ink)}
+.back-top.show{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+.back-top:hover{background:var(--ink);color:var(--cream);transform:translateY(-4px)}
+.back-top svg{width:18px;height:18px}
+
+/* LIVE TICKER */
+.live-ticker{position:fixed;left:28px;bottom:28px;z-index:500;background:var(--white);border:1px solid var(--border);border-radius:999px;padding:10px 18px 10px 14px;display:flex;align-items:center;gap:10px;box-shadow:var(--shadow-md);font-family:var(--mono);font-size:10px;color:var(--ink-2);letter-spacing:.05em;max-width:340px;transition:all .5s var(--ease);transform:translateY(80px);opacity:0;cursor:default}
+.live-ticker.on{transform:translateY(0);opacity:1}
+.lt-pulse{position:relative;width:8px;height:8px;background:var(--green);border-radius:50%;flex-shrink:0}
+.lt-pulse::before{content:'';position:absolute;inset:-4px;border:1px solid var(--green);border-radius:50%;animation:livePulse 1.8s infinite}
+.lt-text b{font-weight:700;color:var(--ink)}
+
+/* REVEAL */
+@keyframes fUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+.rev{opacity:0;transform:translateY(40px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
+.rev.on{opacity:1;transform:translateY(0)}
+
+/* DIVIDER */
+.divider{position:relative;height:80px;display:flex;align-items:center;justify-content:center;overflow:hidden;z-index:3}
+.divider::before,.divider::after{content:'';position:absolute;top:50%;width:calc(50% - 30px);height:1px;background:linear-gradient(90deg,transparent,var(--border-2),transparent)}
+.divider::before{left:0}.divider::after{right:0}
+.divider-bolt{width:36px;height:36px;background:var(--cream);border:1px solid var(--border-2);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--electric);position:relative;animation:floatY 4s ease-in-out infinite}
+.divider-bolt::before{content:'';position:absolute;inset:-8px;border:1px dashed var(--border-2);border-radius:50%;animation:spin 22s linear infinite}
+.divider-bolt svg{width:18px;height:18px}
+
+/* RESPONSIVE */
+@media(max-width:1200px){
+  .wrap{padding:110px 36px}
+  nav.topnav{padding:16px 32px}
+  .hero-inner{gap:40px}
+  .hero-visual{height:520px}
+}
+@media(max-width:980px){
+  #cur,#cur-ring{display:none}
+  .trail{display:none!important}
+  .hero-h1{font-size:clamp(42px,6vw,72px);line-height:.95}
+  .sec-h{font-size:clamp(38px,5vw,60px)}
+  .cta-h{font-size:clamp(44px,6vw,80px)}
+  .hero-inner{grid-template-columns:1fr;gap:48px;max-width:640px}
+  .hero-visual{height:440px;order:2}
+  .hero-stats{gap:24px;flex-wrap:wrap;margin-top:40px;padding-top:28px}
+  .hs-n{font-size:38px}
+  .hv-c1{top:20px;left:10px}
+  .hv-c2{top:120px;right:10px}
+  .hv-c3{bottom:120px;left:20px}
+  .hv-c4{bottom:20px;right:10px}
+  .hv-center{width:100px;height:100px}
+  .hv-center .bolt{font-size:40px}
+  .term{width:200px;padding:12px 14px;font-size:10px;left:-10px;bottom:-20px}
+  .stats-inner{grid-template-columns:repeat(2,1fr);gap:30px}
+  .stat-v{font-size:44px}
+  .stats-strip{padding:48px 24px}
+  .results-row{grid-template-columns:repeat(2,1fr)}
+  .res-n{font-size:52px}
+  .res-deco{font-size:84px}
+  .dash-grid{grid-template-columns:repeat(2,1fr)}
+  .dash-row{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr;gap:32px}
+  .footer-bottom{flex-direction:column;gap:12px;text-align:center}
+  nav.topnav{padding:14px 20px}
+  .nav-links{display:none}
+  .nav-cta{padding:9px 14px;font-size:9px}
+  .wrap{padding:80px 24px}
+  .sv-grid{grid-template-columns:1fr}
+  .live-ticker{display:none!important}
+  .wa-fab{bottom:16px;right:16px;width:46px;height:46px}
+  .wa-fab svg{width:22px;height:22px}
+  .trust-inner{grid-template-columns:1fr;gap:24px;text-align:center}
+  .trust-list{justify-content:center;gap:16px 20px}
+  .trust-item{font-size:15px}
+  .mq-item{font-size:26px;padding:0 20px;gap:20px}
+}
+@media(max-width:768px){
+  .hero-h1{font-size:clamp(38px,8vw,58px)}
+  .sec-h{font-size:clamp(34px,7vw,52px)}
+  .cta-h{font-size:clamp(38px,8vw,68px)}
+  .hero-visual{height:380px}
+  .term{display:none}
+  .hv-center{width:80px;height:80px}
+  .hv-center .bolt{font-size:32px}
+  .stats-inner{grid-template-columns:1fr 1fr}
+  .results-row{grid-template-columns:1fr 1fr}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.15s!important}
+  .bolt-svg,.mesh,.marquee-track,.orb-rotate,.orb-rotate-rev{display:none!important}
+}
+</style>
 </head>
 <body>
-  <a class="skip-link" href="#contenido">Saltar al contenido</a>
 
-  <!-- LOADER -->
-  <div id="loader" aria-hidden="true">
-    <div class="ld-mark"><span class="ld-two">2</span><span class="ld-bi">BI</span><span class="ld-dot"></span></div>
-    <div class="ld-bar"><div class="ld-fill"></div></div>
-    <span class="ld-tag">Cargando experiencia</span>
+<div id="loader" aria-hidden="true">
+  <div class="ld-mark"><span class="ld-two">2</span><span class="ld-bi">BI</span><span class="ld-dot"></span></div>
+  <div class="ld-bar"><div class="ld-fill"></div></div>
+  <span class="ld-tag">Cargando experiencia</span>
+</div>
+
+<div class="scroll-prog" aria-hidden="true"></div>
+<div id="cur" aria-hidden="true"></div>
+<div id="cur-ring" aria-hidden="true"></div>
+
+<div class="mesh" aria-hidden="true">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+</div>
+
+<div class="lightning-stage" aria-hidden="true"></div>
+
+<nav class="topnav" id="nav">
+  <a class="brand" href="index.html">
+    <span class="two">2</span><span class="bi">BI</span><span class="dot"></span>
+  </a>
+  <div class="nav-links">
+    <a href="nosotros.html">Nosotros</a>
+    <a href="soluciones.html">Soluciones</a>
+    <a href="portafolio.html">Portafolio</a>
+    <a href="valores.html">Valores</a>
+    <a href="ecosistema.html">Ecosistema</a>
+    <a href="contacto.html">Contacto</a>
   </div>
+  <a class="nav-cta" href="contacto.html"><span class="ndot"></span><span>Hablemos</span></a>
+</nav>
 
-  <!-- SCROLL PROGRESS -->
-  <div class="scroll-prog" aria-hidden="true"></div>
-
-  <!-- CUSTOM CURSOR -->
-  <div id="cur" aria-hidden="true"></div>
-  <div id="cur-ring" aria-hidden="true"></div>
-
-  <!-- GRADIENT MESH BG -->
-  <div class="mesh" aria-hidden="true">
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
-    <div class="blob blob-3"></div>
-  </div>
-
-  <!-- LIGHTNING -->
-  <div class="lightning-stage" aria-hidden="true"></div>
-
-  <!-- AMBIENT from repo -->
-  <div class="ambient ambient--rich" aria-hidden="true">
-    <div class="ambient__mesh"></div>
-    <div class="ambient__grid"></div>
-    <div class="ambient__shimmer"></div>
-  </div>
-  <div class="grain" aria-hidden="true"></div>
-
-  <!-- HEADER -->
-  <header class="site-header">
-    <div class="site-header__inner">
-      <div class="site-header__datetime" id="p2bi-datetime-mount" aria-live="polite"></div>
-      <a class="logo" href="index.html">
-        <span class="logo__mark">2BI</span>
-        <span class="logo__stack">
-          <span class="logo__stack-line logo__stack-line--tagline">Technology Solutions</span>
-        </span>
-      </a>
-      <nav class="nav nav--desktop" aria-label="Principal">
-        <ul class="nav__list">
-          <li><a class="nav__link" href="index.html">Inicio</a></li>
-          <li><button class="nav__link nav__link--btn" type="button" id="p2bi-nav-explore" aria-expanded="false" aria-controls="p2bi-explorebar">Explorar ▾</button></li>
-          <li><a class="nav__link" href="nosotros.html">Nosotros</a></li>
-          <li><a class="nav__link" href="soluciones.html">Soluciones</a></li>
-          <li><a class="nav__link" href="portafolio.html">Portafolio</a></li>
-          <li><a class="nav__link" href="valores.html">Valores</a></li>
-          <li><a class="nav__link" href="ecosistema.html">Ecosistema</a></li>
-        </ul>
-      </nav>
-      <a class="btn btn--primary" href="mailto:guillermorc44@gmail.com,alvaropalma87@gmail.com,chdominiel@gmail.com?subject=Contacto%202BI%20Technology%20Solutions">Hablemos</a>
-      <div class="site-header__toolbar" aria-label="Controles del sitio">
-        <button type="button" class="p2bi-icon-btn" id="p2bi-btn-tour" title="Tour del sitio" aria-label="Tour del sitio">
-          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 2h8l4 4v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm8 1.5V7h3.5L14 3.5ZM7 10h10v1.7H7V10Zm0 4h10v1.7H7V14Zm0 4h7v1.7H7V18Z"/></svg>
-        </button>
-        <button type="button" class="p2bi-icon-btn" id="p2bi-btn-cmd" title="Accesos rápidos" aria-label="Accesos rápidos"><span aria-hidden="true">⌘K</span></button>
-        <button type="button" class="p2bi-icon-btn" id="p2bi-btn-theme" title="Modo Sol (claro)" aria-label="Cambiar tema" aria-pressed="false">☀</button>
+<section id="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-tag"><span class="live"></span> Monterrey, MX · Online · BI · IA · Auto · Web · IoT</div>
+      <h1 class="hero-h1">
+        <span class="l1">Convertimos datos</span>
+        <span class="l2">en <em>decisiones</em> que</span>
+        <span class="l3">escalan contigo.</span>
+      </h1>
+      <p class="hero-p">Arquitectura analítica, tableros con <strong>sentido de negocio</strong>, automatización inteligente y cultura de medición — sin humo, con trazabilidad y ROI claro. Proyectos desde <strong>$22K MXN</strong> con garantía real.</p>
+      <div class="hero-btns">
+        <a class="btn btn-primary magnet" href="contacto.html"><span>Agendar conversación</span><span class="arr">→</span></a>
+        <a class="btn btn-ghost magnet" href="soluciones.html"><span>Explorar soluciones</span></a>
       </div>
-      <button class="nav-toggle js-nav-toggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-drawer">
-        <span class="nav-toggle__bars" aria-hidden="true"><span></span><span></span><span></span></span>
-      </button>
+      <div class="hero-stats">
+        <div class="hs"><div class="hs-n"><span class="counter" data-target="47">0</span><span class="ac">+</span></div><div class="hs-l">Proyectos</div></div>
+        <div class="hs"><div class="hs-n"><span class="counter" data-target="94">0</span><span class="ac">%</span></div><div class="hs-l">Confianza modelo</div></div>
+        <div class="hs"><div class="hs-n">−<span class="counter" data-target="38">0</span><span class="ac">%</span></div><div class="hs-l">Tiempo a insight</div></div>
+        <div class="hs"><div class="hs-n"><span class="counter" data-target="12">0</span><span class="ac">+</span></div><div class="hs-l">Industrias</div></div>
+      </div>
     </div>
-    <div class="nav-panel js-nav-panel">
-      <div class="nav-drawer js-nav-drawer" id="nav-drawer" role="dialog" aria-modal="true" aria-label="Menú">
-        <nav class="nav nav--drawer" aria-label="Móvil">
-          <ul class="nav__list">
-            <li><a class="nav__link" href="index.html">Inicio</a></li>
-            <li><a class="nav__link" href="nosotros.html">Nosotros</a></li>
-            <li><a class="nav__link" href="soluciones.html">Soluciones</a></li>
-            <li><a class="nav__link" href="portafolio.html">Portafolio</a></li>
-            <li><a class="nav__link" href="valores.html">Valores</a></li>
-            <li><a class="nav__link" href="ecosistema.html">Ecosistema</a></li>
-          </ul>
-        </nav>
-        <div class="nav-drawer__cta">
-          <a class="btn btn--primary btn--lg" href="mailto:guillermorc44@gmail.com,alvaropalma87@gmail.com,chdominiel@gmail.com?subject=Contacto%202BI%20Technology%20Solutions" style="width:100%">Hablemos</a>
+    <div class="hero-visual">
+      <div class="hv-stage">
+        <div class="hv-orbit">
+          <svg viewBox="0 0 300 300">
+            <circle class="orb-line" cx="150" cy="150" r="120"/>
+            <circle class="orb-line" cx="150" cy="150" r="80"/>
+            <g class="orb-rotate"><circle class="orb-dot" cx="150" cy="30" r="4" fill="#1d3aff"/><circle class="orb-dot" cx="270" cy="150" r="3" fill="#0d9b50"/></g>
+            <g class="orb-rotate-rev"><circle class="orb-dot" cx="150" cy="270" r="3.5" fill="#ff6a00"/><circle class="orb-dot" cx="30" cy="150" r="3" fill="#1d3aff"/></g>
+          </svg>
+        </div>
+        <div class="hv-center"><span class="bolt">2</span></div>
+        <div class="hv-card hv-c1">
+          <div class="lbl"><span class="lbl-icn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span> REVENUE</div>
+          <div class="val">$2.4<span class="ac">M</span></div>
+          <div class="delta">↑ 23% vs Q3</div>
+          <div class="mini-chart"><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+        <div class="hv-card hv-c2">
+          <div class="lbl"><span class="lbl-icn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span> UPTIME</div>
+          <div class="val">99.9<span class="ac">%</span></div>
+          <div class="delta">SLA cumplido</div>
+        </div>
+        <div class="hv-card hv-c3">
+          <div class="lbl"><span class="lbl-icn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span> USUARIOS</div>
+          <div class="val">1,247</div>
+          <div class="delta">↑ 18% mes</div>
+        </div>
+        <div class="hv-card hv-c4">
+          <div class="lbl"><span class="lbl-icn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span> AUTOMATIONS</div>
+          <div class="val">847<span class="ac">/d</span></div>
+          <div class="delta">Activas hoy</div>
+        </div>
+        <div class="term">
+          <div class="term-bar"><i></i><i></i><i></i><span>zsh</span></div>
+          <span class="term-line"><span class="pr">$</span> npx 2bi deploy --prod</span>
+          <span class="term-line t">✓ 47 dashboards synced</span>
+          <span class="term-line t">✓ 12 automations live</span>
+          <span class="term-line"><span class="pr">$</span> <span class="term-cursor"></span></span>
         </div>
       </div>
     </div>
-  </header>
-
-  <!-- FAB -->
-  <div class="fab" aria-label="Acciones rápidas">
-    <a class="btn btn--primary btn--sm" href="mailto:guillermorc44@gmail.com,alvaropalma87@gmail.com,chdominiel@gmail.com?subject=Contacto%202BI">Hablemos</a>
-    <a class="btn btn--ghost fab__mini" href="soluciones.html" title="Soluciones" aria-label="Soluciones">◎</a>
-    <a class="btn btn--ghost fab__mini" href="portafolio.html" title="Portafolio" aria-label="Portafolio">✦</a>
   </div>
+</section>
 
-  <!-- SECTION DOTS -->
-  <div class="section-dots" aria-hidden="true">
-    <div class="sd-dot active" data-section="hero-home"><span class="sd-tip">Inicio</span></div>
-    <div class="sd-dot" data-section="servicios"><span class="sd-tip">Servicios</span></div>
-    <div class="sd-dot" data-section="dashboard"><span class="sd-tip">Dashboard</span></div>
-    <div class="sd-dot" data-section="resultados"><span class="sd-tip">Resultados</span></div>
-    <div class="sd-dot" data-section="cta-final"><span class="sd-tip">Contacto</span></div>
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span class="mq-item">Power BI <span class="star">✦</span></span>
+    <span class="mq-item">Claude AI <span class="star alt">★</span></span>
+    <span class="mq-item">n8n <span class="star">✦</span></span>
+    <span class="mq-item">WhatsApp Bot <span class="star alt">★</span></span>
+    <span class="mq-item">Microsip API <span class="star">✦</span></span>
+    <span class="mq-item">IoT LILYGO <span class="star alt">★</span></span>
+    <span class="mq-item">Next.js <span class="star">✦</span></span>
+    <span class="mq-item">Railway <span class="star alt">★</span></span>
+    <span class="mq-item">Power BI <span class="star">✦</span></span>
+    <span class="mq-item">Claude AI <span class="star alt">★</span></span>
+    <span class="mq-item">n8n <span class="star">✦</span></span>
+    <span class="mq-item">WhatsApp Bot <span class="star alt">★</span></span>
+    <span class="mq-item">Microsip API <span class="star">✦</span></span>
+    <span class="mq-item">IoT LILYGO <span class="star alt">★</span></span>
+    <span class="mq-item">Next.js <span class="star">✦</span></span>
+    <span class="mq-item">Railway <span class="star alt">★</span></span>
   </div>
+</div>
 
-  <main id="contenido">
+<div class="trust-strip">
+  <div class="trust-inner">
+    <div class="trust-label">Industrias<b>Clientes activos</b></div>
+    <div class="trust-list">
+      <div class="trust-item">Manufactura</div>
+      <div class="trust-item">Retail</div>
+      <div class="trust-item">Logística</div>
+      <div class="trust-item">Servicios</div>
+      <div class="trust-item">Alimenticio</div>
+      <div class="trust-item">Salud</div>
+    </div>
+  </div>
+</div>
 
-    <!-- HERO -->
-    <section class="hero-home wrap" id="hero-home">
-      <div class="hero-spotlight" aria-hidden="true"></div>
-      <div class="hero-home__grid">
-        <div class="hero-entrance">
-          <p class="hero-home__eyebrow fx-reveal">
-            <span class="eyebrow-live"><span class="live-dot"></span> Monterrey, MX</span>
-            Data · BI · IA · Automatización · IoT
-          </p>
-          <h1 class="display fx-reveal" style="--delay:.15s">
-            Convertimos <em>datos</em> en decisiones que <strong class="hero-accent">escalan</strong> contigo.
-          </h1>
-          <p class="hero-home__lead fx-reveal" style="--delay:.3s">
-            Arquitectura analítica, tableros con sentido de negocio, automatización inteligente y cultura de medición — sin humo, con trazabilidad y ROI claro. <strong>El buen BI es un guión</strong>: quién habla primero, qué métrica desbloquea el siguiente slide y qué hace el equipo el martes siguiente.
-          </p>
-          <div class="hero-home__actions fx-reveal" style="--delay:.45s">
-            <a class="btn btn--primary btn--lg btn--pulse btn--magnetic" href="contacto.html">
-              <span>Agendar conversación</span>
-              <span class="btn-arr">→</span>
-            </a>
-            <a class="btn btn--ghost btn--lg btn--magnetic" href="soluciones.html">Explorar soluciones</a>
+<div class="divider"><div class="divider-bolt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div></div>
+
+<section id="services">
+  <div class="wrap">
+    <div class="sec-tag rev">Nuestros servicios</div>
+    <h2 class="sec-h rev">Todo bajo el <em class="underline">mismo techo</em>,<br><span class="strong">sin proveedores</span> que se culpen.</h2>
+    <p class="sec-sub rev">Desde el dato crudo hasta la acción. Integramos BI, automatización, web, IA e IoT en un solo ecosistema. Un equipo, un timeline, una factura.</p>
+
+    <div class="sv-grid">
+      <div class="sv-card rev"><div class="hover-grad"></div>
+        <div class="mini-demo demo-bi"><div class="md-tag">LIVE PREVIEW</div><div class="bi-mock"><div class="bi-kpis"><div class="bi-kpi"><div class="bi-kpi-l">INGRESOS</div><div class="bi-kpi-v"><b>$</b>2.4M</div></div><div class="bi-kpi"><div class="bi-kpi-l">MARGEN</div><div class="bi-kpi-v ac">+23%</div></div></div><div class="bi-bars"><i style="height:40%"></i><i style="height:65%"></i><i style="height:85%" class="hi"></i><i style="height:55%"></i><i style="height:72%"></i><i style="height:90%" class="hi"></i><i style="height:60%"></i><i style="height:78%"></i></div></div></div>
+        <div class="sv-card-top"><span class="sv-label lbl-h">Alta demanda</span><span class="sv-num">01</span></div>
+        <div class="sv-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
+        <h3 class="sv-title">Business Intelligence</h3>
+        <p class="sv-desc">Tableros Power BI con modelo semántico, RLS, refrescos programados y narrativa ejecutiva. No "otra gráfica" — un sistema de decisiones.</p>
+        <div class="sv-stack"><span class="sv-tech">Power BI</span><span class="sv-tech">DAX</span><span class="sv-tech">SQL Server</span><span class="sv-tech">Fabric</span></div>
+        <a class="sv-cta" href="solucion-bi.html"><span>Ver solución completa</span><span class="arr">→</span></a>
+      </div>
+
+      <div class="sv-card rev"><div class="hover-grad"></div>
+        <div class="mini-demo demo-chat"><div class="md-tag">AI CHAT</div><div class="md-row b1"><div class="md-avatar">2</div><div class="md-bubble bot">¿Cómo puedo ayudarte hoy?</div></div><div class="md-row right b2"><div class="md-bubble user">Reporte ventas Q4</div></div><div class="md-row b3"><div class="md-avatar">2</div><div class="md-bubble bot">Generando reporte en tiempo real...</div></div></div>
+        <div class="sv-card-top"><span class="sv-label lbl-m">Trending</span><span class="sv-num">02</span></div>
+        <div class="sv-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10H12V2z"/><path d="M20 12A8 8 0 0 0 12 4v8h8z" opacity=".5"/></svg></div>
+        <h3 class="sv-title">Inteligencia Artificial</h3>
+        <p class="sv-desc">Bots conversacionales, agentes con Claude AI, clasificadores y flujos inteligentes. IA que entiende tu negocio, no un chatbot genérico.</p>
+        <div class="sv-stack"><span class="sv-tech">Claude AI</span><span class="sv-tech">Python</span><span class="sv-tech">RAG</span><span class="sv-tech">WhatsApp</span></div>
+        <a class="sv-cta" href="soluciones.html"><span>Ver solución completa</span><span class="arr">→</span></a>
+      </div>
+
+      <div class="sv-card rev"><div class="hover-grad"></div>
+        <div class="mini-demo demo-flow"><div class="md-tag">WORKFLOW</div><svg viewBox="0 0 280 120"><line class="md-link" x1="60" y1="60" x2="140" y2="40"/><line class="md-link" x1="140" y1="40" x2="220" y2="60"/><line class="md-link" x1="140" y1="40" x2="140" y2="90"/><circle class="md-node-c" cx="60" cy="60" r="18" stroke="#1d3aff"/><text class="md-node-t" x="60" y="64" text-anchor="middle" fill="#0a0a0a">CRM</text><circle class="md-node-c dark" cx="140" cy="40" r="20" stroke="#1d3aff"/><text class="md-node-t" x="140" y="44" text-anchor="middle" fill="#fff">n8n</text><circle class="md-node-c" cx="220" cy="60" r="18" stroke="#0d9b50"/><text class="md-node-t" x="220" y="64" text-anchor="middle" fill="#0a0a0a">BI</text><circle class="md-node-c" cx="140" cy="90" r="16" stroke="#ff6a00"/><text class="md-node-t" x="140" y="94" text-anchor="middle" fill="#0a0a0a" font-size="8">WA</text></svg></div>
+        <div class="sv-card-top"><span class="sv-label lbl-n">Nuevo</span><span class="sv-num">03</span></div>
+        <div class="sv-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg></div>
+        <h3 class="sv-title">Automatización</h3>
+        <p class="sv-desc">Flujos n8n que conectan ERP, CRM, WhatsApp y BI. Elimina copiar-pegar entre sistemas. Un humano valida, la máquina ejecuta.</p>
+        <div class="sv-stack"><span class="sv-tech">n8n</span><span class="sv-tech">Microsip API</span><span class="sv-tech">Webhooks</span><span class="sv-tech">Cron</span></div>
+        <a class="sv-cta" href="soluciones.html"><span>Ver solución completa</span><span class="arr">→</span></a>
+      </div>
+
+      <div class="sv-card rev"><div class="hover-grad"></div>
+        <div class="mini-demo demo-app"><div class="md-tag">WEB APP</div><div class="md-window"><div class="md-bar"><i></i><i></i><i></i></div><div class="md-app-grid"><div class="md-side"><div class="md-side-item active"></div><div class="md-side-item"></div><div class="md-side-item"></div></div><div class="md-main"><div class="md-card-row"></div><div class="md-bars"><i></i><i></i><i></i><i></i><i></i></div></div></div></div></div>
+        <div class="sv-card-top"><span class="sv-label lbl-h">Alta demanda</span><span class="sv-num">04</span></div>
+        <div class="sv-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+        <h3 class="sv-title">Desarrollo Web</h3>
+        <p class="sv-desc">Apps a medida con Next.js, portales internos, landing pages y sistemas de catálogo. Performance real, SEO incluido, deploy automatizado.</p>
+        <div class="sv-stack"><span class="sv-tech">Next.js</span><span class="sv-tech">React</span><span class="sv-tech">Railway</span><span class="sv-tech">Vercel</span></div>
+        <a class="sv-cta" href="soluciones.html"><span>Ver solución completa</span><span class="arr">→</span></a>
+      </div>
+
+      <div class="sv-card rev"><div class="hover-grad"></div>
+        <div class="mini-demo demo-map"><div class="md-tag">IoT MAP</div><svg viewBox="0 0 280 160"><path class="map-grid" d="M0,40 h280 M0,80 h280 M0,120 h280 M70,0 v160 M140,0 v160 M210,0 v160"/><g style="color:#1d3aff"><circle class="pin-core" cx="80" cy="60" r="5" fill="currentColor"/><circle class="pin-ring" cx="80" cy="60" r="5" style="animation:pinRing 2s infinite"/></g><g style="color:#0d9b50"><circle class="pin-core" cx="180" cy="90" r="5" fill="currentColor"/><circle class="pin-ring" cx="180" cy="90" r="5" style="animation:pinRing 2s .5s infinite"/></g><g style="color:#ff6a00"><circle class="pin-core" cx="130" cy="45" r="4" fill="currentColor"/><circle class="pin-ring" cx="130" cy="45" r="4" style="animation:pinRing 2s 1s infinite"/></g><g style="color:#1d3aff"><circle class="pin-core" cx="220" cy="120" r="4" fill="currentColor"/><circle class="pin-ring" cx="220" cy="120" r="4" style="animation:pinRing 2s 1.5s infinite"/></g></svg></div>
+        <div class="sv-card-top"><span class="sv-label lbl-n">Nuevo</span><span class="sv-num">05</span></div>
+        <div class="sv-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="7"/><line x1="12" y1="18" x2="12" y2="18.01" stroke-width="3" stroke-linecap="round"/></svg></div>
+        <h3 class="sv-title">IoT & Sensores</h3>
+        <p class="sv-desc">Dispositivos LILYGO con telemetría en tiempo real. Temperatura, humedad, GPS, alertas automáticas vía WhatsApp y dashboards live.</p>
+        <div class="sv-stack"><span class="sv-tech">LILYGO</span><span class="sv-tech">MQTT</span><span class="sv-tech">ESP32</span><span class="sv-tech">Grafana</span></div>
+        <a class="sv-cta" href="soluciones.html"><span>Ver solución completa</span><span class="arr">→</span></a>
+      </div>
+
+      <div class="sv-card rev"><div class="hover-grad"></div>
+        <div class="mini-demo demo-doc"><div class="md-tag">DOCUMENT</div><div class="md-paper"><div class="md-line w70"></div><div class="md-line w50"></div><div class="md-checkrow"><div class="md-check c1">✓</div><div class="md-line w60"></div></div><div class="md-checkrow"><div class="md-check c2">✓</div><div class="md-line w40"></div></div><div class="md-checkrow"><div class="md-check c3">✓</div><div class="md-line w35"></div></div><div class="md-stamp">APROBADO</div></div></div>
+        <div class="sv-card-top"><span class="sv-label lbl-m">Trending</span><span class="sv-num">06</span></div>
+        <div class="sv-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+        <h3 class="sv-title">Consultoría & Gobernanza</h3>
+        <p class="sv-desc">Auditoría de datos, definición de KPIs, modelo de gobernanza y capacitación. Dejamos el equipo funcionando, no dependiente.</p>
+        <div class="sv-stack"><span class="sv-tech">Gobernanza</span><span class="sv-tech">KPIs</span><span class="sv-tech">Capacitación</span><span class="sv-tech">Auditoría</span></div>
+        <a class="sv-cta" href="solucion-gobernanza.html"><span>Ver solución completa</span><span class="arr">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="stats-strip">
+  <div class="stats-inner">
+    <div class="stat-card rev"><div class="stat-v"><span class="counter" data-target="47">0</span><sup>+</sup></div><div class="stat-l">Proyectos entregados<br><b>en 6 industrias</b></div></div>
+    <div class="stat-card rev"><div class="stat-v">$<span class="counter" data-target="22">0</span><span class="ac">K</span></div><div class="stat-l">Proyecto mínimo<br><b>MXN con garantía</b></div></div>
+    <div class="stat-card rev"><div class="stat-v"><span class="counter" data-target="94">0</span><span class="ac">%</span></div><div class="stat-l">Clientes repiten<br><b>otro módulo</b></div></div>
+    <div class="stat-card rev"><div class="stat-v"><span class="counter" data-target="72">0</span><span class="vlt">hrs</span></div><div class="stat-l">Tiempo promedio<br><b>primer entregable</b></div></div>
+  </div>
+</div>
+
+<section id="dashboard-preview">
+  <div class="wrap">
+    <div class="sec-tag rev">Vista previa</div>
+    <h2 class="sec-h rev">Así se ve un dashboard <em>2BI</em></h2>
+    <p class="sec-sub rev">No es un template: es la arquitectura que diseñamos para cada cliente. Semántica, RLS y narrativa ejecutiva incluida.</p>
+    <div class="dash-stage rev">
+      <div class="dash-bar"><div class="dash-dot"><i></i><i></i><i></i></div><div class="dash-title"><b>2BI</b> · Executive Dashboard · Q4 2024</div><div class="dash-live">LIVE</div></div>
+      <div class="dash-grid">
+        <div class="dash-kpi"><div class="dash-kpi-l">Revenue</div><div class="dash-kpi-v">$2.4<span class="ac">M</span></div><div class="dash-kpi-d">↑ 23.4% vs Q3</div></div>
+        <div class="dash-kpi"><div class="dash-kpi-l">Margen</div><div class="dash-kpi-v">34.2<span class="ac">%</span></div><div class="dash-kpi-d">↑ 2.1pp</div></div>
+        <div class="dash-kpi"><div class="dash-kpi-l">Tickets</div><div class="dash-kpi-v">1,247</div><div class="dash-kpi-d">↑ 18% este mes</div></div>
+        <div class="dash-kpi"><div class="dash-kpi-l">SLA</div><div class="dash-kpi-v">99.9<span class="ac">%</span></div><div class="dash-kpi-d">On target</div></div>
+      </div>
+      <div class="dash-row">
+        <div class="dash-card">
+          <div class="dash-card-h"><b>Ventas por mes</b><span>2024</span></div>
+          <div class="dash-bars">
+            <div class="bar" style="height:45%" data-v="$180K"></div>
+            <div class="bar" style="height:62%" data-v="$248K"></div>
+            <div class="bar" style="height:55%" data-v="$220K"></div>
+            <div class="bar" style="height:78%" data-v="$312K"></div>
+            <div class="bar" style="height:70%" data-v="$280K"></div>
+            <div class="bar" style="height:85%" data-v="$340K"></div>
+            <div class="bar" style="height:90%" data-v="$360K"></div>
+            <div class="bar" style="height:72%" data-v="$288K"></div>
           </div>
-          <div class="hero-home__badges fx-reveal" style="--delay:.6s" aria-label="Destacados">
-            <span class="badge badge--live">Listos para comité ejecutivo</span>
-            <span class="badge">Semántica · RLS · refrescos medibles</span>
-          </div>
-          <div class="hero-stats fx-reveal" style="--delay:.75s">
-            <div class="hs"><div class="hs-n"><span class="counter" data-target="47">0</span><span class="hs-ac">+</span></div><div class="hs-l">Proyectos entregados</div></div>
-            <div class="hs"><div class="hs-n"><span class="counter" data-target="94">0</span><span class="hs-ac">%</span></div><div class="hs-l">Confianza de modelo</div></div>
-            <div class="hs"><div class="hs-n">−<span class="counter" data-target="38">0</span><span class="hs-ac">%</span></div><div class="hs-l">Tiempo a insight</div></div>
-            <div class="hs"><div class="hs-n"><span class="counter" data-target="12">0</span><span class="hs-ac">+</span></div><div class="hs-l">Industrias cubiertas</div></div>
-          </div>
+          <div class="dash-bar-labels"><span>ENE</span><span>FEB</span><span>MAR</span><span>ABR</span><span>MAY</span><span>JUN</span><span>JUL</span><span>AGO</span></div>
         </div>
-
-        <div class="hero-panel reveal hero-panel--float">
-          <div class="hero-visual-scene">
-            <div class="hv-orbit">
-              <svg viewBox="0 0 300 300">
-                <circle class="orb-line" cx="150" cy="150" r="120" stroke-dasharray="3 5"/>
-                <circle class="orb-line" cx="150" cy="150" r="80" stroke-dasharray="2 4"/>
-                <g class="orb-rotate"><circle class="orb-dot" cx="150" cy="30" r="4" fill="var(--blue-bright)"/><circle class="orb-dot" cx="270" cy="150" r="3" fill="var(--success)"/></g>
-                <g class="orb-rotate-rev"><circle class="orb-dot" cx="150" cy="270" r="3.5" fill="#ff6a00"/><circle class="orb-dot" cx="30" cy="150" r="3" fill="var(--blue-glow)"/></g>
-              </svg>
-            </div>
-            <div class="hv-center"><span class="hv-bolt">2</span></div>
-            <div class="hv-card hv-c1">
-              <div class="hv-lbl"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg> Revenue</div>
-              <div class="hv-val">$2.4<span class="hv-ac">M</span></div>
-              <div class="hv-delta">↑ 23% vs Q3</div>
-              <div class="hv-mini-chart"><i></i><i></i><i></i><i></i><i></i></div>
-            </div>
-            <div class="hv-card hv-c2">
-              <div class="hv-lbl"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Uptime</div>
-              <div class="hv-val">99.9<span class="hv-ac">%</span></div>
-              <div class="hv-delta">SLA cumplido</div>
-            </div>
-            <div class="hv-card hv-c3">
-              <div class="hv-lbl"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg> Usuarios</div>
-              <div class="hv-val">1,247</div>
-              <div class="hv-delta">↑ 18% este mes</div>
-            </div>
-            <div class="hero-term">
-              <div class="term-bar"><i></i><i></i><i></i><span>zsh</span></div>
-              <span class="term-line"><span class="term-pr">$</span> npx 2bi deploy --prod</span>
-              <span class="term-line term-t">✓ 47 dashboards synced</span>
-              <span class="term-line term-t">✓ 12 automations live</span>
-              <span class="term-line"><span class="term-pr">$</span> <span class="term-cursor"></span></span>
-            </div>
-          </div>
-          <div class="hero-panel__grid">
-            <div class="kpi-mini"><div class="kpi-mini__l">Confianza modelo</div><div class="kpi-mini__v">94.2%</div><div class="kpi-mini__d">↑ vs. trimestre anterior</div></div>
-            <div class="kpi-mini"><div class="kpi-mini__l">Tiempo a insight</div><div class="kpi-mini__v">−38%</div><div class="kpi-mini__d">Automatización + gobernanza</div></div>
-          </div>
-          <svg class="chart-svg" viewBox="0 0 400 120" preserveAspectRatio="none" aria-hidden="true">
-            <defs><linearGradient id="gradArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="var(--blue-bright)" stop-opacity=".35"/><stop offset="100%" stop-color="var(--blue-bright)" stop-opacity="0"/></linearGradient></defs>
-            <path class="chart-area" d="M0,100 L0,85 C40,90 60,40 100,55 C140,70 160,25 200,40 C240,55 260,15 300,30 C340,45 360,20 400,35 L400,120 L0,120 Z" fill="url(#gradArea)"/>
-            <path class="chart-line js-chart-line" d="M0,85 C40,90 60,40 100,55 C140,70 160,25 200,40 C240,55 260,15 300,30 C340,45 360,20 400,35" fill="none" stroke="var(--blue-bright)" stroke-width="2"/>
+        <div class="dash-card">
+          <div class="dash-card-h"><b>Tendencia acumulada</b><span>YTD</span></div>
+          <svg class="dash-line-svg" viewBox="0 0 400 130">
+            <defs><linearGradient id="dashGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1d3aff" stop-opacity=".3"/><stop offset="100%" stop-color="#1d3aff" stop-opacity="0"/></linearGradient></defs>
+            <path class="dash-line-area" d="M0,110 C50,100 80,80 120,70 C160,60 200,45 240,35 C280,25 320,30 360,20 L400,15 L400,130 L0,130 Z"/>
+            <path class="dash-line-stroke" d="M0,110 C50,100 80,80 120,70 C160,60 200,45 240,35 C280,25 320,30 360,20 L400,15"/>
+            <circle class="dash-pt" cx="120" cy="70" r="4" style="animation-delay:.5s"/>
+            <circle class="dash-pt" cx="240" cy="35" r="4" style="animation-delay:1s"/>
+            <circle class="dash-pt" cx="400" cy="15" r="4" style="animation-delay:1.5s"/>
           </svg>
         </div>
       </div>
-      <div class="scroll-ind"><span>Scroll</span><div class="dot-anim"></div></div>
-    </section>
-
-    <!-- MARQUEE -->
-    <div class="marquee" aria-hidden="true">
-      <div class="marquee-track">
-        <span class="mq-item">Power BI <span class="mq-star">✦</span></span>
-        <span class="mq-item">Claude AI <span class="mq-star alt">★</span></span>
-        <span class="mq-item">n8n <span class="mq-star">✦</span></span>
-        <span class="mq-item">WhatsApp Bot <span class="mq-star alt">★</span></span>
-        <span class="mq-item">Microsip API <span class="mq-star">✦</span></span>
-        <span class="mq-item">IoT LILYGO <span class="mq-star alt">★</span></span>
-        <span class="mq-item">Next.js <span class="mq-star">✦</span></span>
-        <span class="mq-item">Railway <span class="mq-star alt">★</span></span>
-        <span class="mq-item">Power BI <span class="mq-star">✦</span></span>
-        <span class="mq-item">Claude AI <span class="mq-star alt">★</span></span>
-        <span class="mq-item">n8n <span class="mq-star">✦</span></span>
-        <span class="mq-item">WhatsApp Bot <span class="mq-star alt">★</span></span>
-        <span class="mq-item">Microsip API <span class="mq-star">✦</span></span>
-        <span class="mq-item">IoT LILYGO <span class="mq-star alt">★</span></span>
-        <span class="mq-item">Next.js <span class="mq-star">✦</span></span>
-        <span class="mq-item">Railway <span class="mq-star alt">★</span></span>
-      </div>
     </div>
+  </div>
+</section>
 
-    <!-- PHOTO RAIL -->
-    <div class="photo-rail photo-rail--home reveal-stagger js-reveal-stagger" aria-label="Historia en cinco fotogramas">
-      <div class="photo-rail__item"><img class="js-ext-img" src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=640&q=82" alt="Descubrimiento" width="640" height="400" loading="lazy" decoding="async"></div>
-      <div class="photo-rail__item"><img class="js-ext-img" src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=640&q=82" alt="Fundamentos" width="640" height="400" loading="lazy" decoding="async"></div>
-      <div class="photo-rail__item"><img class="js-ext-img" src="https://images.unsplash.com/photo-1563986768609-322da13575f3?w=640&q=82" alt="Gobierno" width="640" height="400" loading="lazy" decoding="async"></div>
-      <div class="photo-rail__item"><img class="js-ext-img" src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=640&q=82" alt="Integración" width="640" height="400" loading="lazy" decoding="async"></div>
-      <div class="photo-rail__item"><img class="js-ext-img" src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=640&q=82" alt="Cierre de ciclo" width="640" height="400" loading="lazy" decoding="async"></div>
+<section id="results">
+  <div class="wrap">
+    <div class="sec-tag rev">Resultados reales</div>
+    <h2 class="sec-h rev">Los números que <em>importan</em></h2>
+    <div class="results-row">
+      <div class="res-box rev"><div class="res-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><div class="res-n"><span class="counter" data-target="94">0</span><span class="ac">%</span></div><div class="res-l">Precisión promedio<br>de modelos</div><div class="res-deco">94</div></div>
+      <div class="res-box rev"><div class="res-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><div class="res-n">−<span class="counter" data-target="38">0</span><span class="ac">%</span></div><div class="res-l">Reducción tiempo<br>a insight</div><div class="res-deco">38</div></div>
+      <div class="res-box rev"><div class="res-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><div class="res-n"><span class="counter" data-target="6">0</span><span class="ac">x</span></div><div class="res-l">ROI promedio<br>primer año</div><div class="res-deco">6x</div></div>
+      <div class="res-box rev"><div class="res-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="res-n"><span class="counter" data-target="94">0</span><span class="ac">%</span></div><div class="res-l">Clientes repiten<br>otro módulo</div><div class="res-deco">94</div></div>
     </div>
+  </div>
+</section>
 
-    <!-- TRUST STRIP -->
-    <div class="wrap trust-strip trust-strip--pulse trust-strip--capsule" aria-hidden="true">
-      <span>Gobernanza</span><span>Modelo estrella</span><span>Seguridad por diseño</span><span>Entregables accionables</span>
+<section id="cta">
+  <div class="cta-inner">
+    <div class="cta-tag">¿Listo para empezar?</div>
+    <h2 class="cta-h">Hagamos que tus<br><em>datos</em> trabajen <span class="strong">para ti</span></h2>
+    <p class="cta-sub">Sin compromisos a largo plazo. Sin letra chica. Primer entregable en menos de 72 horas. Garantía real o te devolvemos el dinero.</p>
+    <div class="cta-btns">
+      <a class="btn btn-primary magnet" href="contacto.html"><span>Agendar conversación</span><span class="arr">→</span></a>
+      <a class="btn btn-ghost magnet" href="https://wa.me/528112345678?text=Hola%202BI" target="_blank" rel="noopener"><span>WhatsApp directo</span></a>
     </div>
+  </div>
+</section>
 
-    <!-- DIVIDER -->
-    <div class="fx-divider" aria-hidden="true"><div class="fx-divider__bolt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div></div>
-
-    <!-- SERVICIOS -->
-    <section class="wrap" id="servicios">
-      <div class="sec-tag fx-reveal">Nuestros servicios</div>
-      <h2 class="sec-h fx-reveal" style="--delay:.1s">Todo bajo el <em>mismo techo</em></h2>
-      <p class="sec-sub fx-reveal" style="--delay:.2s">Desde el dato crudo hasta la acción. Integramos BI, automatización, web, IA e IoT en un solo ecosistema.</p>
-
-      <div class="sv-grid">
-        <div class="sv-card fx-reveal"><div class="hover-grad"></div>
-          <div class="mini-demo demo-bi"><div class="md-tag"><span></span> LIVE PREVIEW</div><div class="bi-mock"><div class="bi-kpis"><div class="bi-kpi"><div class="bi-kpi-l">INGRESOS</div><div class="bi-kpi-v"><b>$</b>2.4M</div></div><div class="bi-kpi"><div class="bi-kpi-l">MARGEN</div><div class="bi-kpi-v ac">+23%</div></div></div><div class="bi-bars"><i style="height:40%"></i><i style="height:65%"></i><i style="height:85%" class="hi"></i><i style="height:55%"></i><i style="height:72%"></i><i style="height:90%" class="hi"></i><i style="height:60%"></i><i style="height:78%"></i></div></div></div>
-          <div class="sv-card-top"><span class="sv-label lbl-h">Alta demanda</span><span class="sv-num">01</span></div>
-          <div class="sv-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
-          <h3 class="sv-title">Business Intelligence</h3>
-          <p class="sv-desc">Tableros Power BI con modelo semántico, RLS, refrescos programados y narrativa ejecutiva.</p>
-          <div class="sv-stack"><span class="sv-tech">Power BI</span><span class="sv-tech">DAX</span><span class="sv-tech">SQL Server</span><span class="sv-tech">Fabric</span></div>
-          <a class="sv-cta" href="solucion-bi.html"><span>Ver solución</span><span class="arr">→</span></a>
-        </div>
-
-        <div class="sv-card fx-reveal" style="--delay:.1s"><div class="hover-grad"></div>
-          <div class="mini-demo demo-chat"><div class="md-tag"><span></span> AI CHAT</div><div class="md-row b1"><div class="md-avatar">2</div><div class="md-bubble bot">¿Cómo puedo ayudarte?</div></div><div class="md-row right b2"><div class="md-bubble user">Reporte ventas Q4</div></div><div class="md-row b3"><div class="md-avatar">2</div><div class="md-bubble bot">Generando reporte...</div></div></div>
-          <div class="sv-card-top"><span class="sv-label lbl-m">Trending</span><span class="sv-num">02</span></div>
-          <div class="sv-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10H12V2z"/></svg></div>
-          <h3 class="sv-title">Inteligencia Artificial</h3>
-          <p class="sv-desc">Bots, agentes Claude AI, clasificadores y flujos inteligentes que entienden tu negocio.</p>
-          <div class="sv-stack"><span class="sv-tech">Claude AI</span><span class="sv-tech">Python</span><span class="sv-tech">RAG</span><span class="sv-tech">WhatsApp</span></div>
-          <a class="sv-cta" href="soluciones.html"><span>Ver solución</span><span class="arr">→</span></a>
-        </div>
-
-        <div class="sv-card fx-reveal" style="--delay:.2s"><div class="hover-grad"></div>
-          <div class="mini-demo demo-flow"><div class="md-tag"><span></span> WORKFLOW</div><svg viewBox="0 0 280 120"><line class="md-link" x1="60" y1="60" x2="140" y2="40"/><line class="md-link" x1="140" y1="40" x2="220" y2="60"/><line class="md-link" x1="140" y1="40" x2="140" y2="90"/><circle class="md-node-c" cx="60" cy="60" r="18" stroke="var(--blue-bright)"/><text class="md-node-t" x="60" y="64" text-anchor="middle" fill="var(--ink)">CRM</text><circle class="md-node-c dark" cx="140" cy="40" r="20" stroke="var(--blue-bright)"/><text class="md-node-t" x="140" y="44" text-anchor="middle" fill="#fff">n8n</text><circle class="md-node-c" cx="220" cy="60" r="18" stroke="var(--success)"/><text class="md-node-t" x="220" y="64" text-anchor="middle" fill="var(--ink)">BI</text><circle class="md-node-c" cx="140" cy="90" r="16" stroke="#ff6a00"/><text class="md-node-t" x="140" y="94" text-anchor="middle" fill="var(--ink)" font-size="8">WA</text></svg></div>
-          <div class="sv-card-top"><span class="sv-label lbl-n">Nuevo</span><span class="sv-num">03</span></div>
-          <div class="sv-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/></svg></div>
-          <h3 class="sv-title">Automatización</h3>
-          <p class="sv-desc">Flujos n8n que conectan ERP, CRM, WhatsApp y BI. Un humano valida, la máquina ejecuta.</p>
-          <div class="sv-stack"><span class="sv-tech">n8n</span><span class="sv-tech">Microsip API</span><span class="sv-tech">Webhooks</span><span class="sv-tech">Cron</span></div>
-          <a class="sv-cta" href="soluciones.html"><span>Ver solución</span><span class="arr">→</span></a>
-        </div>
-
-        <div class="sv-card fx-reveal" style="--delay:.3s"><div class="hover-grad"></div>
-          <div class="mini-demo demo-app"><div class="md-tag"><span></span> WEB APP</div><div class="md-window"><div class="md-bar"><i></i><i></i><i></i></div><div class="md-app-grid"><div class="md-side"><div class="md-side-item active"></div><div class="md-side-item"></div><div class="md-side-item"></div></div><div class="md-main"><div class="md-card-row"></div><div class="md-bars"><i></i><i></i><i></i><i></i><i></i></div></div></div></div></div>
-          <div class="sv-card-top"><span class="sv-label lbl-h">Alta demanda</span><span class="sv-num">04</span></div>
-          <div class="sv-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
-          <h3 class="sv-title">Desarrollo Web</h3>
-          <p class="sv-desc">Apps a medida con Next.js, portales internos, landing pages y catálogos. SEO + deploy auto.</p>
-          <div class="sv-stack"><span class="sv-tech">Next.js</span><span class="sv-tech">React</span><span class="sv-tech">Railway</span><span class="sv-tech">Vercel</span></div>
-          <a class="sv-cta" href="soluciones.html"><span>Ver solución</span><span class="arr">→</span></a>
-        </div>
-
-        <div class="sv-card fx-reveal" style="--delay:.4s"><div class="hover-grad"></div>
-          <div class="mini-demo demo-map"><div class="md-tag"><span></span> IoT MAP</div><svg viewBox="0 0 280 160"><path class="map-grid" d="M0,40 h280 M0,80 h280 M0,120 h280 M70,0 v160 M140,0 v160 M210,0 v160" stroke="rgba(10,74,124,.08)"/><g class="map-pin" style="color:var(--blue-bright)"><circle class="pin-core" cx="80" cy="60" r="5" fill="currentColor"/><circle class="pin-ring" cx="80" cy="60" r="5" style="animation:pinRing 2s infinite"/></g><g class="map-pin" style="color:var(--success)"><circle class="pin-core" cx="180" cy="90" r="5" fill="currentColor"/><circle class="pin-ring" cx="180" cy="90" r="5" style="animation:pinRing 2s .5s infinite"/></g><g class="map-pin" style="color:#ff6a00"><circle class="pin-core" cx="130" cy="45" r="4" fill="currentColor"/><circle class="pin-ring" cx="130" cy="45" r="4" style="animation:pinRing 2s 1s infinite"/></g></svg></div>
-          <div class="sv-card-top"><span class="sv-label lbl-n">Nuevo</span><span class="sv-num">05</span></div>
-          <div class="sv-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="7"/><line x1="12" y1="18" x2="12" y2="18.01" stroke-width="3" stroke-linecap="round"/></svg></div>
-          <h3 class="sv-title">IoT & Sensores</h3>
-          <p class="sv-desc">LILYGO + telemetría real: temperatura, humedad, GPS, alertas automáticas y dashboards live.</p>
-          <div class="sv-stack"><span class="sv-tech">LILYGO</span><span class="sv-tech">MQTT</span><span class="sv-tech">ESP32</span><span class="sv-tech">Grafana</span></div>
-          <a class="sv-cta" href="soluciones.html"><span>Ver solución</span><span class="arr">→</span></a>
-        </div>
-
-        <div class="sv-card fx-reveal" style="--delay:.5s"><div class="hover-grad"></div>
-          <div class="mini-demo demo-doc"><div class="md-tag"><span></span> DOCUMENT</div><div class="md-paper"><div class="md-line w70"></div><div class="md-line w50"></div><div class="md-checkrow"><div class="md-check c1">✓</div><div class="md-line w60"></div></div><div class="md-checkrow"><div class="md-check c2">✓</div><div class="md-line w40"></div></div><div class="md-checkrow"><div class="md-check c3">✓</div><div class="md-line w35"></div></div><div class="md-stamp">APROBADO</div></div></div>
-          <div class="sv-card-top"><span class="sv-label lbl-m">Trending</span><span class="sv-num">06</span></div>
-          <div class="sv-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-          <h3 class="sv-title">Consultoría & Gobernanza</h3>
-          <p class="sv-desc">Auditoría de datos, KPIs, gobernanza y capacitación. El equipo funciona, no depende.</p>
-          <div class="sv-stack"><span class="sv-tech">Gobernanza</span><span class="sv-tech">KPIs</span><span class="sv-tech">Capacitación</span><span class="sv-tech">Auditoría</span></div>
-          <a class="sv-cta" href="solucion-gobernanza.html"><span>Ver solución</span><span class="arr">→</span></a>
-        </div>
-      </div>
-    </section>
-
-    <!-- STATS STRIP -->
-    <div class="stats-strip">
-      <div class="stats-inner">
-        <div class="stat-card fx-reveal"><div class="stat-v"><span class="counter" data-target="47">0</span><sup>+</sup></div><div class="stat-l">Proyectos entregados<br><b>en 6 industrias</b></div></div>
-        <div class="stat-card fx-reveal" style="--delay:.1s"><div class="stat-v">$<span class="counter" data-target="15">0</span><span class="stat-ac">K</span></div><div class="stat-l">Proyecto mínimo<br><b>MXN con garantía</b></div></div>
-        <div class="stat-card fx-reveal" style="--delay:.2s"><div class="stat-v"><span class="counter" data-target="94">0</span><span class="stat-ac">%</span></div><div class="stat-l">Clientes repiten<br><b>otro módulo</b></div></div>
-        <div class="stat-card fx-reveal" style="--delay:.3s"><div class="stat-v"><span class="counter" data-target="72">0</span><span class="stat-ac">hrs</span></div><div class="stat-l">Tiempo promedio<br><b>primer entregable</b></div></div>
-      </div>
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a class="brand" href="index.html"><span class="two">2</span><span class="bi">BI</span><span class="dot"></span></a>
+      <p class="footer-tagline">Beyond Business Intelligence<br>Monterrey, Nuevo León, México</p>
     </div>
+    <div><div class="footer-col-title">Navegación</div><div class="footer-links"><a href="nosotros.html">Nosotros</a><a href="soluciones.html">Soluciones</a><a href="portafolio.html">Portafolio</a><a href="valores.html">Valores</a><a href="ecosistema.html">Ecosistema</a><a href="contacto.html">Contacto</a></div></div>
+    <div><div class="footer-col-title">Soluciones</div><div class="footer-links"><a href="solucion-bi.html">Business Intelligence</a><a href="solucion-datos.html">Datos & Analytics</a><a href="solucion-comercial.html">Automatización Comercial</a><a href="solucion-activacion.html">Activación Digital</a><a href="solucion-performance.html">Performance</a><a href="solucion-gobernanza.html">Gobernanza</a></div></div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2024 2BI Technology Solutions. Todos los derechos reservados.</span>
+    <div class="fb-r"><span class="star">✦</span><span>Hecho con datos y café en Monterrey</span></div>
+  </div>
+</footer>
 
-    <!-- DIVIDER -->
-    <div class="fx-divider" aria-hidden="true"><div class="fx-divider__bolt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div></div>
+<button class="back-top" id="backTop" aria-label="Volver arriba"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg></button>
 
-    <!-- NARRATIVE ARC -->
-    <section class="narrative-band reveal" id="arco">
-      <div class="wrap narrative-band__inner">
-        <p class="narrative-band__kicker">El arco que repetimos en cada cliente</p>
-        <h2 class="narrative-band__title">Del ruido a la decisión, sin atajos que te cobren después</h2>
-        <p class="narrative-band__lede">No vendemos horas sueltas: acompañamos una historia que el CFO y operaciones pueden contar igual.</p>
-        <ol class="narrative-beats" role="list">
-          <li class="narrative-beat"><span class="narrative-beat__phase">Hoy</span><strong class="narrative-beat__head">Chaos amable</strong><p class="narrative-beat__text">Métricas duplicadas, Excel en paralelo y reuniones donde nadie trae la misma cifra.</p></li>
-          <li class="narrative-beat"><span class="narrative-beat__phase">Camino</span><strong class="narrative-beat__head">Modelo + narrativa</strong><p class="narrative-beat__text">Semántica explícita, RLS donde toca y tableros que explican el "por qué".</p></li>
-          <li class="narrative-beat"><span class="narrative-beat__phase">Mañana</span><strong class="narrative-beat__head">Comité con agenda</strong><p class="narrative-beat__text">La junta dura 20 min, las métricas coinciden y el equipo sale con acciones.</p></li>
-        </ol>
-      </div>
-    </section>
+<a class="wa-fab" href="https://wa.me/528112345678?text=Hola%202BI" target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492a.5.5 0 0 0 .612.616l4.556-1.467A11.938 11.938 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-2.239 0-4.308-.724-5.993-1.953l-.42-.312-3.076.99.981-3.02-.337-.442A9.953 9.953 0 0 1 2 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
+</a>
 
-    <!-- DASHBOARD MOCKUP -->
-    <section class="wrap" id="dashboard">
-      <div class="sec-tag fx-reveal">Vista previa</div>
-      <h2 class="sec-h fx-reveal" style="--delay:.1s">Así se ve un dashboard <em>2BI</em></h2>
-      <p class="sec-sub fx-reveal" style="--delay:.2s">No es un template: es la arquitectura que diseñamos para cada cliente.</p>
-      <div class="dash-stage fx-reveal" style="--delay:.3s">
-        <div class="dash-bar"><div class="dash-dot"><i></i><i></i><i></i></div><div class="dash-title"><b>2BI</b> · Executive Dashboard</div><div class="dash-live">LIVE</div></div>
-        <div class="dash-grid">
-          <div class="dash-kpi"><div class="dash-kpi-l">Revenue</div><div class="dash-kpi-v">$2.4<span class="dash-ac">M</span></div><div class="dash-kpi-d">↑ 23.4% vs Q3</div></div>
-          <div class="dash-kpi"><div class="dash-kpi-l">Margen</div><div class="dash-kpi-v">34.2<span class="dash-ac">%</span></div><div class="dash-kpi-d">↑ 2.1pp</div></div>
-          <div class="dash-kpi"><div class="dash-kpi-l">Tickets</div><div class="dash-kpi-v">1,247</div><div class="dash-kpi-d">↑ 18%</div></div>
-          <div class="dash-kpi"><div class="dash-kpi-l">SLA</div><div class="dash-kpi-v">99.9<span class="dash-ac">%</span></div><div class="dash-kpi-d">On target</div></div>
-        </div>
-        <div class="dash-row">
-          <div class="dash-card"><div class="dash-card-h"><b>Ventas por mes</b><span>2024</span></div><div class="dash-bars"><div class="bar" style="height:45%" data-v="$180K"></div><div class="bar" style="height:62%" data-v="$248K"></div><div class="bar" style="height:55%" data-v="$220K"></div><div class="bar" style="height:78%" data-v="$312K"></div><div class="bar" style="height:70%" data-v="$280K"></div><div class="bar" style="height:85%" data-v="$340K"></div><div class="bar" style="height:90%" data-v="$360K"></div><div class="bar" style="height:72%" data-v="$288K"></div></div><div class="dash-bar-labels"><span>ENE</span><span>FEB</span><span>MAR</span><span>ABR</span><span>MAY</span><span>JUN</span><span>JUL</span><span>AGO</span></div></div>
-          <div class="dash-card"><div class="dash-card-h"><b>Tendencia</b><span>YTD</span></div><svg class="dash-line-svg" viewBox="0 0 400 130"><defs><linearGradient id="dashGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="var(--blue-bright)" stop-opacity=".3"/><stop offset="100%" stop-color="var(--blue-bright)" stop-opacity="0"/></linearGradient></defs><path class="dash-line-area" d="M0,110 C50,100 80,80 120,70 C160,60 200,45 240,35 C280,25 320,30 360,20 L400,15 L400,130 L0,130 Z"/><path class="dash-line-stroke" d="M0,110 C50,100 80,80 120,70 C160,60 200,45 240,35 C280,25 320,30 360,20 L400,15"/><circle class="dash-pt" cx="120" cy="70" r="4" style="animation-delay:.5s"/><circle class="dash-pt" cx="240" cy="35" r="4" style="animation-delay:1s"/><circle class="dash-pt" cx="400" cy="15" r="4" style="animation-delay:1.5s"/></svg></div>
-        </div>
-      </div>
-    </section>
+<div class="live-ticker"><div class="lt-pulse"></div><div class="lt-text"></div></div>
 
-    <!-- RESULTADOS -->
-    <section class="wrap" id="resultados">
-      <div class="sec-tag fx-reveal">Resultados reales</div>
-      <h2 class="sec-h fx-reveal" style="--delay:.1s">Los números que <em>importan</em></h2>
-      <div class="results-row">
-        <div class="res-box fx-reveal"><div class="res-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--blue-bright)" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><div class="res-n"><span class="counter" data-target="94">0</span><span class="res-ac">%</span></div><div class="res-l">Precisión promedio</div><div class="res-deco">94</div></div>
-        <div class="res-box fx-reveal" style="--delay:.1s"><div class="res-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--blue-bright)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><div class="res-n">−<span class="counter" data-target="38">0</span><span class="res-ac">%</span></div><div class="res-l">Tiempo a insight</div><div class="res-deco">38</div></div>
-        <div class="res-box fx-reveal" style="--delay:.2s"><div class="res-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--blue-bright)" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><div class="res-n"><span class="counter" data-target="6">0</span><span class="res-ac">x</span></div><div class="res-l">ROI primer año</div><div class="res-deco">6x</div></div>
-        <div class="res-box fx-reveal" style="--delay:.3s"><div class="res-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--blue-bright)" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><div class="res-n"><span class="counter" data-target="94">0</span><span class="res-ac">%</span></div><div class="res-l">Clientes repiten</div><div class="res-deco">94</div></div>
-      </div>
-    </section>
+<script>
+(function(){
+  'use strict';
+  var rm=false;try{rm=matchMedia('(prefers-reduced-motion:reduce)').matches;}catch(_){}
 
-    <!-- CTA -->
-    <section class="cta-section" id="cta-final">
-      <div class="cta-inner">
-        <div class="cta-tag fx-reveal">¿Listo para empezar?</div>
-        <h2 class="cta-h fx-reveal" style="--delay:.1s">Hagamos que tus <em>datos</em> trabajen <strong>para ti</strong></h2>
-        <p class="cta-sub fx-reveal" style="--delay:.2s">Sin compromisos a largo plazo. Primer entregable en menos de 72 horas. Garantía real o te devolvemos el dinero.</p>
-        <div class="cta-btns fx-reveal" style="--delay:.3s">
-          <a class="btn btn--primary btn--lg btn--magnetic" href="contacto.html"><span>Agendar conversación</span><span class="btn-arr">→</span></a>
-          <a class="btn btn--ghost btn--lg btn--magnetic" href="https://wa.me/528112345678?text=Hola%202BI" target="_blank" rel="noopener">WhatsApp directo</a>
-        </div>
-      </div>
-    </section>
-  </main>
+  // LOADER
+  function dismissLoader(){var l=document.getElementById('loader');if(!l)return;l.classList.add('gone');setTimeout(function(){l.style.display='none';},800);}
+  if(document.readyState==='complete')setTimeout(dismissLoader,400);
+  else window.addEventListener('load',function(){setTimeout(dismissLoader,600);});
 
-  <!-- LIVE TICKER -->
-  <div class="live-ticker" aria-hidden="true"><div class="lt-pulse"></div><div class="lt-text"></div></div>
+  // SCROLL PROGRESS
+  var prog=document.querySelector('.scroll-prog');
+  // CURSOR
+  var cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
+  var mx=0,my=0,cx=0,cy=0;
+  if(cur&&ring&&!rm&&innerWidth>980){
+    document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+    (function loop(){cx+=(mx-cx)*.12;cy+=(my-cy)*.12;ring.style.left=cx+'px';ring.style.top=cy+'px';requestAnimationFrame(loop);})();
+    document.querySelectorAll('a,button,.sv-card,.dash-kpi,.hv-card,.res-box,.trust-item').forEach(function(el){
+      el.addEventListener('mouseenter',function(){ring.classList.add('big');});
+      el.addEventListener('mouseleave',function(){ring.classList.remove('big');});
+    });
+    var trailT=0;
+    document.addEventListener('mousemove',function(e){if(Date.now()-trailT<50)return;trailT=Date.now();var d=document.createElement('div');d.className='trail';d.style.left=e.clientX+'px';d.style.top=e.clientY+'px';document.body.appendChild(d);setTimeout(function(){d.remove();},700);});
+  }
 
-  <!-- BACK TO TOP -->
-  <button class="back-top" id="backTop" aria-label="Volver arriba"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg></button>
+  // CARD HOVER GRADIENT
+  document.querySelectorAll('.sv-card').forEach(function(c){
+    c.addEventListener('mousemove',function(e){var r=c.getBoundingClientRect();c.style.setProperty('--rx',((e.clientX-r.left)/r.width*100)+'%');c.style.setProperty('--ry',((e.clientY-r.top)/r.height*100)+'%');});
+  });
 
-  <!-- WHATSAPP -->
-  <a class="wa-fab" href="https://wa.me/528112345678?text=Hola%202BI" target="_blank" rel="noopener" aria-label="WhatsApp">
-    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492a.5.5 0 0 0 .612.616l4.556-1.467A11.938 11.938 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-2.239 0-4.308-.724-5.993-1.953l-.42-.312-3.076.99.981-3.02-.337-.442A9.953 9.953 0 0 1 2 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
-  </a>
+  // NAV scroll
+  var nav=document.getElementById('nav');
+  // BACK TOP
+  var backTop=document.getElementById('backTop');
+  if(backTop)backTop.addEventListener('click',function(){scrollTo({top:0,behavior:'smooth'});});
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-top">
-      <div class="footer-brand">
-        <a class="logo" href="index.html" style="color:#fff;text-decoration:none"><span class="logo__mark" style="color:var(--blue-glow,#5eb8ff)">2BI</span></a>
-        <p class="footer-tagline">Beyond Business Intelligence<br>Monterrey, Nuevo León, México</p>
-      </div>
-      <div><div class="footer-col-title">Navegación</div><div class="footer-links"><a href="nosotros.html">Nosotros</a><a href="soluciones.html">Soluciones</a><a href="portafolio.html">Portafolio</a><a href="valores.html">Valores</a><a href="ecosistema.html">Ecosistema</a><a href="contacto.html">Contacto</a></div></div>
-      <div><div class="footer-col-title">Soluciones</div><div class="footer-links"><a href="solucion-bi.html">Business Intelligence</a><a href="solucion-datos.html">Datos & Analytics</a><a href="solucion-comercial.html">Automatización Comercial</a><a href="solucion-activacion.html">Activación Digital</a><a href="solucion-performance.html">Performance</a><a href="solucion-gobernanza.html">Gobernanza</a></div></div>
-    </div>
-    <div class="footer-bottom">
-      <span>© 2024 2BI Technology Solutions. Todos los derechos reservados.</span>
-      <div class="fb-r"><span class="fb-star">✦</span><span>Hecho con datos y café en Monterrey</span></div>
-    </div>
-  </footer>
+  // REVEAL
+  function reveal(){
+    document.querySelectorAll('.rev:not(.on)').forEach(function(el){
+      if(el.getBoundingClientRect().top<innerHeight*.88)el.classList.add('on');
+    });
+    document.querySelectorAll('.sec-h:not(.on)').forEach(function(el){
+      if(el.getBoundingClientRect().top<innerHeight*.88)el.classList.add('on');
+    });
+  }
 
-  <script src="./assets/pagina-2bi-toolbar.js"></script>
-  <script src="./assets/site.js"></script>
-  <script src="./assets/effects.js"></script>
+  // COUNTERS
+  var cAnim=new Set();
+  function counters(){
+    document.querySelectorAll('.counter').forEach(function(el){
+      if(cAnim.has(el))return;
+      if(el.getBoundingClientRect().top>innerHeight)return;
+      cAnim.add(el);
+      var t=parseInt(el.getAttribute('data-target'),10),s=performance.now(),d=1800;
+      function tick(n){var p=Math.min((n-s)/d,1),e=1-Math.pow(1-p,3);el.textContent=Math.round(t*e);if(p<1)requestAnimationFrame(tick);}
+      requestAnimationFrame(tick);
+    });
+  }
+
+  // SCROLL HANDLER
+  var ticking=false;
+  addEventListener('scroll',function(){
+    if(ticking)return;
+    ticking=true;
+    requestAnimationFrame(function(){
+      if(prog){var h=document.documentElement.scrollHeight-innerHeight;prog.style.width=h>0?(scrollY/h*100)+'%':'0';}
+      if(nav)nav.classList.toggle('s',scrollY>40);
+      if(backTop)backTop.classList.toggle('show',scrollY>600);
+      reveal();counters();
+      ticking=false;
+    });
+  },{passive:true});
+
+  setTimeout(function(){reveal();counters();},100);
+
+  // LIGHTNING
+  if(!rm){
+    var stage=document.querySelector('.lightning-stage');
+    function bolt(){
+      if(!stage)return;
+      var s=document.createElementNS('http://www.w3.org/2000/svg','svg');
+      s.setAttribute('class','bolt-svg');s.setAttribute('width','60');s.setAttribute('height','120');s.setAttribute('viewBox','0 0 60 120');
+      var p=document.createElementNS('http://www.w3.org/2000/svg','path');
+      var pts='M30,0 ',y=0;
+      while(y<110){y+=10+Math.random()*15;var x=15+Math.random()*30;pts+='L'+x+','+Math.min(y,120)+' ';}
+      p.setAttribute('d',pts);s.appendChild(p);
+      s.style.left=(Math.random()*100)+'%';s.style.top=(Math.random()*60)+'%';s.style.width=(40+Math.random()*60)+'px';
+      stage.appendChild(s);
+      requestAnimationFrame(function(){s.classList.add('flash');});
+      setTimeout(function(){s.remove();},600);
+    }
+    setInterval(function(){if(Math.random()<.3)bolt();},4000);
+  }
+
+  // LIVE TICKER
+  var ticker=document.querySelector('.live-ticker'),tt=document.querySelector('.lt-text');
+  if(ticker&&tt){
+    var msgs=['<b>Dashboard ejecutivo</b> actualizado hace 3 min','<b>n8n workflow</b> — 847 ejecuciones hoy','<b>Bot WhatsApp</b> — 23 conversaciones activas','<b>IoT sensor</b> Planta 2 — 22.4°C','<b>Power BI</b> refresco automático OK','<b>Claude AI</b> — 156 consultas hoy','<b>API Microsip</b> — sync cada 15 min'];
+    var i=0;
+    function show(){tt.innerHTML=msgs[i];ticker.classList.add('on');i=(i+1)%msgs.length;setTimeout(function(){ticker.classList.remove('on');},5000);}
+    setTimeout(show,3500);setInterval(show,8500);
+  }
+
+  // MAGNETIC
+  if(!rm&&innerWidth>980){
+    document.querySelectorAll('.magnet').forEach(function(b){
+      b.addEventListener('mousemove',function(e){var r=b.getBoundingClientRect(),x=((e.clientX-r.left)/r.width-.5)*2,y=((e.clientY-r.top)/r.height-.5)*2;b.style.transform='translate('+(x*8).toFixed(1)+'px,'+(y*6).toFixed(1)+'px)';});
+      b.addEventListener('mouseleave',function(){b.style.transform='';});
+    });
+  }
+
+  // HERO TILT
+  if(!rm&&innerWidth>980){
+    var hv=document.querySelector('.hv-stage');
+    if(hv){
+      var v=hv.parentElement;
+      v.addEventListener('mousemove',function(e){var r=v.getBoundingClientRect(),x=((e.clientX-r.left)/r.width-.5)*8,y=((e.clientY-r.top)/r.height-.5)*8;hv.style.transform='rotateY('+x.toFixed(1)+'deg) rotateX('+(-y).toFixed(1)+'deg)';});
+      v.addEventListener('mouseleave',function(){hv.style.transform='';});
+    }
+  }
+})();
+</script>
 </body>
 </html>
