@@ -1,0 +1,20 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/PAGINA-2BI", "destination": "/", "type": 301 },
+    { "source": "/PAGINA-2BI/", "destination": "/", "type": 301 },
+    { "source": "/PAGINA-2BI/:slug", "destination": "/:slug", "type": 301 },
+    { "source": "/PAGINA-2BI/:slug.html", "destination": "/:slug", "type": 301 }
+  ],
+  "headers": [
+    {
+      "source": "**/*.@(jpg|jpeg|gif|png|svg|webp|woff2|ttf|otf|css|js)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400" }]
+    },
+    {
+      "source": "**/*.html",
+      "headers": [{ "key": "Cache-Control", "value": "no-cache" }]
+    }
+  ]
+}
