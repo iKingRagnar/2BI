@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="es" data-page="academia">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a4a7c">
+  <meta name="description" content="Academia 2BI Technology Solutions: programas de Power BI desde fundamentos hasta arquitectura corporativa. 4 niveles, mentoría 1 a 1 y proyecto con tus datos reales.">
+  <title>Academia — 2BI Technology Solutions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Outfit:wght@300..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/theme.css">
+  <link rel="stylesheet" href="./assets/pagina-2bi-toolbar.css" />
+  <style>
+    /* Refuerzos locales para Academia (no tocan theme.css global) */
+    .academia-tier-card { position: relative; display: flex; flex-direction: column; }
+    .academia-tier-card .tier-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+      margin-bottom: 0.6rem;
+      align-self: flex-start;
+    }
+    .academia-tier-card.t-express .tier-tag { background: rgba(0,168,168,0.12); color: #007f7f; border: 1px solid rgba(0,168,168,0.3); }
+    .academia-tier-card.t-estandar .tier-tag { background: rgba(212,172,76,0.15); color: #8a6d23; border: 1px solid rgba(212,172,76,0.4); }
+    .academia-tier-card.t-premium .tier-tag { background: rgba(107,77,138,0.12); color: #4f3868; border: 1px solid rgba(107,77,138,0.3); }
+    .academia-tier-card.t-vip .tier-tag { background: rgba(47,111,78,0.12); color: #1f4e37; border: 1px solid rgba(47,111,78,0.3); }
+    .academia-tier-card .tier-price {
+      font-family: 'Fraunces', serif;
+      font-size: 1.65rem;
+      font-weight: 700;
+      color: var(--accent, #0a4a7c);
+      margin: 0.2rem 0 0.1rem;
+    }
+    .academia-tier-card .tier-meta {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-bottom: 0.8rem;
+    }
+    .academia-tier-card.flagship::before {
+      content: '★ Más elegido ★';
+      position: absolute; top: 12px; right: 12px;
+      background: #d4ac4c; color: #2a1f00;
+      padding: 4px 10px; border-radius: 999px;
+      font-size: 0.65rem; font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      z-index: 2;
+    }
+    .academia-tier-card .tier-features {
+      list-style: none; padding: 0; margin: 0.5rem 0 0;
+      font-size: 0.85rem;
+    }
+    .academia-tier-card .tier-features li {
+      padding: 4px 0; padding-left: 1.2em; position: relative;
+      color: var(--ink-soft);
+    }
+    .academia-tier-card .tier-features li::before {
+      content: '✓'; position: absolute; left: 0; font-weight: 800;
+    }
+    .academia-tier-card.t-express .tier-features li::before { color: #00a8a8; }
+    .academia-tier-card.t-estandar .tier-features li::before { color: #b89236; }
+    .academia-tier-card.t-premium .tier-features li::before { color: #6b4d8a; }
+    .academia-tier-card.t-vip .tier-features li::before { color: #2f6f4e; }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+  <div class="ambient ambient--rich" aria-hidden="true">
+    <div class="ambient__mesh" aria-hidden="true"></div>
+    <div class="ambient__grid" aria-hidden="true"></div>
+    <div class="ambient__shimmer" aria-hidden="true"></div>
+    <div class="ambient__orb ambient__orb--a" aria-hidden="true"></div>
+    <div class="ambient__blob ambient__blob--1"></div>
+    <div class="ambient__blob ambient__blob--2"></div>
+    <div class="ambient__blob ambient__blob--3"></div>
+    <div class="ambient__blob ambient__blob--4"></div>
+  </div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="site-header__inner">
+      <div class="site-header__datetime" id="p2bi-datetime-mount" aria-live="polite"></div>
+      <a class="logo" href="index.html">
+        <span class="logo__mark">2BI</span>
+        <span class="logo__stack">
+          <span class="logo__stack-line logo__stack-line--tagline">Technology Solutions</span>
+        </span>
+      </a>
+      <nav class="nav nav--desktop" aria-label="Principal">
+        <ul class="nav__list">
+          <li><a class="nav__link" href="index.html">Inicio</a></li>
+          <li><button class="nav__link nav__link--btn" type="button" id="p2bi-nav-explore" aria-expanded="false" aria-controls="p2bi-explorebar">Explorar ▾</button></li>
+          <li><a class="nav__link" href="nosotros.html">Nosotros</a></li>
+          <li><a class="nav__link" href="soluciones.html">Soluciones</a></li>
+          <li><a class="nav__link nav__link--current" href="academia.html" aria-current="page">Academia</a></li>
+          <li><a class="nav__link" href="portafolio.html">Portafolio</a></li>
+          <li><a class="nav__link" href="valores.html">Valores</a></li>
+          <li><a class="nav__link" href="ecosistema.html">Ecosistema</a></li>
+        </ul>
+      </nav>
+      <a class="btn btn--primary" href="mailto:guillermorc44@gmail.com,alvaropalma87@gmail.com,chdominiel@gmail.com?subject=Academia%202BI%20%E2%80%94%20Quiero%20agendar%20diagn%C3%B3stico">Hablemos</a>
+      <div class="site-header__toolbar" aria-label="Controles del sitio">
+        <button type="button" class="p2bi-icon-btn" id="p2bi-btn-tour" title="Tour del sitio" aria-label="Tour del sitio">
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M6 2h8l4 4v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm8 1.5V7h3.5L14 3.5ZM7 10h10v1.7H7V10Zm0 4h10v1.7H7V14Zm0 4h7v1.7H7V18Z"/></svg>
+        </button>
+        <button type="button" class="p2bi-icon-btn" id="p2bi-btn-cmd" title="Accesos rápidos" aria-label="Accesos rápidos"><span aria-hidden="true">⌘K</span></button>
+        <button type="button" class="p2bi-icon-btn" id="p2bi-btn-theme" title="Modo Sol (claro)" aria-label="Cambiar a modo Luna (oscuro)" aria-pressed="false">☀</button>
+      </div>
+      <button class="nav-toggle js-nav-toggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-drawer">
+        <span class="nav-toggle__bars" aria-hidden="true"><span></span><span></span><span></span></span>
+      </button>
+    </div>
+    <div class="nav-panel js-nav-panel">
+      <div class="nav-drawer js-nav-drawer" id="nav-drawer" role="dialog" aria-modal="true" aria-label="Menú">
+        <nav class="nav nav--drawer" aria-label="Móvil">
+          <ul class="nav__list">
+            <li><a class="nav__link" href="index.html">Inicio</a></li>
+            <li><a class="nav__link" href="index.html#explora">Explorar</a></li>
+            <li><a class="nav__link" href="nosotros.html">Nosotros</a></li>
+            <li><a class="nav__link" href="soluciones.html">Soluciones</a></li>
+            <li><a class="nav__link nav__link--current" href="academia.html">Academia</a></li>
+            <li><a class="nav__link" href="portafolio.html">Portafolio</a></li>
+            <li><a class="nav__link" href="valores.html">Valores</a></li>
+            <li><a class="nav__link" href="ecosistema.html">Ecosistema</a></li>
+          </ul>
+        </nav>
+        <div class="nav-drawer__cta">
+          <a class="btn btn--primary btn--lg" href="mailto:guillermorc44@gmail.com,alvaropalma87@gmail.com,chdominiel@gmail.com?subject=Academia%202BI" style="width:100%">Hablemos</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="fab" aria-label="Acciones rápidas">
+    <a class="btn btn--primary btn--sm" href="mailto:guillermorc44@gmail.com,alvaropalma87@gmail.com,chdominiel@gmail.com?subject=Academia%202BI">Hablemos</a>
+    <a class="btn btn--ghost fab__mini" href="soluciones.html" title="Soluciones" aria-label="Soluciones">◎</a>
+    <a class="btn btn--ghost fab__mini" href="portafolio.html" title="Portafolio" aria-label="Portafolio">✦</a>
+  </div>
+
+  <main id="contenido">
+    <section class="page-hero page-hero--cover" aria-labelledby="page-title">
+      <div class="page-hero__bg" style="background-image:url('https://images.unsplash.com/photo-1531545514256-b1400bc00f31?w=1800&amp;q=80')"></div>
+      <div class="wrap">
+        <div class="page-hero__inner page-hero--glass">
+          <nav class="breadcrumb" aria-label="Ruta">
+            <a href="index.html">Inicio</a>
+            <span aria-hidden="true">/</span>
+            <span aria-current="page">Academia</span>
+          </nav>
+          <h1 id="page-title" class="page-hero__title display">Academia 2BI</h1>
+          <p class="page-hero__lead">Capacitamos al equipo que va a operar tu BI. Cuatro programas con la misma lógica que aplicamos en proyectos: <strong>modelo correcto, DAX con criterio, gobierno y adopción</strong> — para que el dashboard del lunes lo abra alguien que lo entiende.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="photo-rail reveal" aria-label="Recorrido de la academia: estudiante, sesión 1 a 1, dashboard final, equipo capacitado, mentoría">
+      <div class="photo-rail__item"><img class="js-ext-img" src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=640&amp;q=82" alt="Sesión 1 a 1: pantalla compartida revisando un modelo Power BI" width="640" height="400" loading="lazy" decoding="async" /></div>
+      <div class="photo-rail__item"><img class="js-ext-img" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=640&amp;q=82" alt="Dashboard ejecutivo construido por un alumno durante el programa" width="640" height="400" loading="lazy" decoding="async" /></div>
+      <div class="photo-rail__item"><img class="js-ext-img" src="https://images.unsplash.com/photo-1552581234-26160f608093?w=640&amp;q=82" alt="Equipo corporativo capacitado en sesión grupal in-company" width="640" height="400" loading="lazy" decoding="async" /></div>
+      <div class="photo-rail__item"><img class="js-ext-img" src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=640&amp;q=82" alt="Pizarra con star schema y nomenclatura — taller de modelado" width="640" height="400" loading="lazy" decoding="async" /></div>
+      <div class="photo-rail__item"><img class="js-ext-img" src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=640&amp;q=82" alt="Mentoría post-curso: revisando .pbip con git desde VS Code" width="640" height="400" loading="lazy" decoding="async" /></div>
+    </div>
+
+    <section class="narrative-band narrative-band--tight reveal" aria-labelledby="aca-narrative-title">
+      <div class="wrap narrative-band__inner">
+        <p class="narrative-band__kicker">Por qué academia, si ya hacemos consultoría</p>
+        <h2 id="aca-narrative-title" class="narrative-band__title">El dashboard que entregamos vale lo mismo que el equipo que lo opera</h2>
+        <p class="narrative-band__lede">La consultoría arregla el síntoma de hoy. La academia arregla la causa: <strong>capacidad instalada</strong>. Cada programa entrega plantillas, hacks de producción y mentoría 1 a 1 — los mismos que usamos internamente en 2BI cuando atacamos un caso real.</p>
+      </div>
+    </section>
+
+    <section class="section wrap">
+      <div class="section__head reveal">
+        <h2>Cuatro programas, una misma lógica</h2>
+        <p>Cada nivel apunta a un perfil distinto y entrega activos reutilizables: plantillas <code>.pbit</code>, library DAX, tema corporativo, mentoría. <strong>Haz clic en una tarjeta</strong> para ver currículo detallado, hacks y materiales.</p>
+      </div>
+
+      <div class="cards cards--3 reveal-stagger js-reveal-stagger">
+        <a class="card card--link card--link-visual reveal js-tilt-card academia-tier-card t-express" href="academia-express.html">
+          <div class="card__media--link"><img class="js-ext-img" src="https://images.unsplash.com/photo-1552581234-26160f608093?w=800&amp;q=82" alt="Express — bootcamp intensivo de fundamentos" width="800" height="450" loading="lazy" decoding="async" /></div>
+          <span class="tier-tag">Express · Bootcamp</span>
+          <h3>Bootcamp Express</h3>
+          <div class="tier-price">$4,500 MXN</div>
+          <div class="tier-meta">4 sesiones · 8 horas · Bootcamp 2 fines de semana</div>
+          <p>Lo esencial bien hecho en un fin de semana: Power Query, modelado en estrella, DAX con criterio y dashboard ejecutivo publicado.</p>
+          <ul class="tier-features">
+            <li>20 hacks de producción</li>
+            <li>1 plantilla .pbit + 10 medidas DAX</li>
+            <li>Cheat Sheet DAX (PDF)</li>
+            <li>Soporte WhatsApp 7 días</li>
+          </ul>
+          <span class="card__more">Ver programa Express</span>
+        </a>
+
+        <a class="card card--link card--link-visual reveal js-tilt-card academia-tier-card t-estandar flagship" href="academia-estandar.html">
+          <div class="card__media--link"><img class="js-ext-img" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&amp;q=82" alt="Estándar — programa flagship 8 sesiones" width="800" height="450" loading="lazy" decoding="async" /></div>
+          <span class="tier-tag">Estándar · Flagship</span>
+          <h3>Programa Flagship</h3>
+          <div class="tier-price">$8,500 MXN</div>
+          <div class="tier-meta">8 sesiones · 16 horas · 1 vez por semana</div>
+          <p>De usuario funcional a Consultor BI en 8 semanas. Modelado, DAX avanzado, optimización con DAX Studio + Tabular Editor, RLS, pipelines y proyecto con tus datos.</p>
+          <ul class="tier-features">
+            <li>50+ hacks profesionales</li>
+            <li>Pack 30 medidas DAX + Calculation Groups</li>
+            <li>Mentoría 30 días post-curso</li>
+            <li>4 bonos exclusivos por confirmar en 7 días</li>
+          </ul>
+          <span class="card__more">Ver programa Estándar</span>
+        </a>
+
+        <a class="card card--link card--link-visual reveal js-tilt-card academia-tier-card t-premium" href="academia-premium.html">
+          <div class="card__media--link"><img class="js-ext-img" src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&amp;q=82" alt="Premium — stack BI completo con Fabric, Python y AI agents" width="800" height="450" loading="lazy" decoding="async" /></div>
+          <span class="tier-tag">Premium · Stack 2026</span>
+          <h3>Programa Premium</h3>
+          <div class="tier-price">$14,500 MXN</div>
+          <div class="tier-meta">12 sesiones · 24 horas · 1 a 1 + Office Hours</div>
+          <p>El stack BI completo: Power BI + Microsoft Fabric con Direct Lake + Python (sempy) + AI agents (n8n + Anthropic). Para perfiles que ya saben Power BI y quieren ir al siguiente nivel.</p>
+          <ul class="tier-features">
+            <li>70+ hacks (incluye Fabric, Python, agents)</li>
+            <li>Mentoría 60 días + revisión de 3 dashboards</li>
+            <li>Plan de carrera 90 días personalizado</li>
+            <li>Acceso vitalicio a updates del programa</li>
+          </ul>
+          <span class="card__more">Ver programa Premium</span>
+        </a>
+
+        <a class="card card--link card--link-visual reveal js-tilt-card academia-tier-card t-vip" href="academia-vip.html">
+          <div class="card__media--link"><img class="js-ext-img" src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=800&amp;q=82" alt="VIP In-Company — capacitación corporativa con equipo BI completo" width="800" height="450" loading="lazy" decoding="async" /></div>
+          <span class="tier-tag">VIP · In-Company</span>
+          <h3>In-Company VIP</h3>
+          <div class="tier-price">$25K – $60K MXN</div>
+          <div class="tier-meta">16 sesiones · 64 horas · Equipos 2-5 personas</div>
+          <p>Capacitamos a tu equipo BI completo, definimos buenas prácticas corporativas y dejamos plantillas con tu marca. Soporte 90 días post-implementación con SLA &lt;24 hrs.</p>
+          <ul class="tier-features">
+            <li>Audit gratuito de arquitectura BI antes de firmar</li>
+            <li>Documento de Governance (50 págs) + Library DAX corporativa</li>
+            <li>Workshop ejecutivo de cierre con dirección</li>
+            <li>Factura empresarial · NDA · contrato de servicios</li>
+          </ul>
+          <span class="card__more">Ver programa VIP</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="section wrap reveal">
+      <div class="detail-example">
+        <span class="detail-example__tag">Resultados típicos</span>
+        <h2>Lo que el alumno (o equipo) entrega al cierre</h2>
+        <div class="detail-example__body">
+          <p>Las métricas no son promesas — son los <strong>criterios de aprobación</strong> del programa. Si no se cumplen, el alumno no termina, o nosotros refinamos sin costo extra.</p>
+        </div>
+        <div class="detail-metrics">
+          <div class="detail-metric">
+            <div class="detail-metric__v">&lt; 3s</div>
+            <div class="detail-metric__l">Tiempo de carga del reporte ejecutivo</div>
+          </div>
+          <div class="detail-metric">
+            <div class="detail-metric__v">15+</div>
+            <div class="detail-metric__l">Medidas DAX documentadas y reutilizables</div>
+          </div>
+          <div class="detail-metric">
+            <div class="detail-metric__v">100%</div>
+            <div class="detail-metric__l">Reglas críticas BPA en verde</div>
+          </div>
+          <div class="detail-metric">
+            <div class="detail-metric__v">RLS</div>
+            <div class="detail-metric__l">Validado con 2+ usuarios distintos</div>
+          </div>
+        </div>
+        <div style="margin-top:1.25rem;display:flex;gap:0.65rem;flex-wrap:wrap">
+          <a class="btn btn--primary" href="academia-estandar.html">Ver Estándar (recomendado)</a>
+          <a class="btn btn--ghost" href="contacto.html">Quiero diagnóstico gratuito</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section wrap">
+      <div class="section__head reveal">
+        <h2>Cómo arrancamos</h2>
+        <p>Mismo proceso para todos los programas (B2C). El VIP In-Company añade audit corporativo y propuesta formal antes del paso 3.</p>
+      </div>
+      <div class="steps steps--stagger reveal-stagger js-reveal-stagger">
+        <div class="step reveal">
+          <div class="step__num">1</div>
+          <h3>Diagnóstico gratuito</h3>
+          <p>Videollamada de 30 min para calibrar nivel real y elegir el dataset del proyecto final.</p>
+        </div>
+        <div class="step reveal">
+          <div class="step__num">2</div>
+          <h3>Confirmas el programa</h3>
+          <p>Express, Estándar, Premium o VIP. Recomendación basada en objetivo, no en nuestro margen.</p>
+        </div>
+        <div class="step reveal">
+          <div class="step__num">3</div>
+          <h3>Acuerdo + pago</h3>
+          <p>1 exhibición (5-8% descuento) o 2 partes sin recargo. Acuerdo digital con cláusulas claras.</p>
+        </div>
+        <div class="step reveal">
+          <div class="step__num">4</div>
+          <h3>Sesión 1 en menos de 7 días</h3>
+          <p>Quick win garantizado el primer día. Versión .pbit funcional al cierre de la primera sesión.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section wrap">
+      <div class="section__head reveal">
+        <h2>Garantía 2BI</h2>
+        <p>Asumimos el riesgo nosotros. Si después de la sesión 2 (o sesión 1 en Express) sientes que no es para ti, devolución del 100%. Sin justificaciones, sin papeleo, sin condiciones letra chica.</p>
+      </div>
+      <div class="pill-grid reveal">
+        <span class="pill">100% devolución</span>
+        <span class="pill">Sin condiciones letra chica</span>
+        <span class="pill">+90% tasa de finalización</span>
+        <span class="pill">Soporte WhatsApp incluido</span>
+        <span class="pill">Plantillas reutilizables vitalicias</span>
+        <span class="pill">Updates anuales gratis (Premium)</span>
+      </div>
+    </section>
+
+    <section class="section wrap">
+      <div class="cta-band reveal cta-band--animated">
+        <div class="cta-band__glow" aria-hidden="true"></div>
+        <div class="cta-band__inner">
+          <h2>¿No sabes cuál es el tuyo?</h2>
+          <p>Cuéntanos qué te detiene hoy con Power BI (un dashboard, una promoción que no llega, un equipo desigual) y te recomendamos el programa correcto — incluso si la respuesta honesta es “no necesitas curso, necesitas otra cosa”.</p>
+          <div class="cta-band__actions">
+            <a class="btn btn--primary btn--lg btn--pulse" href="contacto.html">Pedir diagnóstico</a>
+            <a class="btn btn--ghost btn--lg" href="mailto:guillermorc44@gmail.com,alvaropalma87@gmail.com,chdominiel@gmail.com?subject=Academia%202BI%20%E2%80%94%20%C2%BFCu%C3%A1l%20programa%20me%20conviene%3F">Email directo</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap site-footer__grid">
+      <div class="site-footer__brand">
+        <div class="footer-brand">
+          <span class="footer-brand__mark">2BI</span>
+          <span class="footer-brand__full">Technology Solutions</span>
+        </div>
+        <p>Inteligencia de negocio con criterio.</p>
+      </div>
+      <div>
+        <h4>Sitio</h4>
+        <ul>
+          <li><a href="nosotros.html">Nosotros</a></li>
+          <li><a href="soluciones.html">Soluciones</a></li>
+          <li><a href="academia.html">Academia</a></li>
+          <li><a href="valores.html">Valores</a></li>
+          <li><a href="ecosistema.html">Ecosistema</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="contacto.html">Formulario</a></li>
+          <li>
+            <a href="mailto:guillermorc44@gmail.com">guillermorc44@gmail.com</a><br />
+            <a href="mailto:alvaropalma87@gmail.com">alvaropalma87@gmail.com</a><br />
+            <a href="mailto:chdominiel@gmail.com">chdominiel@gmail.com</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="wrap site-footer__legal">© <span id="year"></span> 2BI Technology Solutions.</div>
+  </footer>
+
+  <div class="chat-widget js-chat-widget">
+    <div class="chat-widget__panel" id="chat-widget-panel" role="dialog" aria-modal="false" aria-label="Asistente 2BI Technology Solutions">
+      <div class="chat-widget__head">
+        <strong>2BI Technology Solutions</strong>
+        <button type="button" class="chat-widget__close js-chat-widget-close" aria-label="Cerrar chat">×</button>
+      </div>
+      <div class="chat-widget__body js-chat-widget-messages" id="chat-widget-messages"></div>
+      <div class="chat-widget__foot">
+        <label class="visually-hidden" for="chat-widget-input">Mensaje al asistente</label>
+        <input id="chat-widget-input" class="js-chat-widget-input" type="text" autocomplete="off" placeholder="Escribe aquí…" maxlength="500">
+        <button type="button" class="js-chat-widget-send">Enviar</button>
+      </div>
+    </div>
+    <button type="button" class="chat-widget__fab js-chat-widget-fab" aria-label="Abrir asistente" aria-expanded="false" aria-controls="chat-widget-panel"><img src="./assets/animated-gifts/IA-face2.svg" alt="" width="36" height="36" /></button>
+  </div>
+
+  <script src="./assets/pagina-2bi-toolbar.js" defer></script>
+  <script src="./assets/site.js" defer></script>
+</body>
+</html>
