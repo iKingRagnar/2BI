@@ -690,24 +690,24 @@
         </div>
       </div>
 
-      <!-- TOP BAR with Fabric + AI + Workflow integrations -->
+      <!-- TOP BAR with Premium + AI + Workflow integrations -->
       <div class="top-bar">
         <div class="fabric-badge">
           <span class="pulse-dot"></span>
-          <strong>Fabric F64</strong>
+          <strong>Premium per User</strong>
           <span style="opacity:0.4">·</span>
-          <span>Direct Lake</span>
+          <span>Premium Capacity</span>
           <span style="opacity:0.4">·</span>
           <span id="last-update">hace 12s</span>
         </div>
         <div class="ai-input">
           <span class="ai-icon">A</span>
-          <input type="text" placeholder="Pregunta a Claude... ej: ¿qué ventas tendremos en diciembre según Forecast Prophet?">
+          <input type="text" placeholder="Pregunta a Smart Narrative... ej: ¿qué ventas tendremos en diciembre según Forecast DAX?">
         </div>
         <div class="workflow-badges">
           <span class="workflow-badge"><span class="dot"></span>Teams</span>
-          <span class="workflow-badge"><span class="dot"></span>Power Automate</span>
-          <span class="workflow-badge"><span class="dot"></span>n8n</span>
+          <span class="workflow-badge"><span class="dot"></span>Subscriptions</span>
+          <span class="workflow-badge"><span class="dot"></span>Subscriptions</span>
           <span class="workflow-badge"><span class="dot"></span>SAP</span>
         </div>
       </div>
@@ -738,8 +738,8 @@
           <div class="chart-head">
             <div class="chart-title-wrap">
               <h3 class="chart-title" id="chart-1-title">Tendencia + Forecast</h3>
-              <span class="chart-source-badge python">Python · Prophet</span>
-              <span class="chart-source-badge fabric">Direct Lake</span>
+              <span class="chart-source-badge python">Python · Forecast DAX</span>
+              <span class="chart-source-badge fabric">Premium Capacity</span>
             </div>
             <span class="chart-sub">12 meses + 3 proyectados</span>
           </div>
@@ -829,7 +829,7 @@
 
       <div class="subscription-card">
         <h4>Refresh schedule</h4>
-        <p>Diario · 06:00 CDMX · Direct Lake</p>
+        <p>Diario · 06:00 CDMX · Premium Capacity</p>
         <p class="next">Próximo: <strong>en 4h 23min</strong></p>
       </div>
 
@@ -847,7 +847,7 @@
 const THEMES = {
   mantenimiento: {
     title: 'OEE corporativo · todas las plantas',
-    subtitle: 'Operaciones · 5 plantas · 8 roles RLS · Direct Lake · alerts 24/7',
+    subtitle: 'Operaciones · 5 plantas · 8 roles RLS · Premium Capacity · alerts 24/7',
     kpis: [
       { label: 'OEE corporativo', value: 87.3, suffix: '%', status: 'green', delta: '+2.1pp', forecast: '+1.2pp en 30d', spark: [82.1,83.4,84.0,85.2,86.1,85.8,86.4,87.3,87.0,87.5,87.3,87.3], fabric: true, dir: 'up' },
       { label: 'MTBF',  value: 142, suffix: ' hrs', status: 'green', delta: '+8 hrs', forecast: '+12 en 30d', spark: [118,124,128,132,135,138,140,138,141,142,142,142], fabric: true, dir: 'up' },
@@ -871,10 +871,10 @@ const THEMES = {
     distribChart: { labels: ['Falla mecánica','Cambio molde','MP','Energía','Mantto.','Otros'], data: [38,25,14,8,10,5] },
     alerts: [
       { type: 'critical', time: 'hace 4 min', title: 'Paro crítico EXT-04', body: 'Planta A · Línea 02 · Operador notificado vía Teams. Forecast: pérdida $42K MXN.' },
-      { type: 'warning', time: 'hace 23 min', title: 'OEE Línea 03 baja a 81%', body: 'Planta B · Por debajo del umbral 85%. Claude detectó tendencia.' },
-      { type: 'info', time: 'hace 1 hr', title: 'Forecast actualizado', body: 'Prophet recalculó. OEE Octubre: 87.9% (banda 87.1–88.7).' },
+      { type: 'warning', time: 'hace 23 min', title: 'OEE Línea 03 baja a 81%', body: 'Planta B · Por debajo del umbral 85%. Smart Narrative detectó tendencia.' },
+      { type: 'info', time: 'hace 1 hr', title: 'Forecast actualizado', body: 'DAX recalculó. OEE Octubre: 87.9% (banda 87.1–88.7).' },
       { type: 'success', time: 'hace 2 hrs', title: 'BPA limpio', body: '42/42 reglas Best Practice Analyzer en verde.' },
-      { type: 'info', time: 'hace 5 hrs', title: 'Refresh nocturno OK', body: '4.2M filas · 47s · Direct Lake F64.' }
+      { type: 'info', time: 'hace 5 hrs', title: 'Refresh nocturno OK', body: '4.2M filas · 47s · Premium Capacity F64.' }
     ]
   },
   ventas: {
@@ -902,10 +902,10 @@ const THEMES = {
     topChart: { labels: ['Acero P-42','Cemento','Resina','Tubería','Lámina','Pintura','Ferretería','Aislante','Tornillería','Soldadura'], data: [842,712,658,591,547,489,432,398,367,312] },
     distribChart: { labels: ['Norte','Centro','Sur','Bajío'], data: [42,28,18,12] },
     alerts: [
-      { type: 'success', time: 'hace 7 min', title: 'Cliente ACME abrió 3 propuestas', body: 'Memo C. notificado. Probabilidad cierre: 71% (Claude).' },
-      { type: 'critical', time: 'hace 34 min', title: 'Margen Norte cae 1.8pp', body: 'Driver: costo de envío subió 12%. Análisis Claude.' },
+      { type: 'success', time: 'hace 7 min', title: 'Cliente ACME abrió 3 propuestas', body: 'Memo C. notificado. Probabilidad cierre: 71% (Smart Narrative).' },
+      { type: 'critical', time: 'hace 34 min', title: 'Margen Norte cae 1.8pp', body: 'Driver: costo de envío subió 12%. Análisis Smart Narrative.' },
       { type: 'warning', time: 'hace 1 hr', title: 'Luis V. bajo meta', body: '−15% vs presupuesto. Coaching recomendado.' },
-      { type: 'info', time: 'hace 3 hrs', title: 'Forecast Q4 actualizado', body: 'Prophet: $52.8M (+ 0.5M vs prior). 82% confianza.' }
+      { type: 'info', time: 'hace 3 hrs', title: 'Forecast Q4 actualizado', body: 'Forecast DAX: $52.8M (+ 0.5M vs prior). 82% confianza.' }
     ]
   },
   finanzas: {
@@ -933,9 +933,9 @@ const THEMES = {
     topChart: { labels: ['Margen bruto','Margen op.','Margen neto','ROE','ROA','Quick','Current','D/E','DPC','Rot.inv.'], data: [42,31,28,18,12,1.42,1.85,0.42,38,4.2] },
     distribChart: { labels: ['Nómina','MP','Servicios','Logística','Mantto.','Otros'], data: [42,28,12,8,6,4] },
     alerts: [
-      { type: 'critical', time: 'hace 12 min', title: 'Gastos op. +5.6% vs ppto', body: 'Driver: Nómina TI +18%. Claude generó análisis.' },
+      { type: 'critical', time: 'hace 12 min', title: 'Gastos op. +5.6% vs ppto', body: 'Driver: Nómina TI +18%. Smart Narrative generó análisis.' },
       { type: 'success', time: 'hace 1 hr', title: 'EBITDA supera ppto +11.4%', body: 'Excelente. Q4 forecast: $13.2M.' },
-      { type: 'info', time: 'hace 4 hrs', title: 'CFO consultó dashboard', body: 'Claude generó 2 narrativas en lenguaje natural.' },
+      { type: 'info', time: 'hace 4 hrs', title: 'CFO consultó dashboard', body: 'Smart Narrative generó 2 narrativas en lenguaje natural.' },
       { type: 'success', time: 'hace 9 hrs', title: 'Close mensual completado', body: 'Septiembre cerrado en 3 días vs 7 anteriores.' }
     ]
   },

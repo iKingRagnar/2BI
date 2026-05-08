@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="es" data-page="portafolio-dashboard">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a4a7c">
+<meta name="description" content="Portafolio 2BI · Dashboard premium con datos demo. Switch entre vista Power BI y vista Web.">
+<title>2BI · Dashboard Premium</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Outfit:wght@300..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./assets/theme.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="./assets/portafolio_data.js"></script>
+<style>
+  :root {
+    --d-accent: #0F4C81;
+    --d-accent-dark: #0A3A66;
+    --d-cream: #FAF8F3;
+    --d-charcoal: #2D3748;
+    --d-muted: #718096;
+    --d-pbi-yellow: #F2C811;
+    --d-pbi-blue: #117DBB;
+  }
+
+  body { background: var(--d-cream); color: var(--d-charcoal); font-family: 'Outfit', system-ui, sans-serif; }
+
+  /* ================== TOP BAR (switch Power BI / Web) ================== */
+  .top-bar {
+    position: sticky; top: 0; z-index: 100;
+    background: linear-gradient(135deg, #0a1320, var(--d-accent-dark));
+    color: #fff;
+    padding: 0.85rem 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  }
+  .top-bar .brand {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-weight: 800; font-size: 1.1rem;
+    text-decoration: none; color: #fff;
+  }
+  .top-bar .brand .squared { color: var(--d-accent); font-size: 0.65em; vertical-align: super; }
+  .top-bar .brand small { font-weight: 400; font-size: 0.7rem; opacity: 0.6; letter-spacing: 0.15em; text-transform: uppercase; }
+
+  .top-bar .breadcrumb-mini {
+    flex: 1; display: flex; align-items: center; gap: 0.5rem;
+    font-size: 0.85rem; color: rgba(255,255,255,0.7);
+  }
+  .top-bar .breadcrumb-mini a { color: rgba(255,255,255,0.7); text-decoration: none; }
+  .top-bar .breadcrumb-mini a:hover { color: var(--d-accent); }
+  .top-bar .breadcrumb-mini strong { color: #fff; }
+
+  /* Switch Power BI / Web */
+  .view-switch {
+    display: flex; align-items: center; gap: 0.6rem;
+    padding: 0.35rem; background: rgba(0,0,0,0.3);
+    border-radius: 14px; border: 1px solid rgba(255,255,255,0.1);
+  }
+  .view-switch button {
+    padding: 0.5rem 1rem;
+    background: transparent; border: none; color: rgba(255,255,255,0.6);
+    font-family: inherit; font-size: 0.8rem; font-weight: 700;
+    border-radius: 10px; cursor: pointer;
+    transition: all 0.25s;
+    display: inline-flex; align-items: center; gap: 0.4rem;
+  }
+  .view-switch button:hover { color: #fff; background: rgba(255,255,255,0.05); }
+  .view-switch button.active { background: var(--d-accent); color: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+  .view-switch button.active.pbi { background: var(--d-pbi-yellow); color: #1a1a1a; }
+  .view-switch .icon { width: 16px; height: 16px; display: inline-block; }
+
+  .top-bar .info-btn {
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+    color: #fff; padding: 0.45rem 0.85rem; border-radius: 8px;
+    font-size: 0.78rem; font-weight: 600; cursor: pointer;
+    transition: all 0.2s;
+  }
+  .top-bar .info-btn:hover { background: rgba(255,255,255,0.15); }
+
+  /* ================== BENEFITS BANNER ================== */
+  .benefits-banner {
+    background: var(--d-cream);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    padding: 0;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.35s ease, padding 0.35s ease;
+  }
+  .benefits-banner.open { max-height: 400px; padding: 1.5rem; }
+  .benefits-grid {
+    max-width: 1280px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+  }
+  .benefit-col {
+    background: #fff; padding: 1.3rem 1.5rem; border-radius: 14px;
+    border: 1px solid rgba(0,0,0,0.06);
+  }
+  .benefit-col.pbi { border-top: 4px solid var(--d-pbi-yellow); }
+  .benefit-col.web { border-top: 4px solid var(--d-accent); }
+  .benefit-col h4 {
+    margin: 0 0 0.6rem; font-family: 'Fraunces', serif; font-size: 1.05rem;
+    color: var(--d-charcoal); display: flex; align-items: center; gap: 0.5rem;
+  }
+  .benefit-col h4 .badge {
+    font-size: 0.65rem; font-weight: 700; padding: 3px 9px;
+    border-radius: 999px; letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .benefit-col.pbi h4 .badge { background: var(--d-pbi-yellow); color: #1a1a1a; }
+  .benefit-col.web h4 .badge { background: var(--d-accent); color: #fff; }
+  .benefit-col ul { list-style: none; padding: 0; margin: 0; }
+  .benefit-col li {
+    font-size: 0.82rem; color: var(--d-charcoal); padding: 0.3rem 0;
+    display: flex; gap: 0.5rem; line-height: 1.45;
+  }
+  .benefit-col li::before { content: '✓'; color: var(--d-accent); font-weight: 800; flex-shrink: 0; }
+  .benefit-col.pbi li::before { color: #d4ac4c; }
+  .benefit-col .cost {
+    margin-top: 0.85rem; padding-top: 0.6rem;
+    border-top: 1px dashed rgba(0,0,0,0.1);
+    font-size: 0.72rem; color: var(--d-muted); font-style: italic;
+  }
+  .benefit-col .cost strong { color: var(--d-accent-dark); font-style: normal; }
+
+  /* ================== DASHBOARD ================== */
+  .dash-shell { max-width: 1480px; margin: 0 auto; padding: 1.5rem; }
+
+  .dash-shell.pbi-mode {
+    background: #f5f5f5; max-width: 100%; padding: 0;
+  }
+  .pbi-mode .pbi-frame {
+    display: grid; grid-template-columns: 56px 1fr 280px;
+    min-height: calc(100vh - 60px);
+  }
+  .pbi-mode .pbi-sidebar {
+    background: #f3f3f3; border-right: 1px solid #e0e0e0;
+    padding: 0.7rem 0.4rem; display: flex; flex-direction: column;
+    gap: 0.3rem; align-items: center;
+  }
+  .pbi-mode .pbi-sidebar-icon {
+    width: 40px; height: 40px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    color: #666; font-size: 0.9rem; cursor: pointer;
+    transition: background 0.2s;
+  }
+  .pbi-mode .pbi-sidebar-icon:hover { background: rgba(0,0,0,0.06); }
+  .pbi-mode .pbi-sidebar-icon.active { background: var(--d-pbi-yellow); color: #1a1a1a; }
+  .pbi-mode .pbi-canvas {
+    background: #fff; padding: 1rem;
+    overflow-y: auto;
+  }
+  .pbi-mode .pbi-filterpane {
+    background: #f7f7f7; border-left: 1px solid #e0e0e0;
+    padding: 0.85rem;
+  }
+  .pbi-mode .pbi-filterpane h4 {
+    font-size: 0.78rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.1em; color: #333; margin: 0 0 0.7rem;
+  }
+
+  /* Title */
+  .dash-title-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 1.2rem; flex-wrap: wrap; gap: 0.8rem;
+  }
+  .dash-title-row .title-block { flex: 1; min-width: 280px; }
+  .dash-title-row .industry-tag {
+    font-size: 0.7rem; font-weight: 700; color: var(--d-accent-dark);
+    letter-spacing: 0.18em; text-transform: uppercase;
+    margin-bottom: 0.3rem;
+  }
+  .dash-title-row h1 {
+    font-family: 'Fraunces', serif; font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+    font-weight: 700; color: var(--d-charcoal); line-height: 1.1; margin: 0;
+  }
+  .dash-title-row h1 .icon { color: var(--d-accent); margin-right: 0.4rem; }
+  .dash-title-row .subtitle { color: var(--d-muted); font-size: 0.92rem; margin: 0.3rem 0 0; }
+
+  /* Narrative card */
+  .narrative-card {
+    background: linear-gradient(135deg, color-mix(in srgb, var(--d-accent) 8%, transparent), rgba(255,255,255,0.5));
+    border: 1px solid color-mix(in srgb, var(--d-accent) 25%, transparent);
+    border-left: 4px solid var(--d-accent);
+    border-radius: 14px;
+    padding: 1rem 1.2rem; margin-bottom: 1.2rem;
+    font-size: 0.92rem; color: var(--d-charcoal); line-height: 1.55;
+  }
+  .narrative-card strong { color: var(--d-accent-dark); }
+  .narrative-card .label {
+    display: inline-block; font-size: 0.62rem; font-weight: 800;
+    color: var(--d-accent-dark); letter-spacing: 0.15em; text-transform: uppercase;
+    margin-bottom: 0.35rem;
+  }
+
+  /* KPI row */
+  .kpi-row {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.85rem; margin-bottom: 1.2rem;
+  }
+  .kpi-card {
+    background: #fff; border-radius: 14px; padding: 1rem 1.15rem;
+    border: 1px solid rgba(0,0,0,0.06);
+    position: relative; overflow: hidden;
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .kpi-card:hover { transform: translateY(-3px); box-shadow: 0 14px 32px rgba(0,0,0,0.08); }
+  .kpi-card::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 4px; height: 100%; background: var(--d-accent);
+  }
+  .kpi-label { font-size: 0.7rem; color: var(--d-muted); letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; margin-bottom: 0.4rem; }
+  .kpi-value { font-family: 'Fraunces', serif; font-size: clamp(1.4rem, 2.2vw, 1.85rem); font-weight: 700; color: var(--d-charcoal); line-height: 1; margin-bottom: 0.3rem; }
+  .kpi-bottom { display: flex; justify-content: space-between; align-items: flex-end; gap: 0.4rem; }
+  .kpi-delta { font-size: 0.78rem; }
+  .kpi-delta.up { color: #2f6f4e; } .kpi-delta.down { color: #b23a48; }
+  .kpi-spark { width: 60px; height: 24px; }
+
+  /* Slicers */
+  .slicers-row {
+    display: flex; flex-wrap: wrap; gap: 0.7rem;
+    padding: 0.7rem 1rem; margin-bottom: 1.1rem;
+    background: rgba(255,255,255,0.7); border-radius: 12px;
+    border: 1px solid rgba(0,0,0,0.05);
+  }
+  .slicer { display: flex; flex-direction: column; gap: 0.3rem; }
+  .slicer-label { font-size: 0.62rem; font-weight: 700; color: var(--d-muted); letter-spacing: 0.18em; text-transform: uppercase; }
+  .slicer-pills { display: flex; flex-wrap: wrap; gap: 0.25rem; }
+  .slicer-pill {
+    padding: 0.28rem 0.7rem; border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 999px; background: #fff; color: var(--d-charcoal);
+    font-size: 0.74rem; cursor: pointer; transition: all 0.18s;
+  }
+  .slicer-pill:hover { border-color: var(--d-accent); color: var(--d-accent-dark); }
+  .slicer-pill.active { background: var(--d-accent); color: #fff; border-color: var(--d-accent); transform: scale(1.04); }
+
+  /* Charts grid */
+  .chart-grid {
+    display: grid; grid-template-columns: 1.6fr 1fr; gap: 1rem;
+    margin-bottom: 1.1rem;
+  }
+  .chart-card {
+    background: #fff; border-radius: 14px; padding: 1rem 1.15rem;
+    border: 1px solid rgba(0,0,0,0.06);
+  }
+  .chart-card.full { grid-column: 1 / -1; }
+  .chart-card h3 {
+    font-family: 'Fraunces', serif; font-size: 1rem; font-weight: 700;
+    margin: 0 0 0.7rem; color: var(--d-charcoal);
+  }
+  .chart-body { position: relative; height: 280px; }
+  .chart-card.tall .chart-body { height: 340px; }
+
+  /* Table */
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; }
+  .data-table thead th {
+    text-align: left; padding: 0.6rem 0.8rem;
+    background: color-mix(in srgb, var(--d-accent) 15%, transparent);
+    color: var(--d-accent-dark); font-size: 0.7rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  .data-table tbody td {
+    padding: 0.55rem 0.8rem; border-bottom: 1px solid rgba(0,0,0,0.05);
+    color: var(--d-charcoal);
+  }
+  .data-table tbody tr:hover { background: color-mix(in srgb, var(--d-accent) 6%, transparent); }
+  .badge-status {
+    display: inline-block; padding: 2px 8px; border-radius: 999px;
+    font-size: 0.7rem; font-weight: 700;
+  }
+  .badge-status.green { background: rgba(47,111,78,0.15); color: #2f6f4e; }
+  .badge-status.red { background: rgba(178,58,72,0.15); color: #b23a48; }
+  .badge-status.amber { background: rgba(212,172,76,0.18); color: #8a6d23; }
+
+  /* PBI mode tweaks */
+  .pbi-mode .narrative-card { background: #fff8d8; border-color: var(--d-pbi-yellow); border-left-color: var(--d-pbi-yellow); }
+  .pbi-mode .kpi-card::before { background: var(--d-pbi-yellow); }
+  .pbi-mode .chart-card { background: #fff; border: 1px solid #e0e0e0; }
+  .pbi-mode .pbi-ribbon {
+    background: #fff; border-bottom: 1px solid #e0e0e0;
+    padding: 0.5rem 1rem; display: flex; gap: 1rem; align-items: center;
+    font-size: 0.78rem; color: #555;
+  }
+  .pbi-mode .pbi-ribbon .pbi-tab { padding: 0.35rem 0.85rem; border-radius: 6px 6px 0 0; cursor: pointer; }
+  .pbi-mode .pbi-ribbon .pbi-tab.active { background: #fff8d8; color: #8a6d23; font-weight: 700; }
+
+  @media (max-width: 1100px) {
+    .pbi-mode .pbi-frame { grid-template-columns: 1fr; }
+    .pbi-mode .pbi-sidebar, .pbi-mode .pbi-filterpane { display: none; }
+  }
+  @media (max-width: 800px) {
+    .chart-grid { grid-template-columns: 1fr; }
+    .benefits-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============== TOP BAR ============== -->
+<div class="top-bar">
+  <a href="index.html" class="brand">
+    2<span class="squared">²</span>BI
+    <small>Portafolio</small>
+  </a>
+  <div class="breadcrumb-mini">
+    <a href="portafolio.html">Portafolio</a>
+    <span>/</span>
+    <strong id="bcr-title">Cargando...</strong>
+  </div>
+
+  <div class="view-switch" role="tablist" aria-label="Vista del dashboard">
+    <button id="btn-web" class="active" data-view="web" aria-selected="true">
+      <span>🌐</span><span>Vista Web</span>
+    </button>
+    <button id="btn-pbi" class="pbi" data-view="pbi" aria-selected="false">
+      <span>⚡</span><span>Vista Power BI</span>
+    </button>
+  </div>
+
+  <button class="info-btn" id="btn-info">⓵ Beneficios</button>
+</div>
+
+<!-- ============== BENEFITS BANNER (toggle) ============== -->
+<div class="benefits-banner" id="benefits">
+  <div class="benefits-grid">
+    <div class="benefit-col pbi">
+      <h4>⚡ Vista Power BI <span class="badge">Microsoft</span></h4>
+      <ul>
+        <li>Hosting nativo Microsoft (Service / Premium)</li>
+        <li>Refresh automático de datos sin código</li>
+        <li>RLS dinámico por rol nativo</li>
+        <li>Apps móviles oficiales (iOS/Android)</li>
+        <li>Subscriptions y Data Alerts integradas</li>
+        <li>Sensitivity Labels + cumplimiento corporativo</li>
+        <li>Calculation Groups + Field Parameters</li>
+        <li>Audit logs y Power BI Activity API</li>
+      </ul>
+      <p class="cost">Costo: <strong>$10 USD/usuario/mes</strong> (Pro). Premium per User <strong>$20 USD</strong>.</p>
+    </div>
+
+    <div class="benefit-col web">
+      <h4>🌐 Vista Web <span class="badge">Custom</span></h4>
+      <ul>
+        <li>Sin licencias por usuario — usuarios ilimitados</li>
+        <li>Embebible en tu sitio o app sin restricciones</li>
+        <li>Branding 100% custom (tu marca, no Microsoft)</li>
+        <li>UX libre: animaciones y layouts sin límite</li>
+        <li>Integración directa con tu API/backend</li>
+        <li>SEO friendly y URL pública compartible</li>
+        <li>Performance optimizado (carga &lt;1s)</li>
+        <li>Funciona en cualquier dispositivo sin app</li>
+      </ul>
+      <p class="cost">Costo: <strong>$0–5 USD/mes</strong> hosting estático (Netlify/Vercel/Railway).</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============== DASHBOARD ============== -->
+<div id="dash-root" class="dash-shell">
+  <!-- Web mode default rendering inserted here by JS -->
+</div>
+
+<script>
+// ============================================================
+// PARSE URL PARAMS
+// ============================================================
+const params = new URLSearchParams(location.search);
+const dashKey = params.get('d') || 'mantenimiento';
+const initialView = params.get('v') || 'web';
+
+const data = window.PORTAFOLIO_DASHBOARDS[dashKey];
+if (!data) {
+  document.getElementById('dash-root').innerHTML = '<p style="padding:3rem;text-align:center">Dashboard no encontrado: <code>' + dashKey + '</code></p>';
+  throw new Error('Dashboard no existe');
+}
+
+// Set CSS accent vars
+document.documentElement.style.setProperty('--d-accent', data.accent);
+document.documentElement.style.setProperty('--d-accent-dark', data.accentDark);
+
+// Set title
+document.getElementById('bcr-title').textContent = data.title;
+document.title = '2BI · ' + data.title;
+
+let currentView = initialView;
+let charts = {};
+let activeFilters = {};
+
+// ============================================================
+// HELPERS
+// ============================================================
+function animateNumber(el, from, to, suffix, prefix, ms = 1100) {
+  const start = performance.now();
+  function tick(now) {
+    const t = Math.min((now - start) / ms, 1);
+    const e = 1 - Math.pow(1 - t, 3);
+    const v = from + (to - from) * e;
+    let display;
+    if (typeof to === 'string') { el.textContent = (prefix || '') + to + (suffix || ''); return; }
+    if (Number.isInteger(to) && Math.abs(to) < 10000) display = Math.round(v).toLocaleString('es-MX');
+    else if (Math.abs(to) < 100) display = v.toFixed(1);
+    else display = v.toFixed(0);
+    el.textContent = (prefix || '') + display + (suffix || '');
+    if (t < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+function sparklineSVG(values, color) {
+  if (!values || !values.length) return '';
+  const w = 60, h = 24;
+  const min = Math.min(...values), max = Math.max(...values);
+  const range = max - min || 1;
+  const pts = values.map((v, i) => {
+    const x = (i / (values.length - 1)) * w;
+    const y = h - ((v - min) / range) * (h - 4) - 2;
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  }).join(' ');
+  return `<svg class="kpi-spark" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
+    <polyline points="${pts}" fill="none" stroke="${color}" stroke-width="1.6" stroke-linejoin="round"/>
+  </svg>`;
+}
+
+// ============================================================
+// RENDER VIEWS
+// ============================================================
+function renderWeb() {
+  const root = document.getElementById('dash-root');
+  root.className = 'dash-shell';
+  root.innerHTML = `
+    <div class="dash-title-row">
+      <div class="title-block">
+        <p class="industry-tag">${data.category} · ${data.industry}</p>
+        <h1><span class="icon">${data.icon}</span>${data.title}</h1>
+        <p class="subtitle">${data.subtitle}</p>
+      </div>
+    </div>
+
+    <div class="narrative-card">
+      <span class="label">★ Insight clave</span>
+      <p style="margin:0">${data.narrative}</p>
+    </div>
+
+    <section class="kpi-row" id="kpis"></section>
+    <section class="slicers-row" id="slicers"></section>
+
+    <section class="chart-grid">
+      <div class="chart-card tall">
+        <h3 id="c-main-t"></h3>
+        <div class="chart-body"><canvas id="c-main"></canvas></div>
+      </div>
+      <div class="chart-card tall">
+        <h3 id="c-donut-t"></h3>
+        <div class="chart-body"><canvas id="c-donut"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <h3 id="c-bar-t"></h3>
+        <div class="chart-body"><canvas id="c-bar"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <h3>Detalle drill-through</h3>
+        <table class="data-table" id="tbl"></table>
+      </div>
+    </section>
+
+    <p style="margin-top:2rem;text-align:center;color:var(--d-muted);font-size:0.85rem">
+      Demo construido como <strong>Web nativo</strong> · datos sintéticos · 100% interactivo · embebible en cualquier sitio.<br>
+      <a href="contacto.html" style="color:var(--d-accent-dark);font-weight:700">Construye uno como este para tu negocio →</a>
+    </p>
+  `;
+  renderKPIs();
+  renderSlicers();
+  renderCharts();
+  renderTable();
+}
+
+function renderPBI() {
+  const root = document.getElementById('dash-root');
+  root.className = 'dash-shell pbi-mode';
+  root.innerHTML = `
+    <div class="pbi-ribbon">
+      <span style="font-weight:700;color:#1a1a1a">📊 Power BI Service</span>
+      <span class="pbi-tab active">${data.title}</span>
+      <span class="pbi-tab" style="opacity:0.4">+ Add page</span>
+      <span style="margin-left:auto;font-size:0.72rem;color:#888">Workspace: 2BI Portfolio · Refresh: hace 12s</span>
+    </div>
+    <div class="pbi-frame">
+      <aside class="pbi-sidebar">
+        <div class="pbi-sidebar-icon active" title="Reports">📊</div>
+        <div class="pbi-sidebar-icon" title="Datasets">🗂</div>
+        <div class="pbi-sidebar-icon" title="Workspaces">🏢</div>
+        <div class="pbi-sidebar-icon" title="Apps">📦</div>
+        <div class="pbi-sidebar-icon" title="Subscribe">📧</div>
+      </aside>
+
+      <main class="pbi-canvas">
+        <div class="dash-title-row">
+          <div class="title-block">
+            <p class="industry-tag">${data.category} · ${data.industry}</p>
+            <h1><span class="icon">${data.icon}</span>${data.title}</h1>
+            <p class="subtitle">${data.subtitle}</p>
+          </div>
+        </div>
+
+        <div class="narrative-card">
+          <span class="label">⚡ AI Insight (Smart Narrative)</span>
+          <p style="margin:0">${data.narrative}</p>
+        </div>
+
+        <section class="kpi-row" id="kpis"></section>
+
+        <section class="chart-grid">
+          <div class="chart-card tall">
+            <h3 id="c-main-t"></h3>
+            <div class="chart-body"><canvas id="c-main"></canvas></div>
+          </div>
+          <div class="chart-card tall">
+            <h3 id="c-donut-t"></h3>
+            <div class="chart-body"><canvas id="c-donut"></canvas></div>
+          </div>
+          <div class="chart-card">
+            <h3 id="c-bar-t"></h3>
+            <div class="chart-body"><canvas id="c-bar"></canvas></div>
+          </div>
+          <div class="chart-card">
+            <h3>Tabla con drill-through</h3>
+            <table class="data-table" id="tbl"></table>
+          </div>
+        </section>
+      </main>
+
+      <aside class="pbi-filterpane">
+        <h4>Filtros</h4>
+        <div id="slicers"></div>
+        <div style="margin-top:1.2rem;padding:0.7rem;background:#fff;border-radius:8px;border:1px solid #e0e0e0">
+          <p style="font-size:0.7rem;color:#888;margin:0 0 0.4rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase">Sensitivity</p>
+          <p style="font-size:0.78rem;margin:0;color:#333">🔒 Confidencial · Interna</p>
+        </div>
+        <div style="margin-top:0.7rem;padding:0.7rem;background:#fff;border-radius:8px;border:1px solid #e0e0e0">
+          <p style="font-size:0.7rem;color:#888;margin:0 0 0.4rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase">Refresh</p>
+          <p style="font-size:0.78rem;margin:0;color:#333">⏱ Diario 06:00 CDMX</p>
+        </div>
+      </aside>
+    </div>
+    <p style="text-align:center;color:var(--d-muted);font-size:0.85rem;padding:1.5rem 1rem">
+      Demo simulado en estilo <strong>Power BI Service</strong> · construible 100% en Power BI Desktop con tu modelo real.<br>
+      <a href="contacto.html" style="color:var(--d-accent-dark);font-weight:700">Construye uno como este en Power BI con tus datos →</a>
+    </p>
+  `;
+  renderKPIs();
+  renderSlicers();
+  renderCharts();
+  renderTable();
+}
+
+// ============================================================
+// SHARED RENDERERS (work for both views)
+// ============================================================
+function renderKPIs() {
+  const row = document.getElementById('kpis');
+  if (!row) return;
+  row.innerHTML = '';
+  data.kpis.forEach((k, i) => {
+    const card = document.createElement('div');
+    card.className = 'kpi-card';
+    card.innerHTML = `
+      <div class="kpi-label">${k.l}</div>
+      <div class="kpi-value">${k.pre || ''}0${k.suf || ''}</div>
+      <div class="kpi-bottom">
+        <span class="kpi-delta ${k.dir}">${k.dir === 'up' ? '▲' : '▼'} ${k.d}</span>
+        ${sparklineSVG(k.spark, data.accent)}
+      </div>
+    `;
+    row.appendChild(card);
+    const v = card.querySelector('.kpi-value');
+    setTimeout(() => animateNumber(v, 0, k.v, k.suf || '', k.pre || '', 1100 + i * 60), 200 + i * 60);
+  });
+}
+
+function renderSlicers() {
+  const row = document.getElementById('slicers');
+  if (!row) return;
+  row.innerHTML = '';
+  activeFilters = {};
+  data.slicers.forEach(s => {
+    activeFilters[s.l] = null;
+    const wrap = document.createElement('div');
+    wrap.className = 'slicer';
+    wrap.innerHTML = `<span class="slicer-label">${s.l}</span>
+      <div class="slicer-pills">${s.opts.map(o => `<button class="slicer-pill" data-s="${s.l}" data-v="${o}">${o}</button>`).join('')}</div>`;
+    row.appendChild(wrap);
+  });
+
+  row.querySelectorAll('.slicer-pill').forEach(p => p.addEventListener('click', () => {
+    const sk = p.dataset.s;
+    const wasActive = p.classList.contains('active');
+    row.querySelectorAll(`.slicer-pill[data-s="${sk}"]`).forEach(pp => pp.classList.remove('active'));
+    if (!wasActive) { p.classList.add('active'); activeFilters[sk] = p.dataset.v; }
+    else activeFilters[sk] = null;
+    applyFilters();
+  }));
+}
+
+function applyFilters() {
+  const cnt = Object.values(activeFilters).filter(v => v !== null).length;
+  if (cnt === 0) { renderCharts(); renderKPIs(); return; }
+  const scale = Math.max(0.2, 1 - cnt * 0.22);
+  const seed = cnt + Object.values(activeFilters).filter(Boolean).join('').length;
+  const copy = JSON.parse(JSON.stringify(data));
+  copy.kpis.forEach(k => {
+    if (typeof k.v === 'number') {
+      const variation = ((seed * 7) % 11 - 5) / 100;
+      k.v = +(k.v * scale * (1 + variation)).toFixed(k.v < 100 ? 1 : 0);
+      if (k.spark) k.spark = k.spark.map(s => +(s * scale * (1 + variation)).toFixed(1));
+    }
+  });
+  const m = arr => arr.map((v, i) => +(v * scale * (1 + ((seed + i) % 9 - 4) / 100)).toFixed(2));
+  if (copy.charts.main.data1) copy.charts.main.data1 = m(copy.charts.main.data1);
+  if (copy.charts.main.data2) copy.charts.main.data2 = m(copy.charts.main.data2);
+  copy.charts.donut.data = m(copy.charts.donut.data);
+  copy.charts.bar.data = m(copy.charts.bar.data);
+  renderKPIsCopy(copy);
+  renderChartsCopy(copy);
+}
+
+function renderKPIsCopy(c) {
+  const row = document.getElementById('kpis');
+  if (!row) return;
+  row.innerHTML = '';
+  c.kpis.forEach((k, i) => {
+    const card = document.createElement('div');
+    card.className = 'kpi-card';
+    card.innerHTML = `<div class="kpi-label">${k.l}</div>
+      <div class="kpi-value">${k.pre || ''}0${k.suf || ''}</div>
+      <div class="kpi-bottom"><span class="kpi-delta ${k.dir}">${k.dir === 'up' ? '▲' : '▼'} ${k.d}</span>${sparklineSVG(k.spark, c.accent)}</div>`;
+    row.appendChild(card);
+    const v = card.querySelector('.kpi-value');
+    setTimeout(() => animateNumber(v, 0, k.v, k.suf || '', k.pre || '', 800), 100 + i * 40);
+  });
+}
+
+function renderCharts() {
+  renderChartsCopy(data);
+}
+
+function renderChartsCopy(d) {
+  const palette = [d.accent, d.accentDark, '#a87f1f', '#bfa050', '#5a7c8c', '#704a4a'];
+
+  const cMain = d.charts.main;
+  document.getElementById('c-main-t').textContent = cMain.title;
+  if (charts.main) charts.main.destroy();
+  charts.main = new Chart(document.getElementById('c-main'), {
+    type: 'bar',
+    data: {
+      labels: cMain.labels,
+      datasets: [
+        { label: 'Real', data: cMain.data1, backgroundColor: d.accent, borderRadius: 4 },
+        { label: 'Comparativo', data: cMain.data2, type: 'line', borderColor: d.accentDark, borderWidth: 2.5, tension: 0.3, pointRadius: 3, fill: false }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: 'bottom' } },
+      scales: { y: { grid: { color: 'rgba(0,0,0,0.05)' } }, x: { grid: { display: false } } }
+    }
+  });
+
+  const cDonut = d.charts.donut;
+  document.getElementById('c-donut-t').textContent = cDonut.title;
+  if (charts.donut) charts.donut.destroy();
+  charts.donut = new Chart(document.getElementById('c-donut'), {
+    type: 'doughnut',
+    data: { labels: cDonut.labels, datasets: [{ data: cDonut.data, backgroundColor: palette, borderColor: '#fff', borderWidth: 2 }] },
+    options: { responsive: true, maintainAspectRatio: false, cutout: '64%', plugins: { legend: { position: 'right' } } }
+  });
+
+  const cBar = d.charts.bar;
+  document.getElementById('c-bar-t').textContent = cBar.title;
+  if (charts.bar) charts.bar.destroy();
+  charts.bar = new Chart(document.getElementById('c-bar'), {
+    type: 'bar',
+    data: { labels: cBar.labels, datasets: [{ data: cBar.data, backgroundColor: cBar.labels.map((_, i) => palette[i % palette.length]), borderRadius: 4 }] },
+    options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { grid: { color: 'rgba(0,0,0,0.05)' } }, y: { grid: { display: false } } } }
+  });
+}
+
+function renderTable() {
+  const tbl = document.getElementById('tbl');
+  if (!tbl) return;
+  const t = data.table;
+  tbl.innerHTML = `<thead><tr>${t.head.map(h => `<th>${h}</th>`).join('')}</tr></thead>
+    <tbody>${t.rows.map(r => `<tr>${r.map((c, i) => {
+      const last = i === r.length - 1;
+      if (last) {
+        const lc = String(c).toLowerCase();
+        let cls = 'amber';
+        if (['ok', 'excelente', 'al día', 'on track', 'cerrada'].some(k => lc.includes(k))) cls = 'green';
+        if (['crítico', 'crítica', 'stockout', 'riesgo', 'abierta', 'vencido'].some(k => lc.includes(k))) cls = 'red';
+        return `<td><span class="badge-status ${cls}">${c}</span></td>`;
+      }
+      return `<td>${c}</td>`;
+    }).join('')}</tr>`).join('')}</tbody>`;
+}
+
+// ============================================================
+// VIEW SWITCH
+// ============================================================
+function setView(v) {
+  currentView = v;
+  document.getElementById('btn-web').classList.toggle('active', v === 'web');
+  document.getElementById('btn-pbi').classList.toggle('active', v === 'pbi');
+  if (v === 'pbi') renderPBI();
+  else renderWeb();
+  // update URL
+  const u = new URL(location.href);
+  u.searchParams.set('v', v);
+  history.replaceState(null, '', u.toString());
+}
+
+document.getElementById('btn-web').addEventListener('click', () => setView('web'));
+document.getElementById('btn-pbi').addEventListener('click', () => setView('pbi'));
+document.getElementById('btn-info').addEventListener('click', () => {
+  document.getElementById('benefits').classList.toggle('open');
+});
+
+// Initial render
+setView(currentView);
+</script>
+</body>
+</html>

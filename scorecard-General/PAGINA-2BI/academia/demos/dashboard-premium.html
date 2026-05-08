@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0a4a7c">
-<meta name="description" content="Demo Power BI Premium 2BI: dashboard con Microsoft Fabric, Direct Lake, AI Insights, forecasting con Python sempy, AI agents y multi-page navigation.">
+<meta name="description" content="Demo Power BI Premium 2BI: dashboard con Power BI Premium, Premium Capacity, AI Insights, forecasting con DAX Studio, AI agents y multi-page navigation.">
 <title>Demo Premium — Academia 2BI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -85,7 +85,7 @@
     max-width: 1600px;
   }
 
-  /* ========== HEADER with Fabric badge ========== */
+  /* ========== HEADER with Premium badge ========== */
   .dash-header {
     display: flex; align-items: center; justify-content: space-between;
     flex-wrap: wrap; gap: 1rem;
@@ -110,7 +110,7 @@
   }
   .dash-subtitle { color: var(--muted); font-size: 0.92rem; margin: 0.25rem 0 0; }
 
-  /* Fabric badge with pulsing dot (NEW) */
+  /* Premium badge with pulsing dot (NEW) */
   .fabric-badge {
     display: inline-flex; align-items: center; gap: 0.6rem;
     padding: 0.55rem 1rem;
@@ -133,7 +133,7 @@
   .fabric-badge strong { color: var(--demo-fabric); }
   .fabric-badge .sep { opacity: 0.4; margin: 0 0.25rem; }
 
-  /* ========== TOP BAR with Fabric + AI Q&A + RLS preview ========== */
+  /* ========== TOP BAR with Premium + AI Q&A + RLS preview ========== */
   .top-bar {
     display: grid;
     grid-template-columns: auto 1fr auto;
@@ -629,26 +629,26 @@
         <div>
           <span class="tier-badge">★★ Premium · Stack 2026</span>
           <h1 class="dash-title" id="dash-title">Dashboard ejecutivo Premium</h1>
-          <p class="dash-subtitle" id="dash-subtitle">Microsoft Fabric, Direct Lake, AI Insights con Claude, forecast Python (sempy + Prophet) y agentes n8n.</p>
+          <p class="dash-subtitle" id="dash-subtitle">Power BI Premium, Premium Capacity, AI Insights con Smart Narrative, forecast con DAX Linear Regression y Subscriptions.</p>
         </div>
         <a href="../../academia-premium.html" class="btn btn--ghost btn--sm">← Volver al programa</a>
       </div>
 
-      <!-- TOP BAR with Fabric badge + AI input + meta info (NEW) -->
+      <!-- TOP BAR with Premium badge + AI input + meta info (NEW) -->
       <div class="top-bar">
         <div class="fabric-badge">
           <span class="pulse-dot"></span>
-          <strong>Microsoft Fabric</strong>
+          <strong>Power BI Premium</strong>
           <span class="sep">·</span>
-          <span>Direct Lake</span>
+          <span>Premium Capacity</span>
           <span class="sep">·</span>
-          <span>F2 capacity</span>
+          <span>PPU capacity</span>
           <span class="sep">·</span>
           <span>actualizado <strong id="last-update">hace 12s</strong></span>
         </div>
         <div class="ai-input">
           <span class="ai-icon">A</span>
-          <input type="text" placeholder="Pregunta a Claude sobre los datos... ej: ¿qué causó el pico de paros en mayo?">
+          <input type="text" placeholder="Pregunta a Smart Narrative sobre los datos... ej: ¿qué causó el pico de paros en mayo?">
           <span class="shortcut">⌘ K</span>
         </div>
         <div class="meta-info">
@@ -659,7 +659,7 @@
       <!-- AI INSIGHTS CARD (NEW vs Estándar) -->
       <div class="ai-insights">
         <div class="ai-insights-head">
-          <span class="badge-pill">✦ AI Insights · Claude Sonnet</span>
+          <span class="badge-pill">✦ AI Insights · Smart Narrative</span>
           <span class="timestamp" id="ai-timestamp">Generado hace 2 minutos</span>
         </div>
         <div class="ai-insights-grid" id="ai-insights-grid"></div>
@@ -699,9 +699,9 @@
           <div class="chart-head">
             <div class="chart-title-wrap">
               <h3 class="chart-title" id="chart-1-title">Tendencia con forecast</h3>
-              <span class="chart-source-badge python">Python · sempy</span>
+              <span class="chart-source-badge python">DAX Studio</span>
             </div>
-            <span class="chart-sub" id="chart-1-sub">12 meses + 3 proyectados (Prophet)</span>
+            <span class="chart-sub" id="chart-1-sub">12 meses + 3 proyectados (Forecast DAX)</span>
           </div>
           <div class="chart-body"><canvas id="chart-1"></canvas></div>
         </div>
@@ -710,7 +710,7 @@
           <div class="chart-head">
             <div class="chart-title-wrap">
               <h3 class="chart-title" id="chart-2-title">Anomalías detectadas</h3>
-              <span class="chart-source-badge ai">AI · Claude</span>
+              <span class="chart-source-badge ai">Smart Narrative</span>
             </div>
             <span class="chart-sub" id="chart-2-sub">σ &gt; 2.5 marcadas en rojo</span>
           </div>
@@ -721,7 +721,7 @@
           <div class="chart-head">
             <div class="chart-title-wrap">
               <h3 class="chart-title" id="chart-3-title">Top 10 con drivers</h3>
-              <span class="chart-source-badge fabric">Direct Lake</span>
+              <span class="chart-source-badge fabric">Premium Capacity</span>
             </div>
             <span class="chart-sub" id="chart-3-sub">ranking + análisis de causas</span>
           </div>
@@ -732,7 +732,7 @@
         <div class="agent-feed">
           <div class="agent-feed-head">
             <div class="agent-feed-icon">🤖</div>
-            <span class="agent-feed-title">Agente n8n + Anthropic</span>
+            <span class="agent-feed-title">Agente Power BI Subscriptions + Power BI AI</span>
             <span class="agent-feed-status">activo</span>
           </div>
           <div class="agent-feed-list" id="agent-feed-list"></div>
@@ -740,7 +740,7 @@
       </section>
 
       <p style="margin-top: 2rem; text-align: center; color: var(--muted); font-size: 0.88rem; line-height: 1.7;">
-        Demo del programa <strong>Premium</strong> ($14,500 MXN). Stack BI 2026 completo: Power BI + Microsoft Fabric + Python + AI agents. <strong>12 sesiones</strong> de mentoría 1 a 1 + Office Hours.<br>
+        Demo del programa <strong>Premium</strong> ($14,500 MXN). Stack BI 2026 completo: Power BI + Power BI Premium + Python + AI agents. <strong>12 sesiones</strong> de mentoría 1 a 1 + Office Hours.<br>
         <a href="../../academia-premium.html" style="color: var(--demo-accent-dark); font-weight: 700;">Ver programa completo →</a>
       </p>
     </main>
@@ -751,11 +751,11 @@
 <script>
 const THEMES = {
   mantenimiento: {
-    title: 'OEE con forecast Prophet y anomalías AI',
-    subtitle: 'Operaciones · Direct Lake · sempy + Claude · agente WhatsApp',
+    title: 'OEE con forecast Forecast DAX y anomalías AI',
+    subtitle: 'Operaciones · Premium Capacity · DAX Studio + Smart Narrative · email diario',
     aiInsights: [
-      { type: 'opportunity', text: '<strong>Oportunidad detectada:</strong> Planta A redujo paros mecánicos 18% — replicable a Planta B con potencial de +3.2pp en OEE corporativo (Claude estimó probabilidad: 78%).' },
-      { type: 'warning', text: '<strong>Anomalía:</strong> EXT-04 acumula 24 hrs de paros en septiembre — forecast Prophet predice escalamiento a 31 hrs en octubre si no hay intervención.' },
+      { type: 'opportunity', text: '<strong>Oportunidad detectada:</strong> Planta A redujo paros mecánicos 18% — replicable a Planta B con potencial de +3.2pp en OEE corporativo (Smart Narrative estimó probabilidad: 78%).' },
+      { type: 'warning', text: '<strong>Anomalía:</strong> EXT-04 acumula 24 hrs de paros en septiembre — forecast Forecast DAX predice escalamiento a 31 hrs en octubre si no hay intervención.' },
       { type: 'normal', text: '<strong>Tendencia:</strong> MTBF mejora 5.4% mensual sostenido. Ritmo proyectado alcanza meta corporativa de 160 hrs en Q1 2027.' }
     ],
     kpis: [
@@ -789,19 +789,19 @@ const THEMES = {
     agentFeed: [
       { time: 'hace 23 min', text: 'Detecté <strong>spike de paros en EXT-04</strong> (+47% vs ayer). Envié alerta al WhatsApp de @MgrPlantaA.' },
       { time: 'hace 2 hrs',  text: 'Briefing matutino 06:00 entregado a 4 stakeholders. <strong>Engagement: 100%</strong>.' },
-      { time: 'hace 5 hrs',  text: 'Forecast Prophet ejecutado. <strong>OEE proyectado octubre: 87.9%</strong> (banda 87.1–88.7).' },
-      { time: 'hace 8 hrs',  text: 'Refresh nocturno completado. <strong>2.3M filas procesadas en 47s</strong> (Direct Lake).' },
-      { time: 'hace 1 día',  text: 'Generé 3 narrativas ejecutivas con Claude Sonnet. PDF en SharePoint.' }
+      { time: 'hace 5 hrs',  text: 'Forecast DAX ejecutado. <strong>OEE proyectado octubre: 87.9%</strong> (banda 87.1–88.7).' },
+      { time: 'hace 8 hrs',  text: 'Refresh nocturno completado. <strong>2.3M filas procesadas en 47s</strong> (Premium Capacity).' },
+      { time: 'hace 1 día',  text: 'Generé 3 narrativas ejecutivas con Smart Narrative. PDF en SharePoint.' }
     ]
   },
 
   ventas: {
-    title: 'Ventas con forecast Prophet y AI insights',
-    subtitle: 'Comercial · Direct Lake · pipeline predictivo · agente CRM',
+    title: 'Ventas con forecast Forecast DAX y AI insights',
+    subtitle: 'Comercial · Premium Capacity · pipeline predictivo · agente CRM',
     aiInsights: [
       { type: 'opportunity', text: '<strong>Oportunidad:</strong> Sofía R. (Centro) tiene ratio cierre 38% vs promedio 24%. Identificadas 12 cuentas con perfil similar al de sus deals ganados.' },
-      { type: 'warning', text: '<strong>Riesgo:</strong> Margen Norte cae 1.8pp en 60 días. Análisis Claude detecta alza en costo de envío como driver principal (correlación 0.87).' },
-      { type: 'normal', text: '<strong>Forecast:</strong> Prophet proyecta cierre Q4 en $52.8M (+9.5% vs Q4 2025) con confianza 82%.' }
+      { type: 'warning', text: '<strong>Riesgo:</strong> Margen Norte cae 1.8pp en 60 días. Análisis Smart Narrative detecta alza en costo de envío como driver principal (correlación 0.87).' },
+      { type: 'normal', text: '<strong>Forecast:</strong> Forecast DAX proyecta cierre Q4 en $52.8M (+9.5% vs Q4 2025) con confianza 82%.' }
     ],
     kpis: [
       { label: 'Ventas YTD', value: 48.2, suffix: 'M', prefix: '$', status: 'green', delta: '+12.4%', dir: 'up', forecast: '$5.4M en 30d', spark: [3.1,3.4,3.8,4.2,4.5,4.7,4.6,4.8,4.9,5.1,5.0,5.1], fabric: true },
@@ -834,18 +834,18 @@ const THEMES = {
     agentFeed: [
       { time: 'hace 7 min', text: 'Cliente <strong>ACME Industries</strong> abrió 3 propuestas en 24 hrs. Notifiqué a Memo C. (probabilidad de conversión: 71%).' },
       { time: 'hace 1 hr',  text: 'Reporte semanal generado. <strong>Sofía R. lidera con $10.8M YTD</strong>. Email enviado a CFO.' },
-      { time: 'hace 4 hrs', text: 'Forecast Prophet recalculado tras nuevo dato. <strong>Q4 ajustado a $52.8M</strong> (de $52.3M).' },
-      { time: 'hace 6 hrs', text: 'Dashboard refrescado · 1.8M filas · <strong>Direct Lake mode 38ms</strong>.' }
+      { time: 'hace 4 hrs', text: 'Forecast DAX recalculado tras nuevo dato. <strong>Q4 ajustado a $52.8M</strong> (de $52.3M).' },
+      { time: 'hace 6 hrs', text: 'Dashboard refrescado · 1.8M filas · <strong>Premium Capacity mode 38ms</strong>.' }
     ]
   },
 
   finanzas: {
-    title: 'Finanzas con forecast Prophet y razones AI',
-    subtitle: 'Financials · Direct Lake · Python sempy · agente CFO briefing',
+    title: 'Finanzas con forecast Forecast DAX y razones AI',
+    subtitle: 'Financials · Premium Capacity · DAX Studio · agente CFO briefing',
     aiInsights: [
       { type: 'opportunity', text: '<strong>Oportunidad:</strong> EBITDA crece 11.2% YoY con margen estable. Cash op acumula buffer suficiente para CAPEX Q1.' },
-      { type: 'warning', text: '<strong>Atención:</strong> Gastos op. 5.6% sobre presupuesto. Claude identificó nómina TI (+18%) y servicios (+12%) como drivers principales.' },
-      { type: 'normal', text: '<strong>Forecast:</strong> Prophet predice revenue diciembre $4.5M (vs forecast lineal $5.1M). Estacionalidad navideña ya considerada.' }
+      { type: 'warning', text: '<strong>Atención:</strong> Gastos op. 5.6% sobre presupuesto. Smart Narrative identificó nómina TI (+18%) y servicios (+12%) como drivers principales.' },
+      { type: 'normal', text: '<strong>Forecast:</strong> Forecast DAX predice revenue diciembre $4.5M (vs forecast lineal $5.1M). Estacionalidad navideña ya considerada.' }
     ],
     kpis: [
       { label: 'Revenue', value: 52.3, suffix: 'M', prefix: '$', status: 'green', delta: '+9.8%', dir: 'up', forecast: '$4.6M en 30d', spark: [3.8,4.0,4.2,4.4,4.5,4.6,4.5,4.7,4.8,4.9,4.7,4.2], fabric: true },
@@ -876,19 +876,19 @@ const THEMES = {
       c3: { labels: ['Margen bruto','Margen op.','Margen neto','ROE','ROA','Quick ratio','Current ratio','Deuda/Equity','Días por cobrar','Rotación inv.'], data: [42, 31, 28, 18, 12, 1.42, 1.85, 0.42, 38, 4.2] }
     },
     agentFeed: [
-      { time: 'hace 12 min', text: 'CFO consultó dashboard. Claude generó <strong>2 narrativas en lenguaje natural</strong> sobre desviaciones del presupuesto.' },
-      { time: 'hace 3 hrs',  text: 'Forecast Prophet completado. <strong>Revenue Q4 proyectado: $13.2M</strong> con banda confianza 82%.' },
-      { time: 'hace 6 hrs',  text: 'Anomalía: <strong>EBITDA septiembre +38% vs Aug</strong>. Claude analiza causas, briefing en 15 min.' },
-      { time: 'hace 9 hrs',  text: 'Refresh nocturno · 4.2M filas · <strong>52s con Direct Lake</strong> (vs 4 min en Import mode).' }
+      { time: 'hace 12 min', text: 'CFO consultó dashboard. Smart Narrative generó <strong>2 narrativas en lenguaje natural</strong> sobre desviaciones del presupuesto.' },
+      { time: 'hace 3 hrs',  text: 'Forecast DAX completado. <strong>Revenue Q4 proyectado: $13.2M</strong> con banda confianza 82%.' },
+      { time: 'hace 6 hrs',  text: 'Anomalía: <strong>EBITDA septiembre +38% vs Aug</strong>. Smart Narrative analiza causas, briefing en 15 min.' },
+      { time: 'hace 9 hrs',  text: 'Refresh nocturno · 4.2M filas · <strong>52s con Premium Capacity</strong> (vs 4 min en Import mode).' }
     ]
   },
 
   inventario: {
-    title: 'Inventarios con forecast Prophet y restocks AI',
-    subtitle: 'Supply chain · Direct Lake · Python · agente compras',
+    title: 'Inventarios con forecast Forecast DAX y restocks AI',
+    subtitle: 'Supply chain · Premium Capacity · Python · agente compras',
     aiInsights: [
-      { type: 'warning', text: '<strong>Riesgo crítico:</strong> SKU-04821 y SKU-12903 en stockout total. Forecast Prophet predice pérdida de venta de $145K MXN si no hay restock en 5 días.' },
-      { type: 'opportunity', text: '<strong>Oportunidad:</strong> Rotación clase A subió 0.4x — posible reducir buffer stock 8% sin riesgo (Claude calculó margen seguridad).' },
+      { type: 'warning', text: '<strong>Riesgo crítico:</strong> SKU-04821 y SKU-12903 en stockout total. Forecast DAX predice pérdida de venta de $145K MXN si no hay restock en 5 días.' },
+      { type: 'opportunity', text: '<strong>Oportunidad:</strong> Rotación clase A subió 0.4x — posible reducir buffer stock 8% sin riesgo (Smart Narrative calculó margen seguridad).' },
       { type: 'normal', text: '<strong>Forecast:</strong> Días stock proyectados a 78 en 30d (vs actual 87) si rotación mantiene ritmo.' }
     ],
     kpis: [
@@ -923,7 +923,7 @@ const THEMES = {
       { time: 'hace 4 min', text: '<strong>ALERTA CRÍTICA:</strong> SKU-04821 (CDMX) cayó a 0 unidades. Generé orden de compra automática.' },
       { time: 'hace 28 min', text: 'Forecast restock recalculado. <strong>Pedido sugerido: 380 unidades para 60 días</strong>.' },
       { time: 'hace 2 hrs', text: 'Análisis ABC actualizado. <strong>3 SKUs migraron de B → A</strong> por aumento en rotación.' },
-      { time: 'hace 5 hrs', text: 'Refresh Direct Lake · <strong>1.4M filas en 31s</strong>. 4 anomalías detectadas, Claude generó briefing.' }
+      { time: 'hace 5 hrs', text: 'Refresh Premium Capacity · <strong>1.4M filas en 31s</strong>. 4 anomalías detectadas, Smart Narrative generó briefing.' }
     ]
   }
 };
@@ -1081,7 +1081,7 @@ function applyFilters() {
 function renderCharts(theme) {
   // Chart 1: Forecast with confidence band
   const c1 = theme.charts.c1;
-  document.getElementById('chart-1-title').textContent = 'Tendencia con forecast Python (Prophet)';
+  document.getElementById('chart-1-title').textContent = 'Tendencia con forecast Python (Forecast DAX)';
   document.getElementById('chart-1-sub').textContent = '12 meses + 3 proyectados con banda confianza 80%';
   if (charts.c1) charts.c1.destroy();
   charts.c1 = new Chart(document.getElementById('chart-1'), {
@@ -1106,7 +1106,7 @@ function renderCharts(theme) {
   // Chart 2: Anomaly detection (line with red dots on anomalies)
   const c2 = theme.charts.c2;
   document.getElementById('chart-2-title').textContent = 'Detección de anomalías (σ > 2.5)';
-  document.getElementById('chart-2-sub').textContent = `${(c2.anomalyPoints || []).length} anomalías detectadas por Claude`;
+  document.getElementById('chart-2-sub').textContent = `${(c2.anomalyPoints || []).length} anomalías detectadas por Smart Narrative`;
   if (charts.c2) charts.c2.destroy();
   const pointBg = c2.data.map((_, i) => (c2.anomalyPoints || []).includes(i) ? '#b23a48' : ACCENT);
   const pointRad = c2.data.map((_, i) => (c2.anomalyPoints || []).includes(i) ? 8 : 4);
@@ -1122,8 +1122,8 @@ function renderCharts(theme) {
 
   // Chart 3: top 10 with palette
   const c3 = theme.charts.c3;
-  document.getElementById('chart-3-title').textContent = c3.labels && c3.labels[0].length > 8 ? 'Ranking dinámico (Direct Lake)' : 'Top 10';
-  document.getElementById('chart-3-sub').textContent = 'leídos en <50ms vía OneLake';
+  document.getElementById('chart-3-title').textContent = c3.labels && c3.labels[0].length > 8 ? 'Ranking dinámico (Premium Capacity)' : 'Top 10';
+  document.getElementById('chart-3-sub').textContent = 'leídos en <50ms vía Premium Storage';
   if (charts.c3) charts.c3.destroy();
   const palette = [ACCENT_DARK, ACCENT, ACCENT_2, '#a37bc4', '#bca0d3', '#cdb7df'];
   charts.c3 = new Chart(document.getElementById('chart-3'), {
