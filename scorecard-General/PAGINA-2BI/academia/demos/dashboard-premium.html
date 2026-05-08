@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="es" data-page="academia-demo-premium">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a4a7c">
+<meta name="description" content="Demo Power BI Premium 2BI: dashboard con Microsoft Fabric, Direct Lake, AI Insights, forecasting con Python sempy, AI agents y multi-page navigation.">
+<title>Demo Premium — Academia 2BI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Outfit:wght@300..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/theme.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3"></script>
+<style>
+  :root {
+    --demo-accent: #6b4d8a;
+    --demo-accent-2: #8c64b3;
+    --demo-accent-soft: rgba(107, 77, 138, 0.13);
+    --demo-accent-dark: #4f3868;
+    --demo-fabric: #117dbb;
+    --demo-fabric-soft: rgba(17, 125, 187, 0.12);
+  }
+
+  /* ========== APP SHELL with sidebar ========== */
+  .app-shell {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+  }
+  .sidebar {
+    background: linear-gradient(180deg, var(--demo-accent-dark), #2c1d40);
+    padding: 1rem 0.5rem;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 0.5rem;
+    position: sticky; top: 0;
+    height: 100vh;
+    box-shadow: 4px 0 24px rgba(0,0,0,0.06);
+  }
+  .sidebar-logo {
+    width: 44px; height: 44px;
+    background: linear-gradient(135deg, var(--demo-accent), var(--demo-accent-2));
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-weight: 800; font-size: 0.85rem;
+    margin-bottom: 0.6rem;
+    box-shadow: 0 4px 12px rgba(107,77,138,0.4);
+  }
+  .nav-icon {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,0.55);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: transparent;
+    border: none;
+  }
+  .nav-icon:hover {
+    background: rgba(255,255,255,0.06);
+    color: #fff;
+  }
+  .nav-icon.is-active {
+    background: linear-gradient(135deg, var(--demo-accent), var(--demo-accent-2));
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(107,77,138,0.4);
+  }
+  .nav-icon-tooltip {
+    position: absolute; left: 56px;
+    background: var(--demo-accent-dark);
+    color: #fff; padding: 4px 10px;
+    border-radius: 6px; font-size: 0.72rem;
+    white-space: nowrap;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.2s;
+  }
+  .nav-icon-wrap { position: relative; }
+  .nav-icon-wrap:hover .nav-icon-tooltip { opacity: 1; pointer-events: auto; }
+
+  .dash-shell {
+    padding: 1.2rem 1.4rem 4rem;
+    max-width: 1600px;
+  }
+
+  /* ========== HEADER with Fabric badge ========== */
+  .dash-header {
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  .tier-badge {
+    display: inline-block;
+    padding: 5px 14px;
+    background: linear-gradient(135deg, var(--demo-accent), var(--demo-accent-2));
+    color: #fff;
+    font-size: 0.7rem; font-weight: 800;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    border-radius: 999px;
+    box-shadow: 0 4px 12px rgba(107,77,138,0.35);
+    margin-bottom: 0.4rem;
+  }
+  .dash-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+    font-weight: 700; color: var(--ink); margin: 0;
+    line-height: 1.1;
+  }
+  .dash-subtitle { color: var(--muted); font-size: 0.92rem; margin: 0.25rem 0 0; }
+
+  /* Fabric badge with pulsing dot (NEW) */
+  .fabric-badge {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    padding: 0.55rem 1rem;
+    background: linear-gradient(135deg, var(--demo-fabric-soft), rgba(255,255,255,0.5));
+    border: 1px solid rgba(17,125,187,0.3);
+    border-radius: 12px;
+    font-size: 0.78rem; color: #0c5d8a; font-weight: 600;
+  }
+  .pulse-dot {
+    width: 8px; height: 8px;
+    background: var(--demo-fabric);
+    border-radius: 50%;
+    position: relative;
+    animation: pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { box-shadow: 0 0 0 0 rgba(17,125,187,0.6); }
+    50% { box-shadow: 0 0 0 8px rgba(17,125,187,0); }
+  }
+  .fabric-badge strong { color: var(--demo-fabric); }
+  .fabric-badge .sep { opacity: 0.4; margin: 0 0.25rem; }
+
+  /* ========== TOP BAR with Fabric + AI Q&A + RLS preview ========== */
+  .top-bar {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 0.8rem;
+    margin-bottom: 1.2rem;
+    padding: 0.75rem 1rem;
+    background: var(--card-bg, rgba(255,255,255,0.7));
+    border: 1px solid rgba(0,0,0,0.05);
+    border-radius: 14px;
+    backdrop-filter: blur(10px);
+    align-items: center;
+  }
+  .ai-input {
+    display: flex; align-items: center; gap: 0.5rem;
+    padding: 0.5rem 0.85rem;
+    background: linear-gradient(135deg, var(--demo-accent-soft), rgba(255,255,255,0.5));
+    border: 1px solid rgba(107,77,138,0.2);
+    border-radius: 999px;
+    cursor: text;
+    transition: all 0.2s;
+  }
+  .ai-input:hover { border-color: var(--demo-accent); }
+  .ai-input .ai-icon {
+    width: 22px; height: 22px;
+    background: linear-gradient(135deg, var(--demo-accent), var(--demo-accent-2));
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 0.7rem; font-weight: 700;
+    flex-shrink: 0;
+  }
+  .ai-input input {
+    border: none; background: transparent;
+    flex: 1; font-family: inherit; font-size: 0.85rem;
+    color: var(--ink); outline: none; min-width: 200px;
+  }
+  .ai-input input::placeholder { color: var(--muted); }
+  .ai-input .shortcut {
+    font-size: 0.7rem; color: var(--muted);
+    padding: 2px 6px; background: rgba(0,0,0,0.05);
+    border-radius: 4px; font-family: monospace;
+  }
+  .meta-info {
+    display: flex; gap: 0.8rem; align-items: center;
+    font-size: 0.78rem; color: var(--muted);
+  }
+  .meta-info .icon {
+    width: 16px; height: 16px;
+    border-radius: 4px;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+
+  /* ========== AI INSIGHTS CARD (NEW vs Estándar) ========== */
+  .ai-insights {
+    background: linear-gradient(135deg, rgba(107,77,138,0.08), rgba(140,100,179,0.04));
+    border: 1px solid rgba(107,77,138,0.2);
+    border-radius: 14px;
+    padding: 1rem 1.2rem;
+    margin-bottom: 1.2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .ai-insights::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: linear-gradient(180deg, var(--demo-accent), var(--demo-accent-2));
+  }
+  .ai-insights-head {
+    display: flex; align-items: center; gap: 0.6rem;
+    margin-bottom: 0.6rem;
+  }
+  .ai-insights-head .badge-pill {
+    display: inline-flex; align-items: center; gap: 0.35rem;
+    padding: 3px 10px;
+    background: linear-gradient(135deg, var(--demo-accent), var(--demo-accent-2));
+    color: #fff;
+    border-radius: 999px;
+    font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .ai-insights-head .timestamp {
+    font-size: 0.72rem; color: var(--muted);
+    margin-left: auto;
+  }
+  .ai-insights-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 0.7rem;
+  }
+  .insight-item {
+    padding: 0.55rem 0.75rem;
+    background: rgba(255,255,255,0.5);
+    border-radius: 10px;
+    border-left: 3px solid var(--demo-accent);
+    font-size: 0.84rem; color: var(--ink-soft);
+    line-height: 1.45;
+  }
+  .insight-item strong { color: var(--demo-accent-dark); }
+  .insight-item.warning { border-left-color: #b23a48; }
+  .insight-item.warning strong { color: #b23a48; }
+  .insight-item.opportunity { border-left-color: #2f6f4e; }
+  .insight-item.opportunity strong { color: #2f6f4e; }
+
+  /* ========== THEME TABS ========== */
+  .theme-tabs {
+    display: flex; gap: 0.45rem; flex-wrap: wrap;
+    margin-bottom: 1.1rem;
+    padding: 0.4rem;
+    background: var(--card-bg, rgba(255,255,255,0.7));
+    border-radius: 12px;
+    border: 1px solid rgba(0,0,0,0.06);
+  }
+  .theme-tab {
+    flex: 1 1 auto; min-width: 130px;
+    padding: 0.6rem 0.95rem;
+    border: 1px solid transparent; background: transparent;
+    border-radius: 8px;
+    font-family: inherit; font-size: 0.85rem; font-weight: 600;
+    color: var(--ink-soft); cursor: pointer;
+    transition: all 0.25s cubic-bezier(.2,.8,.2,1);
+    display: flex; align-items: center; justify-content: center; gap: 0.45rem;
+  }
+  .theme-tab:hover { background: rgba(0,0,0,0.04); color: var(--ink); }
+  .theme-tab.is-active {
+    background: linear-gradient(135deg, var(--demo-accent), var(--demo-accent-2));
+    color: #fff;
+    box-shadow: 0 6px 18px rgba(107,77,138,0.35);
+    transform: translateY(-1px);
+  }
+
+  /* ========== CALC GROUPS / FIELD PARAMS BAR ========== */
+  .calc-groups-bar {
+    display: flex; align-items: center; gap: 0.6rem;
+    padding: 0.65rem 1rem;
+    background: linear-gradient(135deg, var(--demo-accent-soft), transparent);
+    border: 1px solid var(--demo-accent-soft);
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+  .calc-groups-label {
+    font-size: 0.72rem; font-weight: 700;
+    color: var(--demo-accent-dark);
+    letter-spacing: 0.15em; text-transform: uppercase;
+  }
+  .calc-pill {
+    padding: 0.3rem 0.78rem;
+    border: 1px solid rgba(107,77,138,0.25);
+    background: rgba(255,255,255,0.7);
+    color: var(--ink-soft);
+    font-size: 0.78rem; font-weight: 600;
+    border-radius: 8px; cursor: pointer;
+    transition: all 0.18s ease;
+  }
+  .calc-pill:hover { border-color: var(--demo-accent); color: var(--demo-accent-dark); }
+  .calc-pill.is-active {
+    background: var(--demo-accent); color: #fff;
+    border-color: var(--demo-accent);
+  }
+
+  /* ========== KPI ROW with sparklines + forecast arrows ========== */
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.85rem;
+    margin-bottom: 1.2rem;
+  }
+  .kpi-card {
+    background: var(--card-bg, #fff);
+    border: 1px solid var(--card-border, rgba(0,0,0,0.06));
+    border-radius: 14px;
+    padding: 1rem 1.15rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .kpi-card:hover { transform: translateY(-3px); box-shadow: 0 16px 36px rgba(0,0,0,0.08); }
+  .kpi-card::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: linear-gradient(180deg, var(--demo-accent), var(--demo-accent-2));
+  }
+  .kpi-header { display: flex; align-items: center; gap: 0.45rem; margin-bottom: 0.4rem; }
+  .kpi-status-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .kpi-status-dot.green { background: #2f6f4e; box-shadow: 0 0 8px rgba(47,111,78,0.5); }
+  .kpi-status-dot.amber { background: #d4ac4c; box-shadow: 0 0 8px rgba(212,172,76,0.5); }
+  .kpi-status-dot.red { background: #b23a48; box-shadow: 0 0 8px rgba(178,58,72,0.5); }
+  .kpi-label {
+    font-size: 0.7rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.12em;
+    font-weight: 700;
+  }
+  .kpi-fabric-tag {
+    margin-left: auto;
+    font-size: 0.6rem; font-weight: 700;
+    color: var(--demo-fabric);
+    padding: 1px 6px;
+    background: var(--demo-fabric-soft);
+    border-radius: 4px;
+  }
+  .kpi-value {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.4rem, 2.3vw, 1.95rem);
+    font-weight: 700; color: var(--ink);
+    line-height: 1; margin-bottom: 0.3rem;
+  }
+  .kpi-bottom {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    gap: 0.4rem;
+  }
+  .kpi-meta { display: flex; flex-direction: column; gap: 0.15rem; }
+  .kpi-delta {
+    font-size: 0.78rem;
+    display: flex; align-items: center; gap: 0.3rem;
+  }
+  .kpi-delta.up { color: #2f6f4e; }
+  .kpi-delta.down { color: #b23a48; }
+  /* NEW: Forecast indicator */
+  .kpi-forecast {
+    font-size: 0.7rem; color: var(--demo-accent-dark);
+    display: flex; align-items: center; gap: 0.25rem;
+  }
+  .kpi-forecast::before {
+    content: '◊'; font-size: 0.65rem;
+  }
+  .kpi-sparkline { width: 70px; height: 28px; overflow: visible; }
+
+  /* ========== VIEW TABS ========== */
+  .view-tabs {
+    display: flex; gap: 0.35rem;
+    margin-bottom: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .view-label {
+    font-size: 0.72rem; font-weight: 700;
+    color: var(--muted);
+    letter-spacing: 0.12em; text-transform: uppercase;
+    margin-right: 0.5rem;
+  }
+  .view-tab {
+    padding: 0.4rem 0.85rem;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: var(--card-bg, #fff);
+    color: var(--ink-soft);
+    font-size: 0.8rem; font-weight: 600;
+    border-radius: 8px; cursor: pointer;
+    transition: all 0.2s;
+  }
+  .view-tab:hover { border-color: var(--demo-accent); color: var(--demo-accent-dark); }
+  .view-tab.is-active {
+    background: var(--ink); color: #fff;
+    border-color: var(--ink);
+  }
+
+  /* ========== SLICERS ========== */
+  .slicers-row {
+    display: flex; flex-wrap: wrap; gap: 0.8rem;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1.1rem;
+    background: var(--card-bg, rgba(255,255,255,0.5));
+    border-radius: 12px;
+    border: 1px solid rgba(0,0,0,0.05);
+  }
+  .slicer { display: flex; flex-direction: column; gap: 0.3rem; }
+  .slicer-label {
+    font-size: 0.65rem; font-weight: 700; color: var(--muted);
+    letter-spacing: 0.18em; text-transform: uppercase;
+  }
+  .slicer-pills { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+  .slicer-pill {
+    padding: 0.3rem 0.7rem;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 999px;
+    background: #fff;
+    color: var(--ink-soft);
+    font-size: 0.76rem; cursor: pointer;
+    transition: all 0.18s ease;
+    user-select: none; white-space: nowrap;
+  }
+  .slicer-pill:hover { border-color: var(--demo-accent); color: var(--demo-accent-dark); }
+  .slicer-pill.is-active {
+    background: var(--demo-accent); color: #fff;
+    border-color: var(--demo-accent);
+    transform: scale(1.04);
+  }
+  .slicer-clear {
+    background: transparent; border: none;
+    color: var(--demo-accent-dark);
+    font-size: 0.78rem; cursor: pointer;
+    text-decoration: underline;
+    margin-left: auto; align-self: flex-end;
+  }
+
+  /* ========== CHART GRID ========== */
+  .chart-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+  }
+  .chart-card {
+    background: var(--card-bg, #fff);
+    border: 1px solid var(--card-border, rgba(0,0,0,0.06));
+    border-radius: 14px;
+    padding: 1rem 1.15rem;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .chart-card:hover { box-shadow: 0 12px 32px rgba(0,0,0,0.06); }
+  .chart-card.full-row { grid-column: 1 / -1; }
+  .chart-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 0.7rem; gap: 0.5rem;
+  }
+  .chart-title-wrap { display: flex; align-items: baseline; gap: 0.5rem; }
+  .chart-title {
+    font-family: 'Fraunces', serif;
+    font-size: 1rem; font-weight: 700;
+    color: var(--ink); margin: 0;
+  }
+  .chart-sub { font-size: 0.7rem; color: var(--muted); }
+  /* Python/AI source badges (NEW) */
+  .chart-source-badge {
+    font-size: 0.62rem; font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 999px;
+    letter-spacing: 0.05em;
+  }
+  .chart-source-badge.python { background: rgba(255,212,59,0.18); color: #8a6f00; border: 1px solid rgba(255,212,59,0.4); }
+  .chart-source-badge.fabric { background: var(--demo-fabric-soft); color: var(--demo-fabric); border: 1px solid rgba(17,125,187,0.3); }
+  .chart-source-badge.ai { background: var(--demo-accent-soft); color: var(--demo-accent-dark); border: 1px solid rgba(107,77,138,0.3); }
+  .chart-body { position: relative; height: 290px; }
+  .chart-card.tall .chart-body { height: 360px; }
+
+  /* ========== AGENT FEED PANEL (NEW) ========== */
+  .agent-feed {
+    background: linear-gradient(135deg, var(--demo-accent-soft), rgba(255,255,255,0.4));
+    border: 1px solid rgba(107,77,138,0.2);
+    border-radius: 14px;
+    padding: 1rem 1.15rem;
+  }
+  .agent-feed-head {
+    display: flex; align-items: center; gap: 0.5rem;
+    margin-bottom: 0.7rem;
+  }
+  .agent-feed-icon {
+    width: 28px; height: 28px;
+    background: linear-gradient(135deg, var(--demo-accent), var(--demo-accent-2));
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 0.85rem; font-weight: 700;
+  }
+  .agent-feed-title {
+    font-family: 'Fraunces', serif;
+    font-size: 0.95rem; font-weight: 700;
+    color: var(--ink);
+  }
+  .agent-feed-status {
+    margin-left: auto;
+    display: inline-flex; align-items: center; gap: 0.3rem;
+    font-size: 0.7rem; color: #2f6f4e; font-weight: 600;
+  }
+  .agent-feed-status::before {
+    content: ''; width: 6px; height: 6px;
+    background: #2f6f4e; border-radius: 50%;
+    animation: pulse 1.6s ease-in-out infinite;
+  }
+  .agent-feed-list { display: flex; flex-direction: column; gap: 0.55rem; }
+  .agent-feed-item {
+    display: flex; gap: 0.55rem;
+    padding: 0.55rem 0.7rem;
+    background: rgba(255,255,255,0.5);
+    border-radius: 8px;
+    font-size: 0.8rem;
+  }
+  .agent-feed-item__time {
+    font-size: 0.66rem; color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    flex-shrink: 0; min-width: 65px;
+  }
+  .agent-feed-item__text { color: var(--ink-soft); line-height: 1.4; }
+  .agent-feed-item__text strong { color: var(--demo-accent-dark); }
+
+  /* ========== TABLE ========== */
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
+  .data-table thead th {
+    text-align: left; padding: 0.6rem 0.7rem;
+    background: var(--demo-accent-soft); color: var(--demo-accent-dark);
+    font-size: 0.68rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  .data-table tbody td {
+    padding: 0.55rem 0.7rem;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    color: var(--ink-soft);
+  }
+  .data-table tbody tr:hover { background: var(--demo-accent-soft); }
+  .data-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .data-table .badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 0.7rem; font-weight: 700; }
+  .data-table .badge.green { background: rgba(47,111,78,0.15); color: #2f6f4e; }
+  .data-table .badge.red { background: rgba(178,58,72,0.15); color: #b23a48; }
+  .data-table .badge.amber { background: rgba(212,172,76,0.18); color: #8a6d23; }
+
+  .detail-pane {
+    background: var(--card-bg, #fff);
+    border: 1px solid var(--card-border, rgba(0,0,0,0.06));
+    border-radius: 14px;
+    padding: 0.9rem 1rem;
+    max-height: 360px; overflow-y: auto;
+  }
+
+  /* ========== ANIMATIONS ========== */
+  @keyframes kpiPulse { 0% { transform: scale(0.95); opacity: 0; } 100% { transform: scale(1); opacity: 1; }}
+  .kpi-card.animate { animation: kpiPulse 0.6s cubic-bezier(.2,.9,.2,1) both; }
+  .kpi-card:nth-child(1) { animation-delay: 0.05s; }
+  .kpi-card:nth-child(2) { animation-delay: 0.12s; }
+  .kpi-card:nth-child(3) { animation-delay: 0.19s; }
+  .kpi-card:nth-child(4) { animation-delay: 0.26s; }
+  .kpi-card:nth-child(5) { animation-delay: 0.33s; }
+  @keyframes chartIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); }}
+  .chart-card { animation: chartIn 0.7s cubic-bezier(.2,.9,.2,1) both; }
+  .chart-card:nth-child(1) { animation-delay: 0.45s; }
+  .chart-card:nth-child(2) { animation-delay: 0.55s; }
+  .chart-card:nth-child(3) { animation-delay: 0.65s; }
+  .chart-card:nth-child(4) { animation-delay: 0.75s; }
+
+  @keyframes aiIn { from { opacity: 0; transform: translateX(-15px); } to { opacity: 1; transform: translateX(0); }}
+  .ai-insights { animation: aiIn 0.6s cubic-bezier(.2,.9,.2,1) 0.3s both; }
+
+  .demo-back {
+    position: fixed; bottom: 1rem; left: 80px; z-index: 50;
+    background: linear-gradient(135deg, var(--demo-accent), var(--demo-accent-2));
+    color: #fff;
+    padding: 0.7rem 1.2rem; border-radius: 999px;
+    text-decoration: none; font-weight: 700; font-size: 0.85rem;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    transition: transform 0.2s;
+  }
+  .demo-back:hover { transform: translateY(-2px) scale(1.03); }
+
+  @media (max-width: 900px) {
+    .app-shell { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    .demo-back { left: 1rem; }
+    .chart-grid { grid-template-columns: 1fr; }
+    .top-bar { grid-template-columns: 1fr; }
+    .ai-input input { min-width: 100%; }
+  }
+
+  .skip-link { position: absolute; left: -9999px; }
+</style>
+</head>
+<body>
+  <a class="skip-link" href="#dashboard">Saltar al contenido</a>
+  <div class="ambient ambient--rich" aria-hidden="true">
+    <div class="ambient__mesh"></div>
+    <div class="ambient__grid"></div>
+    <div class="ambient__shimmer"></div>
+    <div class="ambient__blob ambient__blob--1"></div>
+    <div class="ambient__blob ambient__blob--2"></div>
+  </div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <div class="app-shell">
+    <!-- SIDEBAR (NEW vs Estándar) -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">2BI</div>
+      <div class="nav-icon-wrap">
+        <button class="nav-icon is-active" data-page="overview" title="Overview">▦</button>
+        <span class="nav-icon-tooltip">Overview</span>
+      </div>
+      <div class="nav-icon-wrap">
+        <button class="nav-icon" data-page="detail" title="Detalle">≡</button>
+        <span class="nav-icon-tooltip">Detalle</span>
+      </div>
+      <div class="nav-icon-wrap">
+        <button class="nav-icon" data-page="anomalies" title="Anomalías">⚡</button>
+        <span class="nav-icon-tooltip">Anomalías</span>
+      </div>
+      <div class="nav-icon-wrap">
+        <button class="nav-icon" data-page="forecast" title="Forecast">↗</button>
+        <span class="nav-icon-tooltip">Forecast</span>
+      </div>
+      <div style="flex: 1"></div>
+      <div class="nav-icon-wrap">
+        <button class="nav-icon" data-page="settings" title="Settings">⚙</button>
+        <span class="nav-icon-tooltip">Configuración</span>
+      </div>
+    </aside>
+
+    <main id="dashboard" class="dash-shell">
+      <div class="dash-header">
+        <div>
+          <span class="tier-badge">★★ Premium · Stack 2026</span>
+          <h1 class="dash-title" id="dash-title">Dashboard ejecutivo Premium</h1>
+          <p class="dash-subtitle" id="dash-subtitle">Microsoft Fabric, Direct Lake, AI Insights con Claude, forecast Python (sempy + Prophet) y agentes n8n.</p>
+        </div>
+        <a href="../../academia-premium.html" class="btn btn--ghost btn--sm">← Volver al programa</a>
+      </div>
+
+      <!-- TOP BAR with Fabric badge + AI input + meta info (NEW) -->
+      <div class="top-bar">
+        <div class="fabric-badge">
+          <span class="pulse-dot"></span>
+          <strong>Microsoft Fabric</strong>
+          <span class="sep">·</span>
+          <span>Direct Lake</span>
+          <span class="sep">·</span>
+          <span>F2 capacity</span>
+          <span class="sep">·</span>
+          <span>actualizado <strong id="last-update">hace 12s</strong></span>
+        </div>
+        <div class="ai-input">
+          <span class="ai-icon">A</span>
+          <input type="text" placeholder="Pregunta a Claude sobre los datos... ej: ¿qué causó el pico de paros en mayo?">
+          <span class="shortcut">⌘ K</span>
+        </div>
+        <div class="meta-info">
+          <span>👁 1,247 vistas hoy</span>
+        </div>
+      </div>
+
+      <!-- AI INSIGHTS CARD (NEW vs Estándar) -->
+      <div class="ai-insights">
+        <div class="ai-insights-head">
+          <span class="badge-pill">✦ AI Insights · Claude Sonnet</span>
+          <span class="timestamp" id="ai-timestamp">Generado hace 2 minutos</span>
+        </div>
+        <div class="ai-insights-grid" id="ai-insights-grid"></div>
+      </div>
+
+      <nav class="theme-tabs" role="tablist">
+        <button class="theme-tab is-active" role="tab" data-theme="mantenimiento" aria-selected="true"><span>⚙</span><span>Mantenimiento</span></button>
+        <button class="theme-tab" role="tab" data-theme="ventas" aria-selected="false"><span>◭</span><span>Ventas</span></button>
+        <button class="theme-tab" role="tab" data-theme="finanzas" aria-selected="false"><span>$</span><span>Finanzas</span></button>
+        <button class="theme-tab" role="tab" data-theme="inventario" aria-selected="false"><span>▤</span><span>Inventario</span></button>
+      </nav>
+
+      <div class="calc-groups-bar">
+        <span class="calc-groups-label">Calculation Group</span>
+        <button class="calc-pill is-active" data-calc="real">Valor real</button>
+        <button class="calc-pill" data-calc="ytd">YTD</button>
+        <button class="calc-pill" data-calc="mtd">MTD</button>
+        <button class="calc-pill" data-calc="mom">vs Mes anterior</button>
+        <button class="calc-pill" data-calc="yoy">vs Año anterior</button>
+        <button class="calc-pill" data-calc="forecast">Forecast 90d</button>
+      </div>
+
+      <div class="view-tabs">
+        <span class="view-label">Vista</span>
+        <button class="view-tab is-active" data-view="general">General</button>
+        <button class="view-tab" data-view="detalle">Detalle</button>
+        <button class="view-tab" data-view="comparativa">Comparativa</button>
+        <button class="view-tab" data-view="forecast">Forecast Python</button>
+      </div>
+
+      <section class="kpi-row" id="kpi-row" aria-label="Indicadores clave"></section>
+
+      <section class="slicers-row" id="slicers-row"></section>
+
+      <section class="chart-grid">
+        <div class="chart-card tall">
+          <div class="chart-head">
+            <div class="chart-title-wrap">
+              <h3 class="chart-title" id="chart-1-title">Tendencia con forecast</h3>
+              <span class="chart-source-badge python">Python · sempy</span>
+            </div>
+            <span class="chart-sub" id="chart-1-sub">12 meses + 3 proyectados (Prophet)</span>
+          </div>
+          <div class="chart-body"><canvas id="chart-1"></canvas></div>
+        </div>
+
+        <div class="chart-card tall">
+          <div class="chart-head">
+            <div class="chart-title-wrap">
+              <h3 class="chart-title" id="chart-2-title">Anomalías detectadas</h3>
+              <span class="chart-source-badge ai">AI · Claude</span>
+            </div>
+            <span class="chart-sub" id="chart-2-sub">σ &gt; 2.5 marcadas en rojo</span>
+          </div>
+          <div class="chart-body"><canvas id="chart-2"></canvas></div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-head">
+            <div class="chart-title-wrap">
+              <h3 class="chart-title" id="chart-3-title">Top 10 con drivers</h3>
+              <span class="chart-source-badge fabric">Direct Lake</span>
+            </div>
+            <span class="chart-sub" id="chart-3-sub">ranking + análisis de causas</span>
+          </div>
+          <div class="chart-body"><canvas id="chart-3"></canvas></div>
+        </div>
+
+        <!-- AGENT FEED instead of plain table (NEW) -->
+        <div class="agent-feed">
+          <div class="agent-feed-head">
+            <div class="agent-feed-icon">🤖</div>
+            <span class="agent-feed-title">Agente n8n + Anthropic</span>
+            <span class="agent-feed-status">activo</span>
+          </div>
+          <div class="agent-feed-list" id="agent-feed-list"></div>
+        </div>
+      </section>
+
+      <p style="margin-top: 2rem; text-align: center; color: var(--muted); font-size: 0.88rem; line-height: 1.7;">
+        Demo del programa <strong>Premium</strong> ($14,500 MXN). Stack BI 2026 completo: Power BI + Microsoft Fabric + Python + AI agents. <strong>12 sesiones</strong> de mentoría 1 a 1 + Office Hours.<br>
+        <a href="../../academia-premium.html" style="color: var(--demo-accent-dark); font-weight: 700;">Ver programa completo →</a>
+      </p>
+    </main>
+  </div>
+
+  <a href="../../academia-premium.html" class="demo-back">← Programa Premium</a>
+
+<script>
+const THEMES = {
+  mantenimiento: {
+    title: 'OEE con forecast Prophet y anomalías AI',
+    subtitle: 'Operaciones · Direct Lake · sempy + Claude · agente WhatsApp',
+    aiInsights: [
+      { type: 'opportunity', text: '<strong>Oportunidad detectada:</strong> Planta A redujo paros mecánicos 18% — replicable a Planta B con potencial de +3.2pp en OEE corporativo (Claude estimó probabilidad: 78%).' },
+      { type: 'warning', text: '<strong>Anomalía:</strong> EXT-04 acumula 24 hrs de paros en septiembre — forecast Prophet predice escalamiento a 31 hrs en octubre si no hay intervención.' },
+      { type: 'normal', text: '<strong>Tendencia:</strong> MTBF mejora 5.4% mensual sostenido. Ritmo proyectado alcanza meta corporativa de 160 hrs en Q1 2027.' }
+    ],
+    kpis: [
+      { label: 'OEE', value: 87.3, suffix: '%', status: 'green', delta: '+2.1pp', dir: 'up', forecast: '+1.2pp en 30d', spark: [82.1,83.4,84.0,85.2,86.1,85.8,86.4,87.3,87.0,87.5,87.3,87.3], fabric: true },
+      { label: 'MTBF', value: 142, suffix: ' hrs', status: 'green', delta: '+8 hrs', dir: 'up', forecast: '+12 hrs en 30d', spark: [118,124,128,132,135,138,140,138,141,142,142,142], fabric: true },
+      { label: 'MTTR', value: 23, suffix: ' min', status: 'green', delta: '−4 min', dir: 'up', forecast: '−2 min en 30d', spark: [32,30,28,27,26,25,24,25,24,23,23,23], fabric: true },
+      { label: 'Paros', value: 47, suffix: '', status: 'amber', delta: '+5', dir: 'down', forecast: '+8 en 30d', spark: [38,42,40,44,42,45,43,40,42,44,46,47], fabric: true },
+      { label: 'Disponibilidad', value: 94.2, suffix: '%', status: 'green', delta: '+0.8pp', dir: 'up', forecast: '+0.5pp en 30d', spark: [89.5,90.2,91.4,92.0,92.5,92.8,93.2,93.0,93.5,93.8,94.0,94.2], fabric: true }
+    ],
+    slicers: [
+      { id: 'planta', label: 'Planta', options: ['Planta A','Planta B','Planta C'] },
+      { id: 'linea', label: 'Línea', options: ['L-01','L-02','L-03','L-04','L-05'] },
+      { id: 'mes', label: 'Mes', options: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'] },
+      { id: 'turno', label: 'Turno', options: ['Matutino','Vespertino','Nocturno'] }
+    ],
+    charts: {
+      c1: {
+        labels: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic','Ene+1','Feb+1','Mar+1'],
+        actual: [82.1,83.4,84.0,85.2,86.1,85.8,86.4,87.3,87.0,87.5,87.3,87.3, null, null, null],
+        forecast: [null,null,null,null,null,null,null,null,null,null,null,87.3, 87.9, 88.4, 88.8],
+        upper: [null,null,null,null,null,null,null,null,null,null,null,87.3, 88.7, 89.6, 90.4],
+        lower: [null,null,null,null,null,null,null,null,null,null,null,87.3, 87.1, 87.2, 87.2]
+      },
+      c2: {
+        labels: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+        data: [38, 42, 40, 44, 88, 45, 43, 40, 92, 44, 46, 47],
+        anomalyPoints: [4, 8]
+      },
+      c3: { labels: ['EXT-04','INY-12','EMB-07','CTM-03','CTM-09','EXT-02','INY-08','TQ-15','EXT-11','MOL-06'], data: [24,21,18,16,14,13,12,10,9,8] }
+    },
+    agentFeed: [
+      { time: 'hace 23 min', text: 'Detecté <strong>spike de paros en EXT-04</strong> (+47% vs ayer). Envié alerta al WhatsApp de @MgrPlantaA.' },
+      { time: 'hace 2 hrs',  text: 'Briefing matutino 06:00 entregado a 4 stakeholders. <strong>Engagement: 100%</strong>.' },
+      { time: 'hace 5 hrs',  text: 'Forecast Prophet ejecutado. <strong>OEE proyectado octubre: 87.9%</strong> (banda 87.1–88.7).' },
+      { time: 'hace 8 hrs',  text: 'Refresh nocturno completado. <strong>2.3M filas procesadas en 47s</strong> (Direct Lake).' },
+      { time: 'hace 1 día',  text: 'Generé 3 narrativas ejecutivas con Claude Sonnet. PDF en SharePoint.' }
+    ]
+  },
+
+  ventas: {
+    title: 'Ventas con forecast Prophet y AI insights',
+    subtitle: 'Comercial · Direct Lake · pipeline predictivo · agente CRM',
+    aiInsights: [
+      { type: 'opportunity', text: '<strong>Oportunidad:</strong> Sofía R. (Centro) tiene ratio cierre 38% vs promedio 24%. Identificadas 12 cuentas con perfil similar al de sus deals ganados.' },
+      { type: 'warning', text: '<strong>Riesgo:</strong> Margen Norte cae 1.8pp en 60 días. Análisis Claude detecta alza en costo de envío como driver principal (correlación 0.87).' },
+      { type: 'normal', text: '<strong>Forecast:</strong> Prophet proyecta cierre Q4 en $52.8M (+9.5% vs Q4 2025) con confianza 82%.' }
+    ],
+    kpis: [
+      { label: 'Ventas YTD', value: 48.2, suffix: 'M', prefix: '$', status: 'green', delta: '+12.4%', dir: 'up', forecast: '$5.4M en 30d', spark: [3.1,3.4,3.8,4.2,4.5,4.7,4.6,4.8,4.9,5.1,5.0,5.1], fabric: true },
+      { label: 'Crecimiento YoY', value: 12.4, suffix: '%', status: 'green', delta: '+3.1pp', dir: 'up', forecast: '+0.8pp en 30d', spark: [8.1,9.2,10.5,11.0,11.5,11.8,12.0,12.1,12.2,12.3,12.4,12.4], fabric: true },
+      { label: 'Clientes activos', value: 1247, suffix: '', status: 'green', delta: '+89', dir: 'up', forecast: '+62 en 30d', spark: [1100,1130,1158,1170,1195,1210,1220,1225,1232,1238,1244,1247], fabric: true },
+      { label: 'Ticket promedio', value: 38.7, suffix: 'K', prefix: '$', status: 'green', delta: '+$2.4K', dir: 'up', forecast: '+$1.1K en 30d', spark: [35.2,36.1,36.5,37.0,37.4,37.8,38.0,38.2,38.4,38.5,38.6,38.7], fabric: true },
+      { label: 'Margen', value: 32.1, suffix: '%', status: 'amber', delta: '−0.4pp', dir: 'down', forecast: '−0.6pp en 30d', spark: [33.5,33.0,32.8,32.6,32.5,32.4,32.3,32.3,32.2,32.2,32.1,32.1], fabric: true }
+    ],
+    slicers: [
+      { id: 'region', label: 'Región', options: ['Norte','Centro','Sur','Bajío'] },
+      { id: 'vendedor', label: 'Vendedor', options: ['Alvaro P.','Sofía R.','Memo C.','Jorge L.','Ana M.','Luis V.'] },
+      { id: 'categoria', label: 'Categoría', options: ['Industrial','Construcción','Retail','Servicios','Tecnología'] },
+      { id: 'mes', label: 'Mes', options: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'] }
+    ],
+    charts: {
+      c1: {
+        labels: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic','Ene+1','Feb+1','Mar+1'],
+        actual: [3.1,3.4,3.8,4.2,4.5,4.7,4.6,4.8,4.9,5.1,5.0,5.1, null, null, null],
+        forecast: [null,null,null,null,null,null,null,null,null,null,null,5.1, 5.3, 5.5, 5.7],
+        upper: [null,null,null,null,null,null,null,null,null,null,null,5.1, 5.6, 6.0, 6.3],
+        lower: [null,null,null,null,null,null,null,null,null,null,null,5.1, 5.0, 5.0, 5.1]
+      },
+      c2: {
+        labels: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+        data: [33,32,31,33,33,32,32,31,30,31,32,31],
+        anomalyPoints: []
+      },
+      c3: { labels: ['Acero P-42','Cemento Tipo I','Resina Epoxi','Tubería 4in','Lámina Galv.','Pintura Industrial','Ferretería Pack','Aislante Térmico','Tornillería','Soldadura'], data: [842,712,658,591,547,489,432,398,367,312] }
+    },
+    agentFeed: [
+      { time: 'hace 7 min', text: 'Cliente <strong>ACME Industries</strong> abrió 3 propuestas en 24 hrs. Notifiqué a Memo C. (probabilidad de conversión: 71%).' },
+      { time: 'hace 1 hr',  text: 'Reporte semanal generado. <strong>Sofía R. lidera con $10.8M YTD</strong>. Email enviado a CFO.' },
+      { time: 'hace 4 hrs', text: 'Forecast Prophet recalculado tras nuevo dato. <strong>Q4 ajustado a $52.8M</strong> (de $52.3M).' },
+      { time: 'hace 6 hrs', text: 'Dashboard refrescado · 1.8M filas · <strong>Direct Lake mode 38ms</strong>.' }
+    ]
+  },
+
+  finanzas: {
+    title: 'Finanzas con forecast Prophet y razones AI',
+    subtitle: 'Financials · Direct Lake · Python sempy · agente CFO briefing',
+    aiInsights: [
+      { type: 'opportunity', text: '<strong>Oportunidad:</strong> EBITDA crece 11.2% YoY con margen estable. Cash op acumula buffer suficiente para CAPEX Q1.' },
+      { type: 'warning', text: '<strong>Atención:</strong> Gastos op. 5.6% sobre presupuesto. Claude identificó nómina TI (+18%) y servicios (+12%) como drivers principales.' },
+      { type: 'normal', text: '<strong>Forecast:</strong> Prophet predice revenue diciembre $4.5M (vs forecast lineal $5.1M). Estacionalidad navideña ya considerada.' }
+    ],
+    kpis: [
+      { label: 'Revenue', value: 52.3, suffix: 'M', prefix: '$', status: 'green', delta: '+9.8%', dir: 'up', forecast: '$4.6M en 30d', spark: [3.8,4.0,4.2,4.4,4.5,4.6,4.5,4.7,4.8,4.9,4.7,4.2], fabric: true },
+      { label: 'EBITDA', value: 14.7, suffix: 'M', prefix: '$', status: 'green', delta: '+11.2%', dir: 'up', forecast: '$1.4M en 30d', spark: [1.0,1.1,1.2,1.2,1.3,1.3,1.3,1.3,1.3,1.4,1.3,1.0], fabric: true },
+      { label: 'Margen neto', value: 28.1, suffix: '%', status: 'green', delta: '+1.4pp', dir: 'up', forecast: '+0.3pp en 30d', spark: [26.3,26.5,26.8,27.1,27.3,27.5,27.7,27.8,27.9,28.0,28.1,28.1], fabric: true },
+      { label: 'Cash op.', value: 3.2, suffix: 'M', prefix: '$', status: 'green', delta: '+$0.4M', dir: 'up', forecast: '+$0.3M en 30d', spark: [2.4,2.5,2.6,2.7,2.8,2.9,3.0,3.0,3.1,3.1,3.2,3.2], fabric: true },
+      { label: 'Quick ratio', value: 1.42, suffix: '', status: 'green', delta: '+0.08', dir: 'up', forecast: '+0.04 en 30d', spark: [1.30,1.32,1.34,1.35,1.37,1.38,1.39,1.40,1.41,1.41,1.42,1.42], fabric: true }
+    ],
+    slicers: [
+      { id: 'centro', label: 'Centro de costo', options: ['Operaciones','Comercial','Admin','TI'] },
+      { id: 'tipo', label: 'Tipo', options: ['Real','Presupuesto','Forecast'] },
+      { id: 'mes', label: 'Mes', options: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'] },
+      { id: 'moneda', label: 'Moneda', options: ['MXN','USD'] }
+    ],
+    charts: {
+      c1: {
+        labels: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic','Ene+1','Feb+1','Mar+1'],
+        actual: [3.8,4.0,4.2,4.4,4.5,4.6,4.5,4.7,4.8,4.9,4.7,4.2, null, null, null],
+        forecast: [null,null,null,null,null,null,null,null,null,null,null,4.2, 4.6, 4.9, 5.1],
+        upper: [null,null,null,null,null,null,null,null,null,null,null,4.2, 5.0, 5.5, 5.8],
+        lower: [null,null,null,null,null,null,null,null,null,null,null,4.2, 4.2, 4.3, 4.4]
+      },
+      c2: {
+        labels: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+        data: [28.0,28.5,29.0,29.5,30.0,30.4,30.8,31.3,38.5,31.8,32.1,32.1],
+        anomalyPoints: [8]
+      },
+      c3: { labels: ['Margen bruto','Margen op.','Margen neto','ROE','ROA','Quick ratio','Current ratio','Deuda/Equity','Días por cobrar','Rotación inv.'], data: [42, 31, 28, 18, 12, 1.42, 1.85, 0.42, 38, 4.2] }
+    },
+    agentFeed: [
+      { time: 'hace 12 min', text: 'CFO consultó dashboard. Claude generó <strong>2 narrativas en lenguaje natural</strong> sobre desviaciones del presupuesto.' },
+      { time: 'hace 3 hrs',  text: 'Forecast Prophet completado. <strong>Revenue Q4 proyectado: $13.2M</strong> con banda confianza 82%.' },
+      { time: 'hace 6 hrs',  text: 'Anomalía: <strong>EBITDA septiembre +38% vs Aug</strong>. Claude analiza causas, briefing en 15 min.' },
+      { time: 'hace 9 hrs',  text: 'Refresh nocturno · 4.2M filas · <strong>52s con Direct Lake</strong> (vs 4 min en Import mode).' }
+    ]
+  },
+
+  inventario: {
+    title: 'Inventarios con forecast Prophet y restocks AI',
+    subtitle: 'Supply chain · Direct Lake · Python · agente compras',
+    aiInsights: [
+      { type: 'warning', text: '<strong>Riesgo crítico:</strong> SKU-04821 y SKU-12903 en stockout total. Forecast Prophet predice pérdida de venta de $145K MXN si no hay restock en 5 días.' },
+      { type: 'opportunity', text: '<strong>Oportunidad:</strong> Rotación clase A subió 0.4x — posible reducir buffer stock 8% sin riesgo (Claude calculó margen seguridad).' },
+      { type: 'normal', text: '<strong>Forecast:</strong> Días stock proyectados a 78 en 30d (vs actual 87) si rotación mantiene ritmo.' }
+    ],
+    kpis: [
+      { label: 'Valor inv.', value: 8.4, suffix: 'M', prefix: '$', status: 'green', delta: '−$0.3M', dir: 'up', forecast: '−$0.2M en 30d', spark: [9.2,9.0,8.9,8.8,8.7,8.6,8.5,8.5,8.4,8.4,8.4,8.4], fabric: true },
+      { label: 'Rotación', value: 4.2, suffix: 'x', status: 'green', delta: '+0.4x', dir: 'up', forecast: '+0.2x en 30d', spark: [3.6,3.7,3.8,3.8,3.9,4.0,4.0,4.1,4.1,4.2,4.2,4.2], fabric: true },
+      { label: 'Días stock', value: 87, suffix: '', status: 'green', delta: '−9 días', dir: 'up', forecast: '−5 días en 30d', spark: [101,99,96,94,92,90,89,88,87,87,87,87], fabric: true },
+      { label: 'SKUs activos', value: 1432, suffix: '', status: 'green', delta: '+47', dir: 'up', forecast: '+12 en 30d', spark: [1340,1358,1370,1385,1400,1410,1418,1422,1426,1428,1430,1432], fabric: true },
+      { label: 'Obsoleto', value: 6.2, suffix: '%', status: 'green', delta: '−1.1pp', dir: 'up', forecast: '−0.4pp en 30d', spark: [7.5,7.4,7.3,7.1,6.9,6.7,6.6,6.5,6.4,6.3,6.2,6.2], fabric: true }
+    ],
+    slicers: [
+      { id: 'almacen', label: 'Almacén', options: ['CDMX','GDL','MTY','BAJ','VRZ'] },
+      { id: 'categoria', label: 'Categoría', options: ['Materia prima','Producto term.','Refacciones','Insumos'] },
+      { id: 'estado', label: 'Estado', options: ['Disponible','En tránsito','Reservado'] },
+      { id: 'abc', label: 'Clase ABC', options: ['A','B','C'] }
+    ],
+    charts: {
+      c1: {
+        labels: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic','Ene+1','Feb+1','Mar+1'],
+        actual: [9.2,9.0,8.9,8.8,8.7,8.6,8.5,8.5,8.4,8.4,8.4,8.4, null, null, null],
+        forecast: [null,null,null,null,null,null,null,null,null,null,null,8.4, 8.2, 8.1, 7.9],
+        upper: [null,null,null,null,null,null,null,null,null,null,null,8.4, 8.6, 8.7, 8.7],
+        lower: [null,null,null,null,null,null,null,null,null,null,null,8.4, 7.8, 7.5, 7.1]
+      },
+      c2: {
+        labels: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+        data: [78,76,74,71,68,67,66,68,142,68,67,68],
+        anomalyPoints: [8]
+      },
+      c3: { labels: ['SKU-04821','SKU-12903','SKU-07712','SKU-44102','SKU-99812','SKU-11203','SKU-67721','SKU-23410','SKU-88210','SKU-01910'], data: [142,128,114,98,92,87,71,68,52,41] }
+    },
+    agentFeed: [
+      { time: 'hace 4 min', text: '<strong>ALERTA CRÍTICA:</strong> SKU-04821 (CDMX) cayó a 0 unidades. Generé orden de compra automática.' },
+      { time: 'hace 28 min', text: 'Forecast restock recalculado. <strong>Pedido sugerido: 380 unidades para 60 días</strong>.' },
+      { time: 'hace 2 hrs', text: 'Análisis ABC actualizado. <strong>3 SKUs migraron de B → A</strong> por aumento en rotación.' },
+      { time: 'hace 5 hrs', text: 'Refresh Direct Lake · <strong>1.4M filas en 31s</strong>. 4 anomalías detectadas, Claude generó briefing.' }
+    ]
+  }
+};
+
+const ACCENT = '#6b4d8a';
+const ACCENT_2 = '#8c64b3';
+const ACCENT_DARK = '#4f3868';
+const FABRIC = '#117dbb';
+
+Chart.defaults.font.family = "'Outfit', system-ui, sans-serif";
+Chart.defaults.font.size = 11;
+Chart.defaults.color = '#475569';
+Chart.defaults.animation.duration = 1000;
+Chart.defaults.animation.easing = 'easeOutCubic';
+
+let currentTheme = 'mantenimiento';
+let currentCalc = 'real';
+let activeFilters = {};
+let charts = { c1: null, c2: null, c3: null };
+
+function animateNumber(el, from, to, suffix, prefix, duration = 1100) {
+  const start = performance.now();
+  function tick(now) {
+    const t = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - t, 3);
+    const value = from + (to - from) * eased;
+    let display;
+    if (Number.isInteger(to) && Math.abs(to) < 10000) display = Math.round(value).toLocaleString('es-MX');
+    else if (Math.abs(to) < 100) display = value.toFixed(1);
+    else display = value.toFixed(0);
+    el.textContent = (prefix || '') + display + (suffix || '');
+    if (t < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+function renderSparkline(values, color) {
+  const w = 70, h = 28;
+  const min = Math.min(...values), max = Math.max(...values);
+  const range = max - min || 1;
+  const points = values.map((v, i) => {
+    const x = (i / (values.length - 1)) * w;
+    const y = h - ((v - min) / range) * (h - 4) - 2;
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  }).join(' ');
+  const lastX = w; const lastY = h - ((values[values.length - 1] - min) / range) * (h - 4) - 2;
+  return `<svg class="kpi-sparkline" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
+    <polyline points="${points}" fill="none" stroke="${color}" stroke-width="1.6" stroke-linejoin="round"/>
+    <circle cx="${lastX}" cy="${lastY.toFixed(1)}" r="2.2" fill="${color}"/>
+  </svg>`;
+}
+
+function renderHeader(theme) {
+  document.getElementById('dash-title').textContent = 'Dashboard Premium · ' + theme.title;
+  document.getElementById('dash-subtitle').textContent = theme.subtitle;
+}
+
+function renderAIInsights(theme) {
+  const grid = document.getElementById('ai-insights-grid');
+  grid.innerHTML = theme.aiInsights.map(i =>
+    `<div class="insight-item ${i.type === 'warning' ? 'warning' : (i.type === 'opportunity' ? 'opportunity' : '')}">${i.text}</div>`
+  ).join('');
+}
+
+function renderKPIs(theme) {
+  const row = document.getElementById('kpi-row');
+  row.innerHTML = '';
+  theme.kpis.forEach((k, i) => {
+    const card = document.createElement('div');
+    card.className = 'kpi-card animate';
+    card.innerHTML = `
+      <div class="kpi-header">
+        <span class="kpi-status-dot ${k.status}"></span>
+        <span class="kpi-label">${k.label}</span>
+        ${k.fabric ? '<span class="kpi-fabric-tag">DL</span>' : ''}
+      </div>
+      <div class="kpi-value">${k.prefix || ''}0${k.suffix || ''}</div>
+      <div class="kpi-bottom">
+        <div class="kpi-meta">
+          <span class="kpi-delta ${k.dir}">${k.dir === 'up' ? '▲' : '▼'} ${k.delta}</span>
+          <span class="kpi-forecast">${k.forecast}</span>
+        </div>
+        ${renderSparkline(k.spark, ACCENT_DARK)}
+      </div>
+    `;
+    row.appendChild(card);
+    const valEl = card.querySelector('.kpi-value');
+    setTimeout(() => animateNumber(valEl, 0, k.value, k.suffix || '', k.prefix || '', 1100 + i * 60), 200 + i * 60);
+  });
+}
+
+function renderSlicers(theme) {
+  const row = document.getElementById('slicers-row');
+  row.innerHTML = '';
+  activeFilters = {};
+  theme.slicers.forEach(s => {
+    activeFilters[s.id] = null;
+    const wrap = document.createElement('div');
+    wrap.className = 'slicer';
+    let pillsHtml = s.options.map(opt => `<button class="slicer-pill" data-slicer="${s.id}" data-value="${opt}">${opt}</button>`).join('');
+    wrap.innerHTML = `<span class="slicer-label">${s.label}</span><div class="slicer-pills">${pillsHtml}</div>`;
+    row.appendChild(wrap);
+  });
+  const clear = document.createElement('button');
+  clear.className = 'slicer-clear'; clear.type = 'button'; clear.textContent = 'Limpiar filtros';
+  clear.addEventListener('click', clearAllFilters);
+  row.appendChild(clear);
+
+  row.querySelectorAll('.slicer-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      const sid = pill.dataset.slicer; const val = pill.dataset.value;
+      const wasActive = pill.classList.contains('is-active');
+      row.querySelectorAll(`.slicer-pill[data-slicer="${sid}"]`).forEach(p => p.classList.remove('is-active'));
+      if (!wasActive) { pill.classList.add('is-active'); activeFilters[sid] = val; } else activeFilters[sid] = null;
+      applyFilters();
+    });
+  });
+}
+
+function clearAllFilters() {
+  Object.keys(activeFilters).forEach(k => activeFilters[k] = null);
+  document.querySelectorAll('.slicer-pill.is-active').forEach(p => p.classList.remove('is-active'));
+  applyFilters();
+}
+
+function applyFilters() {
+  const filterCount = Object.values(activeFilters).filter(v => v !== null).length;
+  const calcMultiplier = { real: 1, ytd: 1, mtd: 0.65, mom: 0.12, yoy: 0.18, forecast: 1.08 }[currentCalc] || 1;
+  if (filterCount === 0 && currentCalc === 'real') {
+    renderCharts(THEMES[currentTheme]);
+    return;
+  }
+  const scale = filterCount === 0 ? 1 : Math.max(0.18, 1 - filterCount * 0.22);
+  const seed = filterCount + Object.values(activeFilters).filter(Boolean).join('').length + currentCalc.length;
+  const themeCopy = JSON.parse(JSON.stringify(THEMES[currentTheme]));
+
+  themeCopy.kpis.forEach(k => {
+    const variation = ((seed * 7) % 11 - 5) / 100;
+    k.value = +(k.value * scale * calcMultiplier * (1 + variation)).toFixed(k.value < 100 ? 1 : 0);
+    k.spark = k.spark.map(s => +(s * scale * calcMultiplier * (1 + variation)).toFixed(1));
+  });
+
+  const mutate = (arr) => arr.map((v,i) => v === null ? null : +(v * scale * calcMultiplier * (1 + ((seed + i) % 9 - 4) / 100)).toFixed(2));
+  themeCopy.charts.c1.actual = mutate(themeCopy.charts.c1.actual);
+  themeCopy.charts.c1.forecast = mutate(themeCopy.charts.c1.forecast);
+  themeCopy.charts.c1.upper = mutate(themeCopy.charts.c1.upper);
+  themeCopy.charts.c1.lower = mutate(themeCopy.charts.c1.lower);
+  themeCopy.charts.c2.data = mutate(themeCopy.charts.c2.data);
+  themeCopy.charts.c3.data = mutate(themeCopy.charts.c3.data);
+
+  renderKPIs(themeCopy);
+  renderCharts(themeCopy);
+}
+
+function renderCharts(theme) {
+  // Chart 1: Forecast with confidence band
+  const c1 = theme.charts.c1;
+  document.getElementById('chart-1-title').textContent = 'Tendencia con forecast Python (Prophet)';
+  document.getElementById('chart-1-sub').textContent = '12 meses + 3 proyectados con banda confianza 80%';
+  if (charts.c1) charts.c1.destroy();
+  charts.c1 = new Chart(document.getElementById('chart-1'), {
+    type: 'line',
+    data: {
+      labels: c1.labels,
+      datasets: [
+        { label: 'Real',          data: c1.actual,    borderColor: ACCENT_DARK, backgroundColor: 'transparent', borderWidth: 2.5, tension: 0.3, pointRadius: 3, pointHoverRadius: 6 },
+        { label: 'Forecast',      data: c1.forecast,  borderColor: ACCENT_2,    borderDash: [5, 5], backgroundColor: 'transparent', borderWidth: 2, tension: 0.3, pointRadius: 3, pointStyle: 'rect' },
+        { label: 'Banda superior',data: c1.upper,     borderColor: 'rgba(140,100,179,0.3)', backgroundColor: 'rgba(140,100,179,0.12)', borderWidth: 1, tension: 0.3, pointRadius: 0, fill: '+1' },
+        { label: 'Banda inferior',data: c1.lower,     borderColor: 'rgba(140,100,179,0.3)', backgroundColor: 'transparent', borderWidth: 1, tension: 0.3, pointRadius: 0 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: { legend: { position: 'bottom', labels: { filter: i => !i.text.includes('Banda inferior') }} },
+      scales: { y: { grid: { color: 'rgba(0,0,0,0.05)' }}, x: { grid: { display: false }}}
+    }
+  });
+
+  // Chart 2: Anomaly detection (line with red dots on anomalies)
+  const c2 = theme.charts.c2;
+  document.getElementById('chart-2-title').textContent = 'Detección de anomalías (σ > 2.5)';
+  document.getElementById('chart-2-sub').textContent = `${(c2.anomalyPoints || []).length} anomalías detectadas por Claude`;
+  if (charts.c2) charts.c2.destroy();
+  const pointBg = c2.data.map((_, i) => (c2.anomalyPoints || []).includes(i) ? '#b23a48' : ACCENT);
+  const pointRad = c2.data.map((_, i) => (c2.anomalyPoints || []).includes(i) ? 8 : 4);
+  charts.c2 = new Chart(document.getElementById('chart-2'), {
+    type: 'line',
+    data: { labels: c2.labels, datasets: [{ label: 'Datos', data: c2.data, borderColor: ACCENT, backgroundColor: 'rgba(107,77,138,0.12)', borderWidth: 2, tension: 0.25, pointBackgroundColor: pointBg, pointRadius: pointRad, pointHoverRadius: pointRad.map(r => r + 2), fill: true }]},
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }},
+      scales: { y: { grid: { color: 'rgba(0,0,0,0.05)' }}, x: { grid: { display: false }}}
+    }
+  });
+
+  // Chart 3: top 10 with palette
+  const c3 = theme.charts.c3;
+  document.getElementById('chart-3-title').textContent = c3.labels && c3.labels[0].length > 8 ? 'Ranking dinámico (Direct Lake)' : 'Top 10';
+  document.getElementById('chart-3-sub').textContent = 'leídos en <50ms vía OneLake';
+  if (charts.c3) charts.c3.destroy();
+  const palette = [ACCENT_DARK, ACCENT, ACCENT_2, '#a37bc4', '#bca0d3', '#cdb7df'];
+  charts.c3 = new Chart(document.getElementById('chart-3'), {
+    type: 'bar',
+    data: { labels: c3.labels, datasets: [{ data: c3.data, backgroundColor: c3.labels.map((_,i) => palette[i % palette.length]), borderRadius: 4 }]},
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      indexAxis: 'y',
+      plugins: { legend: { display: false }},
+      scales: { x: { grid: { color: 'rgba(0,0,0,0.05)' }}, y: { grid: { display: false }}}
+    }
+  });
+}
+
+function renderAgentFeed(theme) {
+  const list = document.getElementById('agent-feed-list');
+  list.innerHTML = theme.agentFeed.map(item =>
+    `<div class="agent-feed-item">
+      <span class="agent-feed-item__time">${item.time}</span>
+      <span class="agent-feed-item__text">${item.text}</span>
+    </div>`
+  ).join('');
+}
+
+function renderDashboard(themeKey) {
+  currentTheme = themeKey;
+  const theme = THEMES[themeKey];
+  renderHeader(theme);
+  renderAIInsights(theme);
+  renderKPIs(theme);
+  renderSlicers(theme);
+  renderCharts(theme);
+  renderAgentFeed(theme);
+}
+
+document.querySelectorAll('.theme-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.theme-tab').forEach(t => { t.classList.remove('is-active'); t.setAttribute('aria-selected', 'false'); });
+    tab.classList.add('is-active'); tab.setAttribute('aria-selected', 'true');
+    renderDashboard(tab.dataset.theme);
+  });
+});
+document.querySelectorAll('.calc-pill').forEach(pill => {
+  pill.addEventListener('click', () => {
+    document.querySelectorAll('.calc-pill').forEach(p => p.classList.remove('is-active'));
+    pill.classList.add('is-active');
+    currentCalc = pill.dataset.calc;
+    applyFilters();
+  });
+});
+document.querySelectorAll('.view-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.view-tab').forEach(t => t.classList.remove('is-active'));
+    tab.classList.add('is-active');
+  });
+});
+document.querySelectorAll('.nav-icon[data-page]').forEach(icon => {
+  icon.addEventListener('click', () => {
+    document.querySelectorAll('.nav-icon[data-page]').forEach(i => i.classList.remove('is-active'));
+    icon.classList.add('is-active');
+  });
+});
+
+// Update "actualizado hace X" every 5s for that real-time feel
+let updateSeconds = 12;
+setInterval(() => {
+  updateSeconds += Math.floor(Math.random() * 8) + 3;
+  if (updateSeconds > 60) updateSeconds = Math.floor(Math.random() * 15) + 8;
+  document.getElementById('last-update').textContent = `hace ${updateSeconds}s`;
+}, 5000);
+
+// Initial
+const urlParams = new URLSearchParams(location.search);
+const urlTheme = urlParams.get('theme');
+if (urlTheme && THEMES[urlTheme]) {
+  document.querySelectorAll('.theme-tab').forEach(t => {
+    t.classList.toggle('is-active', t.dataset.theme === urlTheme);
+    t.setAttribute('aria-selected', t.dataset.theme === urlTheme);
+  });
+  renderDashboard(urlTheme);
+} else {
+  renderDashboard('mantenimiento');
+}
+</script>
+</body>
+</html>

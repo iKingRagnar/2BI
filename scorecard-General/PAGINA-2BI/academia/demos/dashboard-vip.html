@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="es" data-page="academia-demo-vip">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a4a7c">
+<meta name="description" content="Demo Power BI VIP In-Company 2BI: dashboard corporativo con branding, RLS, governance, deployment pipeline, mapa geo, alertas en vivo, executive mode.">
+<title>Demo VIP In-Company — Academia 2BI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Outfit:wght@300..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/theme.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --demo-accent: #2f6f4e;
+    --demo-accent-2: #4a8b6a;
+    --demo-accent-soft: rgba(47, 111, 78, 0.13);
+    --demo-accent-dark: #1f4e37;
+    --demo-fabric: #117dbb;
+    --demo-fabric-soft: rgba(17, 125, 187, 0.12);
+    --demo-bronze: #b08d57;
+  }
+
+  /* ================ CORPORATE HEADER (NEW vs Premium) ================ */
+  .corporate-header {
+    background: linear-gradient(135deg, var(--demo-accent-dark) 0%, #15402a 100%);
+    color: #fff;
+    padding: 0.85rem 1.4rem;
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    gap: 1rem;
+    align-items: center;
+    border-bottom: 3px solid var(--demo-accent);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+    position: sticky; top: 0; z-index: 50;
+  }
+  .corp-brand {
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .corp-logo-slot {
+    width: 44px; height: 44px;
+    background: linear-gradient(135deg, var(--demo-accent), var(--demo-accent-2));
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-weight: 800; font-size: 1rem;
+    border: 2px solid rgba(255,255,255,0.15);
+  }
+  .corp-info { display: flex; flex-direction: column; gap: 2px; }
+  .corp-name { font-family: 'Fraunces', serif; font-weight: 700; font-size: 1.05rem; line-height: 1; }
+  .corp-meta { font-size: 0.7rem; opacity: 0.7; letter-spacing: 0.1em; }
+
+  /* Pipeline status (NEW) */
+  .pipeline-status {
+    display: flex; align-items: center; gap: 0.55rem;
+    padding: 0.4rem 0.9rem;
+    background: rgba(255,255,255,0.06);
+    border-radius: 999px;
+    font-size: 0.75rem;
+  }
+  .pipeline-step {
+    display: flex; align-items: center; gap: 0.3rem;
+    color: rgba(255,255,255,0.85);
+  }
+  .pipeline-step .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--demo-accent-2);
+    box-shadow: 0 0 8px rgba(74,139,106,0.7);
+  }
+  .pipeline-arrow { color: rgba(255,255,255,0.4); }
+  .pipeline-step.active .dot { background: #80ff80; }
+
+  /* RLS user switcher (NEW) */
+  .rls-switcher {
+    display: flex; align-items: center; gap: 0.5rem;
+    padding: 0.4rem 0.85rem;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .rls-switcher:hover { background: rgba(255,255,255,0.12); }
+  .rls-icon {
+    width: 24px; height: 24px;
+    background: linear-gradient(135deg, var(--demo-accent), var(--demo-accent-2));
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.7rem; font-weight: 700; color: #fff;
+    flex-shrink: 0;
+  }
+  .rls-text { font-size: 0.78rem; }
+  .rls-text small { display: block; opacity: 0.7; font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; }
+  .rls-text strong { font-weight: 600; }
+  .rls-arrow { font-size: 0.7rem; opacity: 0.6; }
+
+  .corp-actions { display: flex; gap: 0.4rem; align-items: center; }
+  .corp-btn {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: #fff;
+    padding: 0.45rem 0.9rem;
+    border-radius: 8px;
+    font-size: 0.78rem; font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex; align-items: center; gap: 0.4rem;
+  }
+  .corp-btn:hover { background: rgba(255,255,255,0.15); }
+  .corp-btn.primary {
+    background: linear-gradient(135deg, var(--demo-accent), var(--demo-accent-2));
+    border-color: var(--demo-accent-2);
+  }
+
+  /* ================ APP SHELL ================ */
+  .app-shell {
+    display: grid;
+    grid-template-columns: 64px 1fr 320px;
+    min-height: calc(100vh - 70px);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    background: linear-gradient(180deg, #1a3d2a, #0d2418);
+    padding: 1rem 0.5rem;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 0.5rem;
+    box-shadow: 4px 0 24px rgba(0,0,0,0.06);
+  }
+  .sidebar-logo {
+    width: 44px; height: 44px;
+    background: linear-gradient(135deg, var(--demo-accent), var(--demo-accent-2));
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-weight: 800; font-size: 0.85rem;
+    margin-bottom: 0.6rem;
+  }
+  .nav-icon {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,0.55);
+    font-size: 1.2rem; cursor: pointer;
+    transition: all 0.2s; background: transparent; border: none;
+  }
+  .nav-icon:hover { background: rgba(255,255,255,0.06); color: #fff; }
+  .nav-icon.is-active {
+    background: linear-gradient(135deg, var(--demo-accent), var(--demo-accent-2));
+    color: #fff;
+  }
+
+  /* Main dashboard area */
+  .dash-shell {
+    padding: 1.2rem 1.4rem 4rem;
+    overflow: hidden;
+  }
+  .dash-header {
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 0.8rem;
+    margin-bottom: 1rem;
+  }
+  .tier-badge {
+    display: inline-block;
+    padding: 5px 14px;
+    background: linear-gradient(135deg, var(--demo-accent-dark), var(--demo-bronze));
+    color: #fff;
+    font-size: 0.7rem; font-weight: 800;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    border-radius: 999px;
+    box-shadow: 0 4px 12px rgba(31,78,55,0.4);
+    margin-bottom: 0.4rem;
+  }
+  .dash-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.5rem, 2.6vw, 2.2rem);
+    font-weight: 700; color: var(--ink); margin: 0; line-height: 1.1;
+  }
+  .dash-subtitle { color: var(--muted); font-size: 0.9rem; margin: 0.25rem 0 0; }
+
+  /* ================ GOVERNANCE SCORECARD (NEW) ================ */
+  .governance-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.7rem;
+    margin-bottom: 1.1rem;
+    padding: 0.85rem 1rem;
+    background: linear-gradient(135deg, var(--demo-accent-soft), rgba(255,255,255,0.4));
+    border: 1px solid rgba(47,111,78,0.2);
+    border-radius: 12px;
+  }
+  .gov-stat {
+    display: flex; align-items: center; gap: 0.55rem;
+    font-size: 0.78rem;
+  }
+  .gov-stat-icon {
+    width: 32px; height: 32px;
+    background: rgba(47,111,78,0.15);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--demo-accent-dark); font-weight: 800; font-size: 0.85rem;
+    flex-shrink: 0;
+  }
+  .gov-stat-text { display: flex; flex-direction: column; gap: 1px; line-height: 1.2; }
+  .gov-stat-label { font-size: 0.62rem; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; }
+  .gov-stat-value { font-family: 'Fraunces', serif; font-weight: 700; color: var(--ink); font-size: 0.95rem; }
+  .gov-stat-value.green { color: #2f6f4e; }
+  .gov-stat-value.amber { color: #8a6d23; }
+
+  /* ================ TOP BAR ================ */
+  .top-bar {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 0.7rem;
+    margin-bottom: 1rem;
+    padding: 0.7rem 0.95rem;
+    background: var(--card-bg, rgba(255,255,255,0.7));
+    border: 1px solid rgba(0,0,0,0.05);
+    border-radius: 12px;
+    align-items: center;
+  }
+  .fabric-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.45rem 0.85rem;
+    background: linear-gradient(135deg, var(--demo-fabric-soft), rgba(255,255,255,0.5));
+    border: 1px solid rgba(17,125,187,0.3);
+    border-radius: 10px;
+    font-size: 0.74rem; color: #0c5d8a; font-weight: 600;
+  }
+  .pulse-dot {
+    width: 7px; height: 7px;
+    background: var(--demo-fabric);
+    border-radius: 50%;
+    animation: pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { box-shadow: 0 0 0 0 rgba(17,125,187,0.6); }
+    50% { box-shadow: 0 0 0 8px rgba(17,125,187,0); }
+  }
+  .ai-input {
+    display: flex; align-items: center; gap: 0.5rem;
+    padding: 0.45rem 0.8rem;
+    background: linear-gradient(135deg, var(--demo-accent-soft), rgba(255,255,255,0.5));
+    border: 1px solid rgba(47,111,78,0.2);
+    border-radius: 999px;
+  }
+  .ai-input .ai-icon {
+    width: 22px; height: 22px;
+    background: linear-gradient(135deg, var(--demo-accent), var(--demo-accent-2));
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 0.65rem; font-weight: 700; flex-shrink: 0;
+  }
+  .ai-input input {
+    border: none; background: transparent; flex: 1;
+    font-family: inherit; font-size: 0.82rem; color: var(--ink);
+    outline: none; min-width: 200px;
+  }
+
+  /* Workflow integrations (NEW) */
+  .workflow-badges {
+    display: flex; gap: 0.4rem;
+  }
+  .workflow-badge {
+    display: inline-flex; align-items: center; gap: 0.3rem;
+    padding: 0.3rem 0.7rem;
+    background: rgba(0,0,0,0.04);
+    border: 1px solid rgba(0,0,0,0.06);
+    border-radius: 8px;
+    font-size: 0.7rem; font-weight: 600;
+    color: var(--ink-soft);
+  }
+  .workflow-badge .dot { width: 6px; height: 6px; background: #2f6f4e; border-radius: 50%; }
+
+  /* ================ THEME TABS / CALC GROUPS / VIEW TABS ================ */
+  .theme-tabs {
+    display: flex; gap: 0.4rem; flex-wrap: wrap;
+    margin-bottom: 1rem;
+    padding: 0.35rem;
+    background: var(--card-bg, rgba(255,255,255,0.7));
+    border-radius: 12px;
+    border: 1px solid rgba(0,0,0,0.06);
+  }
+  .theme-tab {
+    flex: 1 1 auto; min-width: 120px;
+    padding: 0.55rem 0.85rem;
+    border: 1px solid transparent; background: transparent;
+    border-radius: 8px;
+    font-family: inherit; font-size: 0.83rem; font-weight: 600;
+    color: var(--ink-soft); cursor: pointer;
+    transition: all 0.25s;
+    display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+  }
+  .theme-tab:hover { background: rgba(0,0,0,0.04); color: var(--ink); }
+  .theme-tab.is-active {
+    background: linear-gradient(135deg, var(--demo-accent), var(--demo-accent-2));
+    color: #fff;
+    box-shadow: 0 6px 18px rgba(47,111,78,0.35);
+  }
+
+  .scenarios-bar {
+    display: flex; align-items: center; gap: 0.5rem;
+    padding: 0.55rem 0.95rem;
+    background: linear-gradient(135deg, var(--demo-accent-soft), transparent);
+    border: 1px solid var(--demo-accent-soft);
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+  .scenarios-label {
+    font-size: 0.7rem; font-weight: 700;
+    color: var(--demo-accent-dark);
+    letter-spacing: 0.15em; text-transform: uppercase;
+  }
+  .scenario-pill {
+    padding: 0.3rem 0.78rem;
+    border: 1px solid rgba(47,111,78,0.25);
+    background: rgba(255,255,255,0.7);
+    color: var(--ink-soft);
+    font-size: 0.78rem; font-weight: 600;
+    border-radius: 8px; cursor: pointer;
+    transition: all 0.18s;
+  }
+  .scenario-pill:hover { border-color: var(--demo-accent); color: var(--demo-accent-dark); }
+  .scenario-pill.is-active {
+    background: var(--demo-accent); color: #fff; border-color: var(--demo-accent);
+  }
+
+  /* ================ KPI ROW ================ */
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.7rem;
+    margin-bottom: 1.1rem;
+  }
+  .kpi-card {
+    background: var(--card-bg, #fff);
+    border: 1px solid var(--card-border, rgba(0,0,0,0.06));
+    border-radius: 14px;
+    padding: 0.95rem 1.05rem;
+    position: relative; overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .kpi-card:hover { transform: translateY(-3px); box-shadow: 0 16px 36px rgba(0,0,0,0.08); }
+  .kpi-card::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: linear-gradient(180deg, var(--demo-accent), var(--demo-accent-2));
+  }
+  .kpi-header { display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.35rem; }
+  .kpi-status-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .kpi-status-dot.green { background: #2f6f4e; box-shadow: 0 0 8px rgba(47,111,78,0.5); }
+  .kpi-status-dot.amber { background: #d4ac4c; }
+  .kpi-status-dot.red { background: #b23a48; }
+  .kpi-label {
+    font-size: 0.68rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700;
+  }
+  .kpi-fabric-tag {
+    margin-left: auto;
+    font-size: 0.58rem; font-weight: 700;
+    color: var(--demo-fabric);
+    padding: 1px 5px;
+    background: var(--demo-fabric-soft);
+    border-radius: 4px;
+  }
+  .kpi-value {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.3rem, 2.1vw, 1.8rem);
+    font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.25rem;
+  }
+  .kpi-bottom { display: flex; justify-content: space-between; align-items: flex-end; gap: 0.4rem; }
+  .kpi-meta { display: flex; flex-direction: column; gap: 0.1rem; }
+  .kpi-delta { font-size: 0.74rem; display: flex; align-items: center; gap: 0.25rem; }
+  .kpi-delta.up { color: #2f6f4e; } .kpi-delta.down { color: #b23a48; }
+  .kpi-forecast { font-size: 0.66rem; color: var(--demo-accent-dark); }
+  .kpi-sparkline { width: 60px; height: 24px; overflow: visible; }
+
+  /* ================ SLICERS ================ */
+  .slicers-row {
+    display: flex; flex-wrap: wrap; gap: 0.7rem;
+    padding: 0.7rem 0.95rem;
+    margin-bottom: 1rem;
+    background: var(--card-bg, rgba(255,255,255,0.5));
+    border-radius: 12px;
+    border: 1px solid rgba(0,0,0,0.05);
+  }
+  .slicer { display: flex; flex-direction: column; gap: 0.3rem; }
+  .slicer-label { font-size: 0.62rem; font-weight: 700; color: var(--muted); letter-spacing: 0.18em; text-transform: uppercase; }
+  .slicer-pills { display: flex; flex-wrap: wrap; gap: 0.25rem; }
+  .slicer-pill {
+    padding: 0.28rem 0.65rem;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 999px; background: #fff;
+    color: var(--ink-soft); font-size: 0.74rem;
+    cursor: pointer; transition: all 0.18s;
+    user-select: none; white-space: nowrap;
+  }
+  .slicer-pill:hover { border-color: var(--demo-accent); color: var(--demo-accent-dark); }
+  .slicer-pill.is-active {
+    background: var(--demo-accent); color: #fff;
+    border-color: var(--demo-accent); transform: scale(1.04);
+  }
+
+  /* ================ CHART GRID ================ */
+  .chart-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 0.95rem;
+    margin-bottom: 1rem;
+  }
+  .chart-card {
+    background: var(--card-bg, #fff);
+    border: 1px solid var(--card-border, rgba(0,0,0,0.06));
+    border-radius: 14px;
+    padding: 0.95rem 1.05rem;
+    transition: all 0.25s; position: relative; overflow: hidden;
+  }
+  .chart-card:hover { box-shadow: 0 12px 32px rgba(0,0,0,0.06); }
+  .chart-card.full-row { grid-column: 1 / -1; }
+  .chart-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 0.6rem; gap: 0.4rem;
+  }
+  .chart-title-wrap { display: flex; align-items: baseline; gap: 0.5rem; }
+  .chart-title { font-family: 'Fraunces', serif; font-size: 0.95rem; font-weight: 700; color: var(--ink); margin: 0; }
+  .chart-sub { font-size: 0.68rem; color: var(--muted); }
+  .chart-source-badge {
+    font-size: 0.6rem; font-weight: 700;
+    padding: 2px 6px; border-radius: 999px;
+    letter-spacing: 0.05em;
+  }
+  .chart-source-badge.python { background: rgba(255,212,59,0.18); color: #8a6f00; border: 1px solid rgba(255,212,59,0.4); }
+  .chart-source-badge.fabric { background: var(--demo-fabric-soft); color: var(--demo-fabric); border: 1px solid rgba(17,125,187,0.3); }
+  .chart-source-badge.ai { background: var(--demo-accent-soft); color: var(--demo-accent-dark); border: 1px solid rgba(47,111,78,0.3); }
+  .chart-body { position: relative; height: 270px; }
+  .chart-card.tall .chart-body { height: 330px; }
+
+  /* ================ MEXICO MAP (NEW) ================ */
+  .mexico-map-card {
+    background: var(--card-bg, #fff);
+    border: 1px solid var(--card-border, rgba(0,0,0,0.06));
+    border-radius: 14px;
+    padding: 0.95rem 1.05rem;
+  }
+  .map-svg { width: 100%; height: 280px; }
+  .map-region {
+    cursor: pointer;
+    transition: all 0.2s;
+    stroke: #fff;
+    stroke-width: 1.5;
+  }
+  .map-region:hover { filter: brightness(1.1); stroke-width: 2.5; }
+  .map-legend {
+    display: flex; align-items: center; gap: 0.4rem;
+    margin-top: 0.4rem; font-size: 0.7rem; color: var(--muted);
+    justify-content: center;
+  }
+  .map-legend-bar {
+    width: 120px; height: 10px;
+    background: linear-gradient(90deg, #d8e8de, var(--demo-accent), var(--demo-accent-dark));
+    border-radius: 4px;
+  }
+
+  /* ================ ALERTS PANEL (RIGHT SIDE) ================ */
+  .alerts-panel {
+    background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(245,247,250,0.9));
+    border-left: 1px solid rgba(0,0,0,0.06);
+    padding: 1rem 1rem 4rem;
+    overflow-y: auto;
+    max-height: calc(100vh - 70px);
+    position: sticky; top: 70px;
+  }
+  .alerts-head {
+    display: flex; align-items: center; gap: 0.5rem;
+    margin-bottom: 0.85rem;
+    padding-bottom: 0.7rem;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+  }
+  .alerts-head h3 { font-family: 'Fraunces', serif; font-size: 1rem; font-weight: 700; color: var(--ink); margin: 0; }
+  .alerts-head .live-indicator {
+    margin-left: auto;
+    display: inline-flex; align-items: center; gap: 0.3rem;
+    font-size: 0.68rem; font-weight: 700;
+    color: #b23a48;
+  }
+  .alerts-head .live-dot {
+    width: 6px; height: 6px; background: #b23a48; border-radius: 50%;
+    animation: pulse-red 1.4s ease-in-out infinite;
+  }
+  @keyframes pulse-red {
+    0%,100% { box-shadow: 0 0 0 0 rgba(178,58,72,0.6); }
+    50% { box-shadow: 0 0 0 6px rgba(178,58,72,0); }
+  }
+  .alert-item {
+    padding: 0.7rem 0.85rem;
+    border-radius: 10px;
+    margin-bottom: 0.6rem;
+    border-left: 3px solid;
+    background: rgba(255,255,255,0.7);
+    border-top: 1px solid rgba(0,0,0,0.04);
+    border-right: 1px solid rgba(0,0,0,0.04);
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+    font-size: 0.78rem;
+  }
+  .alert-item.critical { border-left-color: #b23a48; background: linear-gradient(135deg, rgba(178,58,72,0.06), rgba(255,255,255,0.7)); }
+  .alert-item.warning { border-left-color: #d4ac4c; background: linear-gradient(135deg, rgba(212,172,76,0.08), rgba(255,255,255,0.7)); }
+  .alert-item.info { border-left-color: var(--demo-accent); background: linear-gradient(135deg, var(--demo-accent-soft), rgba(255,255,255,0.7)); }
+  .alert-item.success { border-left-color: #2f6f4e; background: linear-gradient(135deg, rgba(47,111,78,0.06), rgba(255,255,255,0.7)); }
+  .alert-time { font-size: 0.62rem; color: var(--muted); letter-spacing: 0.05em; margin-bottom: 0.2rem; font-variant-numeric: tabular-nums; }
+  .alert-title { font-weight: 700; color: var(--ink); margin-bottom: 0.2rem; }
+  .alert-body { color: var(--ink-soft); line-height: 1.4; }
+
+  .subscription-card {
+    margin-top: 1.5rem;
+    padding: 0.85rem;
+    background: linear-gradient(135deg, var(--demo-accent-soft), rgba(255,255,255,0.4));
+    border: 1px solid rgba(47,111,78,0.2);
+    border-radius: 10px;
+  }
+  .subscription-card h4 { font-family: 'Fraunces', serif; font-size: 0.85rem; margin: 0 0 0.4rem; color: var(--demo-accent-dark); }
+  .subscription-card p { font-size: 0.74rem; color: var(--ink-soft); margin: 0 0 0.3rem; }
+  .subscription-card .next { font-size: 0.7rem; color: var(--muted); }
+
+  /* ================ ANIMATIONS ================ */
+  @keyframes kpiPulse { 0% { transform: scale(0.95); opacity: 0; } 100% { transform: scale(1); opacity: 1; }}
+  .kpi-card.animate { animation: kpiPulse 0.6s cubic-bezier(.2,.9,.2,1) both; }
+  .kpi-card:nth-child(1) { animation-delay: 0.05s; }
+  .kpi-card:nth-child(2) { animation-delay: 0.10s; }
+  .kpi-card:nth-child(3) { animation-delay: 0.15s; }
+  .kpi-card:nth-child(4) { animation-delay: 0.20s; }
+  .kpi-card:nth-child(5) { animation-delay: 0.25s; }
+
+  @keyframes chartIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); }}
+  .chart-card, .mexico-map-card { animation: chartIn 0.7s cubic-bezier(.2,.9,.2,1) both; }
+  .chart-card:nth-child(1) { animation-delay: 0.35s; }
+  .chart-card:nth-child(2) { animation-delay: 0.45s; }
+  .chart-card:nth-child(3) { animation-delay: 0.55s; }
+
+  @keyframes alertSlideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); }}
+  .alert-item { animation: alertSlideIn 0.4s cubic-bezier(.2,.9,.2,1) both; }
+  .alert-item:nth-child(1) { animation-delay: 0.1s; }
+  .alert-item:nth-child(2) { animation-delay: 0.2s; }
+  .alert-item:nth-child(3) { animation-delay: 0.3s; }
+  .alert-item:nth-child(4) { animation-delay: 0.4s; }
+  .alert-item:nth-child(5) { animation-delay: 0.5s; }
+
+  /* ================ EXECUTIVE MODE (NEW) ================ */
+  body.exec-mode .corporate-header { background: #000; }
+  body.exec-mode .sidebar, body.exec-mode .alerts-panel { display: none; }
+  body.exec-mode .app-shell { grid-template-columns: 1fr; }
+  body.exec-mode .dash-shell { padding: 2rem 3rem; }
+  body.exec-mode .dash-title { font-size: 3rem; }
+  body.exec-mode .kpi-card { padding: 1.4rem 1.6rem; }
+  body.exec-mode .kpi-value { font-size: 2.4rem; }
+  body.exec-mode .chart-body { height: 380px; }
+
+  .demo-back {
+    position: fixed; bottom: 1rem; left: 80px; z-index: 50;
+    background: linear-gradient(135deg, var(--demo-accent), var(--demo-accent-2));
+    color: #fff;
+    padding: 0.7rem 1.2rem; border-radius: 999px;
+    text-decoration: none; font-weight: 700; font-size: 0.85rem;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    transition: transform 0.2s;
+  }
+  .demo-back:hover { transform: translateY(-2px) scale(1.03); }
+  body.exec-mode .demo-back { display: none; }
+
+  @media (max-width: 1200px) {
+    .alerts-panel { display: none; }
+    .app-shell { grid-template-columns: 64px 1fr; }
+  }
+  @media (max-width: 900px) {
+    .app-shell { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    .demo-back { left: 1rem; }
+    .chart-grid { grid-template-columns: 1fr; }
+    .corporate-header { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+  <div class="ambient ambient--rich" aria-hidden="true">
+    <div class="ambient__mesh"></div>
+    <div class="ambient__grid"></div>
+    <div class="ambient__shimmer"></div>
+    <div class="ambient__blob ambient__blob--1"></div>
+  </div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- CORPORATE HEADER (NEW) -->
+  <header class="corporate-header">
+    <div class="corp-brand">
+      <div class="corp-logo-slot">[LOGO]</div>
+      <div class="corp-info">
+        <div class="corp-name">Empresa Cliente Demo · Powered by 2BI</div>
+        <div class="corp-meta">CORPORATE BI · Q4 2026 · Daily Refresh</div>
+      </div>
+    </div>
+
+    <div class="pipeline-status">
+      <span class="pipeline-step"><span class="dot"></span>DEV</span>
+      <span class="pipeline-arrow">→</span>
+      <span class="pipeline-step"><span class="dot"></span>TEST</span>
+      <span class="pipeline-arrow">→</span>
+      <span class="pipeline-step active"><span class="dot"></span>PROD</span>
+    </div>
+
+    <div class="rls-switcher" id="rls-switcher" title="Cambiar rol RLS">
+      <div class="rls-icon" id="rls-avatar">CE</div>
+      <div class="rls-text">
+        <small>Viendo como</small>
+        <strong id="rls-name">CEO · Vista global</strong>
+      </div>
+      <span class="rls-arrow">▾</span>
+    </div>
+
+    <div class="corp-actions">
+      <button class="corp-btn" id="exec-mode-toggle">▶ Modo Ejecutivo</button>
+      <button class="corp-btn primary">📤 Compartir</button>
+    </div>
+  </header>
+
+  <div class="app-shell">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">2BI</div>
+      <button class="nav-icon is-active">▦</button>
+      <button class="nav-icon">≡</button>
+      <button class="nav-icon">⚡</button>
+      <button class="nav-icon">↗</button>
+      <button class="nav-icon">🌎</button>
+      <button class="nav-icon">⚙</button>
+    </aside>
+
+    <main id="dashboard" class="dash-shell">
+      <div class="dash-header">
+        <div>
+          <span class="tier-badge">★★★ VIP · In-Company</span>
+          <h1 class="dash-title" id="dash-title">Dashboard corporativo VIP</h1>
+          <p class="dash-subtitle" id="dash-subtitle">Branding propio · RLS por rol · Governance · Alertas en vivo · Mapa nacional · Modo Ejecutivo · Workflow integrado</p>
+        </div>
+      </div>
+
+      <!-- GOVERNANCE SCORECARD (NEW vs Premium) -->
+      <div class="governance-row">
+        <div class="gov-stat">
+          <div class="gov-stat-icon">✓</div>
+          <div class="gov-stat-text">
+            <span class="gov-stat-label">Data Quality</span>
+            <span class="gov-stat-value green">98.4%</span>
+          </div>
+        </div>
+        <div class="gov-stat">
+          <div class="gov-stat-icon">✓</div>
+          <div class="gov-stat-text">
+            <span class="gov-stat-label">BPA Reglas</span>
+            <span class="gov-stat-value green">42 / 42 OK</span>
+          </div>
+        </div>
+        <div class="gov-stat">
+          <div class="gov-stat-icon">⏱</div>
+          <div class="gov-stat-text">
+            <span class="gov-stat-label">Freshness</span>
+            <span class="gov-stat-value green">12 min</span>
+          </div>
+        </div>
+        <div class="gov-stat">
+          <div class="gov-stat-icon">★</div>
+          <div class="gov-stat-text">
+            <span class="gov-stat-label">SLA Mes</span>
+            <span class="gov-stat-value green">99.97%</span>
+          </div>
+        </div>
+        <div class="gov-stat">
+          <div class="gov-stat-icon">♦</div>
+          <div class="gov-stat-text">
+            <span class="gov-stat-label">RLS Roles</span>
+            <span class="gov-stat-value">8 activos</span>
+          </div>
+        </div>
+        <div class="gov-stat">
+          <div class="gov-stat-icon">⚠</div>
+          <div class="gov-stat-text">
+            <span class="gov-stat-label">Alertas 24h</span>
+            <span class="gov-stat-value amber">4 nuevas</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOP BAR with Fabric + AI + Workflow integrations -->
+      <div class="top-bar">
+        <div class="fabric-badge">
+          <span class="pulse-dot"></span>
+          <strong>Fabric F64</strong>
+          <span style="opacity:0.4">·</span>
+          <span>Direct Lake</span>
+          <span style="opacity:0.4">·</span>
+          <span id="last-update">hace 12s</span>
+        </div>
+        <div class="ai-input">
+          <span class="ai-icon">A</span>
+          <input type="text" placeholder="Pregunta a Claude... ej: ¿qué ventas tendremos en diciembre según Forecast Prophet?">
+        </div>
+        <div class="workflow-badges">
+          <span class="workflow-badge"><span class="dot"></span>Teams</span>
+          <span class="workflow-badge"><span class="dot"></span>Power Automate</span>
+          <span class="workflow-badge"><span class="dot"></span>n8n</span>
+          <span class="workflow-badge"><span class="dot"></span>SAP</span>
+        </div>
+      </div>
+
+      <nav class="theme-tabs" role="tablist">
+        <button class="theme-tab is-active" role="tab" data-theme="mantenimiento"><span>⚙</span><span>Mantenimiento</span></button>
+        <button class="theme-tab" role="tab" data-theme="ventas"><span>◭</span><span>Ventas</span></button>
+        <button class="theme-tab" role="tab" data-theme="finanzas"><span>$</span><span>Finanzas</span></button>
+        <button class="theme-tab" role="tab" data-theme="inventario"><span>▤</span><span>Inventario</span></button>
+      </nav>
+
+      <!-- SCENARIOS (NEW vs Premium) -->
+      <div class="scenarios-bar">
+        <span class="scenarios-label">Escenarios</span>
+        <button class="scenario-pill is-active" data-sc="real">Real</button>
+        <button class="scenario-pill" data-sc="ppto">Presupuesto</button>
+        <button class="scenario-pill" data-sc="forecast">Forecast</button>
+        <button class="scenario-pill" data-sc="stress">Stress test</button>
+        <button class="scenario-pill" data-sc="optimist">Optimista</button>
+      </div>
+
+      <section class="kpi-row" id="kpi-row" aria-label="Indicadores"></section>
+
+      <section class="slicers-row" id="slicers-row"></section>
+
+      <section class="chart-grid">
+        <div class="chart-card tall">
+          <div class="chart-head">
+            <div class="chart-title-wrap">
+              <h3 class="chart-title" id="chart-1-title">Tendencia + Forecast</h3>
+              <span class="chart-source-badge python">Python · Prophet</span>
+              <span class="chart-source-badge fabric">Direct Lake</span>
+            </div>
+            <span class="chart-sub">12 meses + 3 proyectados</span>
+          </div>
+          <div class="chart-body"><canvas id="chart-1"></canvas></div>
+        </div>
+
+        <!-- MEXICO MAP (NEW vs Premium) -->
+        <div class="mexico-map-card">
+          <div class="chart-head">
+            <div class="chart-title-wrap">
+              <h3 class="chart-title">Distribución geográfica</h3>
+              <span class="chart-source-badge fabric">Geo + RLS</span>
+            </div>
+            <span class="chart-sub">por estado · click para drill-down</span>
+          </div>
+          <svg class="map-svg" viewBox="0 0 600 380" id="mexico-svg">
+            <!-- Mapa simplificado de México - regiones representativas -->
+            <g id="map-regions">
+              <!-- Norte: Chihuahua, Sonora, Coahuila, NL -->
+              <path class="map-region" data-region="Sonora" data-value="42" d="M 65 60 L 175 60 L 165 140 L 75 145 Z" />
+              <path class="map-region" data-region="Chihuahua" data-value="58" d="M 175 60 L 290 70 L 285 165 L 165 140 Z" />
+              <path class="map-region" data-region="Coahuila" data-value="68" d="M 290 70 L 380 90 L 380 175 L 285 165 Z" />
+              <path class="map-region" data-region="Nuevo Leon" data-value="92" d="M 380 90 L 460 105 L 455 195 L 380 175 Z" />
+              <path class="map-region" data-region="Tamaulipas" data-value="51" d="M 460 105 L 525 145 L 510 240 L 455 195 Z" />
+              <!-- Centro -->
+              <path class="map-region" data-region="Sinaloa" data-value="38" d="M 75 145 L 165 140 L 175 230 L 100 245 Z" />
+              <path class="map-region" data-region="Durango" data-value="44" d="M 165 140 L 285 165 L 285 245 L 175 230 Z" />
+              <path class="map-region" data-region="Zacatecas" data-value="36" d="M 285 165 L 380 175 L 375 250 L 285 245 Z" />
+              <path class="map-region" data-region="San Luis Potosi" data-value="55" d="M 380 175 L 455 195 L 455 268 L 375 250 Z" />
+              <path class="map-region" data-region="Veracruz" data-value="74" d="M 455 195 L 510 240 L 530 320 L 455 268 Z" />
+              <!-- Bajío + CDMX -->
+              <path class="map-region" data-region="Nayarit" data-value="22" d="M 100 245 L 175 230 L 180 290 L 115 295 Z" />
+              <path class="map-region" data-region="Jalisco" data-value="86" d="M 175 230 L 285 245 L 290 315 L 180 290 Z" />
+              <path class="map-region" data-region="Guanajuato" data-value="72" d="M 285 245 L 375 250 L 375 305 L 290 315 Z" />
+              <path class="map-region" data-region="CDMX" data-value="98" d="M 375 250 L 425 265 L 422 320 L 375 305 Z" />
+              <path class="map-region" data-region="Puebla" data-value="64" d="M 425 265 L 455 268 L 460 325 L 422 320 Z" />
+              <!-- Sur -->
+              <path class="map-region" data-region="Michoacan" data-value="48" d="M 180 290 L 290 315 L 290 360 L 195 358 Z" />
+              <path class="map-region" data-region="Guerrero" data-value="34" d="M 290 315 L 375 305 L 380 360 L 290 360 Z" />
+              <path class="map-region" data-region="Oaxaca" data-value="29" d="M 380 360 L 460 325 L 465 365 L 380 360 Z M 422 320 L 460 325 L 460 360 L 380 360 Z" />
+              <!-- Peninsula -->
+              <path class="map-region" data-region="Yucatan" data-value="42" d="M 510 240 L 565 240 L 555 290 L 530 320 Z" />
+            </g>
+          </svg>
+          <div class="map-legend">
+            <span style="font-size:0.66rem">Bajo</span>
+            <div class="map-legend-bar"></div>
+            <span style="font-size:0.66rem">Alto</span>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-head">
+            <div class="chart-title-wrap">
+              <h3 class="chart-title" id="chart-3-title">Top 10</h3>
+              <span class="chart-source-badge ai">AI insights</span>
+            </div>
+            <span class="chart-sub">ranking + drivers automáticos</span>
+          </div>
+          <div class="chart-body"><canvas id="chart-3"></canvas></div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-head">
+            <div class="chart-title-wrap">
+              <h3 class="chart-title" id="chart-4-title">Distribución</h3>
+            </div>
+            <span class="chart-sub">% del total filtrado por RLS</span>
+          </div>
+          <div class="chart-body"><canvas id="chart-4"></canvas></div>
+        </div>
+      </section>
+
+      <p style="margin-top: 1.5rem; text-align: center; color: var(--muted); font-size: 0.85rem; line-height: 1.7;">
+        Demo del programa <strong>VIP In-Company</strong> ($25K-$60K MXN). Todo el stack del Premium + branding propio + RLS multinivel + governance documentada + workshop ejecutivo + soporte 90 días con SLA.<br>
+        <a href="../../academia-vip.html" style="color: var(--demo-accent-dark); font-weight: 700;">Ver programa completo →</a>
+      </p>
+    </main>
+
+    <!-- ALERTS PANEL (NEW vs Premium) -->
+    <aside class="alerts-panel">
+      <div class="alerts-head">
+        <h3>Alertas</h3>
+        <span class="live-indicator"><span class="live-dot"></span>EN VIVO</span>
+      </div>
+      <div id="alerts-list"></div>
+
+      <div class="subscription-card">
+        <h4>Refresh schedule</h4>
+        <p>Diario · 06:00 CDMX · Direct Lake</p>
+        <p class="next">Próximo: <strong>en 4h 23min</strong></p>
+      </div>
+
+      <div class="subscription-card" style="margin-top:0.7rem">
+        <h4>Suscriptores activos</h4>
+        <p>14 stakeholders · 8 roles RLS</p>
+        <p class="next">Última distribución: <strong>hoy 06:02</strong></p>
+      </div>
+    </aside>
+  </div>
+
+  <a href="../../academia-vip.html" class="demo-back">← Programa VIP</a>
+
+<script>
+const THEMES = {
+  mantenimiento: {
+    title: 'OEE corporativo · todas las plantas',
+    subtitle: 'Operaciones · 5 plantas · 8 roles RLS · Direct Lake · alerts 24/7',
+    kpis: [
+      { label: 'OEE corporativo', value: 87.3, suffix: '%', status: 'green', delta: '+2.1pp', forecast: '+1.2pp en 30d', spark: [82.1,83.4,84.0,85.2,86.1,85.8,86.4,87.3,87.0,87.5,87.3,87.3], fabric: true, dir: 'up' },
+      { label: 'MTBF',  value: 142, suffix: ' hrs', status: 'green', delta: '+8 hrs', forecast: '+12 en 30d', spark: [118,124,128,132,135,138,140,138,141,142,142,142], fabric: true, dir: 'up' },
+      { label: 'MTTR',  value: 23, suffix: ' min', status: 'green', delta: '−4 min', forecast: '−2 en 30d', spark: [32,30,28,27,26,25,24,25,24,23,23,23], fabric: true, dir: 'up' },
+      { label: 'Plantas activas', value: 5, suffix: '/5', status: 'green', delta: '100%', forecast: 'sin cambios', spark: [5,5,5,5,5,5,5,5,5,5,5,5], fabric: true, dir: 'up' },
+      { label: 'Disponibilidad', value: 94.2, suffix: '%', status: 'green', delta: '+0.8pp', forecast: '+0.5 en 30d', spark: [89.5,90.2,91.4,92.0,92.5,92.8,93.2,93.0,93.5,93.8,94.0,94.2], fabric: true, dir: 'up' }
+    ],
+    slicers: [
+      { id: 'planta', label: 'Planta', options: ['Planta A','Planta B','Planta C','Planta D','Planta E'] },
+      { id: 'mes', label: 'Mes', options: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'] },
+      { id: 'turno', label: 'Turno', options: ['Matutino','Vespertino','Nocturno'] }
+    ],
+    forecastChart: {
+      labels: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic','Ene+1','Feb+1','Mar+1'],
+      actual: [82.1,83.4,84.0,85.2,86.1,85.8,86.4,87.3,87.0,87.5,87.3,87.3, null, null, null],
+      forecast: [null,null,null,null,null,null,null,null,null,null,null,87.3, 87.9, 88.4, 88.8],
+      upper: [null,null,null,null,null,null,null,null,null,null,null,87.3, 88.7, 89.6, 90.4],
+      lower: [null,null,null,null,null,null,null,null,null,null,null,87.3, 87.1, 87.2, 87.2]
+    },
+    topChart: { labels: ['EXT-04','INY-12','EMB-07','CTM-03','CTM-09','EXT-02','INY-08','TQ-15','EXT-11','MOL-06'], data: [24,21,18,16,14,13,12,10,9,8] },
+    distribChart: { labels: ['Falla mecánica','Cambio molde','MP','Energía','Mantto.','Otros'], data: [38,25,14,8,10,5] },
+    alerts: [
+      { type: 'critical', time: 'hace 4 min', title: 'Paro crítico EXT-04', body: 'Planta A · Línea 02 · Operador notificado vía Teams. Forecast: pérdida $42K MXN.' },
+      { type: 'warning', time: 'hace 23 min', title: 'OEE Línea 03 baja a 81%', body: 'Planta B · Por debajo del umbral 85%. Claude detectó tendencia.' },
+      { type: 'info', time: 'hace 1 hr', title: 'Forecast actualizado', body: 'Prophet recalculó. OEE Octubre: 87.9% (banda 87.1–88.7).' },
+      { type: 'success', time: 'hace 2 hrs', title: 'BPA limpio', body: '42/42 reglas Best Practice Analyzer en verde.' },
+      { type: 'info', time: 'hace 5 hrs', title: 'Refresh nocturno OK', body: '4.2M filas · 47s · Direct Lake F64.' }
+    ]
+  },
+  ventas: {
+    title: 'Performance comercial corporativo',
+    subtitle: 'Ventas · 4 regiones · 6 vendedores · todos los canales',
+    kpis: [
+      { label: 'Ventas YTD', value: 48.2, suffix: 'M', prefix: '$', status: 'green', delta: '+12.4%', forecast: '+$5.4M en 30d', spark: [3.1,3.4,3.8,4.2,4.5,4.7,4.6,4.8,4.9,5.1,5.0,5.1], fabric: true, dir: 'up' },
+      { label: 'Crecimiento YoY', value: 12.4, suffix: '%', status: 'green', delta: '+3.1pp', forecast: '+0.8pp', spark: [8.1,9.2,10.5,11.0,11.5,11.8,12.0,12.1,12.2,12.3,12.4,12.4], fabric: true, dir: 'up' },
+      { label: 'Clientes', value: 1247, suffix: '', status: 'green', delta: '+89', forecast: '+62', spark: [1100,1130,1158,1170,1195,1210,1220,1225,1232,1238,1244,1247], fabric: true, dir: 'up' },
+      { label: 'Ticket prom.', value: 38.7, suffix: 'K', prefix: '$', status: 'green', delta: '+$2.4K', forecast: '+$1.1K', spark: [35.2,36.1,36.5,37.0,37.4,37.8,38.0,38.2,38.4,38.5,38.6,38.7], fabric: true, dir: 'up' },
+      { label: 'Margen', value: 32.1, suffix: '%', status: 'amber', delta: '−0.4pp', forecast: '−0.6pp', spark: [33.5,33.0,32.8,32.6,32.5,32.4,32.3,32.3,32.2,32.2,32.1,32.1], fabric: true, dir: 'down' }
+    ],
+    slicers: [
+      { id: 'region', label: 'Región', options: ['Norte','Centro','Sur','Bajío'] },
+      { id: 'vendedor', label: 'Vendedor', options: ['Alvaro P.','Sofía R.','Memo C.','Jorge L.','Ana M.','Luis V.'] },
+      { id: 'mes', label: 'Mes', options: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'] }
+    ],
+    forecastChart: {
+      labels: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic','Ene+1','Feb+1','Mar+1'],
+      actual: [3.1,3.4,3.8,4.2,4.5,4.7,4.6,4.8,4.9,5.1,5.0,5.1, null,null,null],
+      forecast: [null,null,null,null,null,null,null,null,null,null,null,5.1, 5.3, 5.5, 5.7],
+      upper: [null,null,null,null,null,null,null,null,null,null,null,5.1, 5.6, 6.0, 6.3],
+      lower: [null,null,null,null,null,null,null,null,null,null,null,5.1, 5.0, 5.0, 5.1]
+    },
+    topChart: { labels: ['Acero P-42','Cemento','Resina','Tubería','Lámina','Pintura','Ferretería','Aislante','Tornillería','Soldadura'], data: [842,712,658,591,547,489,432,398,367,312] },
+    distribChart: { labels: ['Norte','Centro','Sur','Bajío'], data: [42,28,18,12] },
+    alerts: [
+      { type: 'success', time: 'hace 7 min', title: 'Cliente ACME abrió 3 propuestas', body: 'Memo C. notificado. Probabilidad cierre: 71% (Claude).' },
+      { type: 'critical', time: 'hace 34 min', title: 'Margen Norte cae 1.8pp', body: 'Driver: costo de envío subió 12%. Análisis Claude.' },
+      { type: 'warning', time: 'hace 1 hr', title: 'Luis V. bajo meta', body: '−15% vs presupuesto. Coaching recomendado.' },
+      { type: 'info', time: 'hace 3 hrs', title: 'Forecast Q4 actualizado', body: 'Prophet: $52.8M (+ 0.5M vs prior). 82% confianza.' }
+    ]
+  },
+  finanzas: {
+    title: 'P&L y razones corporativas',
+    subtitle: 'Financials consolidados · multi-currency · vs presupuesto',
+    kpis: [
+      { label: 'Revenue', value: 52.3, suffix: 'M', prefix: '$', status: 'green', delta: '+9.8%', forecast: '+$4.6M', spark: [3.8,4.0,4.2,4.4,4.5,4.6,4.5,4.7,4.8,4.9,4.7,4.2], fabric: true, dir: 'up' },
+      { label: 'EBITDA', value: 14.7, suffix: 'M', prefix: '$', status: 'green', delta: '+11.2%', forecast: '+$1.4M', spark: [1.0,1.1,1.2,1.2,1.3,1.3,1.3,1.3,1.3,1.4,1.3,1.0], fabric: true, dir: 'up' },
+      { label: 'Margen neto', value: 28.1, suffix: '%', status: 'green', delta: '+1.4pp', forecast: '+0.3pp', spark: [26.3,26.5,26.8,27.1,27.3,27.5,27.7,27.8,27.9,28.0,28.1,28.1], fabric: true, dir: 'up' },
+      { label: 'Cash op.', value: 3.2, suffix: 'M', prefix: '$', status: 'green', delta: '+$0.4M', forecast: '+$0.3M', spark: [2.4,2.5,2.6,2.7,2.8,2.9,3.0,3.0,3.1,3.1,3.2,3.2], fabric: true, dir: 'up' },
+      { label: 'Quick ratio', value: 1.42, suffix: '', status: 'green', delta: '+0.08', forecast: '+0.04', spark: [1.30,1.32,1.34,1.35,1.37,1.38,1.39,1.40,1.41,1.41,1.42,1.42], fabric: true, dir: 'up' }
+    ],
+    slicers: [
+      { id: 'centro', label: 'Centro', options: ['Operaciones','Comercial','Admin','TI'] },
+      { id: 'tipo', label: 'Tipo', options: ['Real','Presupuesto','Forecast'] },
+      { id: 'moneda', label: 'Moneda', options: ['MXN','USD'] }
+    ],
+    forecastChart: {
+      labels: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic','Ene+1','Feb+1','Mar+1'],
+      actual: [3.8,4.0,4.2,4.4,4.5,4.6,4.5,4.7,4.8,4.9,4.7,4.2, null,null,null],
+      forecast: [null,null,null,null,null,null,null,null,null,null,null,4.2, 4.6, 4.9, 5.1],
+      upper: [null,null,null,null,null,null,null,null,null,null,null,4.2, 5.0, 5.5, 5.8],
+      lower: [null,null,null,null,null,null,null,null,null,null,null,4.2, 4.2, 4.3, 4.4]
+    },
+    topChart: { labels: ['Margen bruto','Margen op.','Margen neto','ROE','ROA','Quick','Current','D/E','DPC','Rot.inv.'], data: [42,31,28,18,12,1.42,1.85,0.42,38,4.2] },
+    distribChart: { labels: ['Nómina','MP','Servicios','Logística','Mantto.','Otros'], data: [42,28,12,8,6,4] },
+    alerts: [
+      { type: 'critical', time: 'hace 12 min', title: 'Gastos op. +5.6% vs ppto', body: 'Driver: Nómina TI +18%. Claude generó análisis.' },
+      { type: 'success', time: 'hace 1 hr', title: 'EBITDA supera ppto +11.4%', body: 'Excelente. Q4 forecast: $13.2M.' },
+      { type: 'info', time: 'hace 4 hrs', title: 'CFO consultó dashboard', body: 'Claude generó 2 narrativas en lenguaje natural.' },
+      { type: 'success', time: 'hace 9 hrs', title: 'Close mensual completado', body: 'Septiembre cerrado en 3 días vs 7 anteriores.' }
+    ]
+  },
+  inventario: {
+    title: 'Supply chain corporativo',
+    subtitle: 'Inventario · 5 almacenes · 1432 SKUs · ABC dinámico · alertas restock',
+    kpis: [
+      { label: 'Valor inv.', value: 8.4, suffix: 'M', prefix: '$', status: 'green', delta: '−$0.3M', forecast: '−$0.2M', spark: [9.2,9.0,8.9,8.8,8.7,8.6,8.5,8.5,8.4,8.4,8.4,8.4], fabric: true, dir: 'up' },
+      { label: 'Rotación', value: 4.2, suffix: 'x', status: 'green', delta: '+0.4x', forecast: '+0.2x', spark: [3.6,3.7,3.8,3.8,3.9,4.0,4.0,4.1,4.1,4.2,4.2,4.2], fabric: true, dir: 'up' },
+      { label: 'Días stock', value: 87, suffix: '', status: 'green', delta: '−9 días', forecast: '−5', spark: [101,99,96,94,92,90,89,88,87,87,87,87], fabric: true, dir: 'up' },
+      { label: 'SKUs A', value: 312, suffix: '', status: 'green', delta: '+12', forecast: '+8', spark: [280,285,290,295,298,302,305,308,310,311,312,312], fabric: true, dir: 'up' },
+      { label: 'Stockouts', value: 2, suffix: '', status: 'red', delta: '+2', forecast: 'crítico', spark: [0,0,0,0,1,1,1,1,2,2,2,2], fabric: true, dir: 'down' }
+    ],
+    slicers: [
+      { id: 'almacen', label: 'Almacén', options: ['CDMX','GDL','MTY','BAJ','VRZ'] },
+      { id: 'categoria', label: 'Categoría', options: ['MP','PT','Refacciones','Insumos'] },
+      { id: 'abc', label: 'Clase ABC', options: ['A','B','C'] }
+    ],
+    forecastChart: {
+      labels: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic','Ene+1','Feb+1','Mar+1'],
+      actual: [9.2,9.0,8.9,8.8,8.7,8.6,8.5,8.5,8.4,8.4,8.4,8.4, null,null,null],
+      forecast: [null,null,null,null,null,null,null,null,null,null,null,8.4, 8.2, 8.1, 7.9],
+      upper: [null,null,null,null,null,null,null,null,null,null,null,8.4, 8.6, 8.7, 8.7],
+      lower: [null,null,null,null,null,null,null,null,null,null,null,8.4, 7.8, 7.5, 7.1]
+    },
+    topChart: { labels: ['SKU-04821','SKU-12903','SKU-07712','SKU-44102','SKU-99812','SKU-11203','SKU-67721','SKU-23410','SKU-88210','SKU-01910'], data: [142,128,114,98,92,87,71,68,52,41] },
+    distribChart: { labels: ['A','B','C'], data: [78,16,6] },
+    alerts: [
+      { type: 'critical', time: 'hace 4 min', title: 'STOCKOUT TOTAL · SKU-04821', body: 'CDMX 0 unidades · clase A · pérdida estimada $145K MXN.' },
+      { type: 'critical', time: 'hace 11 min', title: 'STOCKOUT · SKU-12903', body: 'GDL 0 unidades · OC automática generada.' },
+      { type: 'warning', time: 'hace 1 hr', title: '3 SKUs subieron a clase A', body: 'Aumento sostenido en rotación.' },
+      { type: 'success', time: 'hace 3 hrs', title: 'Obsoleto bajó a 6.2%', body: '−1.1pp vs trimestre anterior.' }
+    ]
+  }
+};
+
+const ACCENT = '#2f6f4e';
+const ACCENT_DARK = '#1f4e37';
+const ACCENT_2 = '#4a8b6a';
+const FABRIC = '#117dbb';
+
+Chart.defaults.font.family = "'Outfit', system-ui, sans-serif";
+Chart.defaults.font.size = 11;
+Chart.defaults.color = '#475569';
+Chart.defaults.animation.duration = 1000;
+Chart.defaults.animation.easing = 'easeOutCubic';
+
+let currentTheme = 'mantenimiento';
+let activeFilters = {};
+let charts = { c1: null, c3: null, c4: null };
+
+function animateNumber(el, from, to, suffix, prefix, duration = 1100) {
+  const start = performance.now();
+  function tick(now) {
+    const t = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - t, 3);
+    const value = from + (to - from) * eased;
+    let display;
+    if (Number.isInteger(to) && Math.abs(to) < 10000) display = Math.round(value).toLocaleString('es-MX');
+    else if (Math.abs(to) < 100) display = value.toFixed(1);
+    else display = value.toFixed(0);
+    el.textContent = (prefix || '') + display + (suffix || '');
+    if (t < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+function renderSparkline(values, color) {
+  const w = 60, h = 24;
+  const min = Math.min(...values), max = Math.max(...values);
+  const range = max - min || 1;
+  const points = values.map((v, i) => {
+    const x = (i / (values.length - 1)) * w;
+    const y = h - ((v - min) / range) * (h - 4) - 2;
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  }).join(' ');
+  const lastY = h - ((values[values.length - 1] - min) / range) * (h - 4) - 2;
+  return `<svg class="kpi-sparkline" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
+    <polyline points="${points}" fill="none" stroke="${color}" stroke-width="1.5"/>
+    <circle cx="${w}" cy="${lastY.toFixed(1)}" r="2" fill="${color}"/>
+  </svg>`;
+}
+
+function renderHeader(theme) {
+  document.getElementById('dash-title').textContent = 'VIP · ' + theme.title;
+  document.getElementById('dash-subtitle').textContent = theme.subtitle;
+}
+
+function renderKPIs(theme) {
+  const row = document.getElementById('kpi-row');
+  row.innerHTML = '';
+  theme.kpis.forEach((k, i) => {
+    const card = document.createElement('div');
+    card.className = 'kpi-card animate';
+    card.innerHTML = `
+      <div class="kpi-header">
+        <span class="kpi-status-dot ${k.status}"></span>
+        <span class="kpi-label">${k.label}</span>
+        ${k.fabric ? '<span class="kpi-fabric-tag">DL</span>' : ''}
+      </div>
+      <div class="kpi-value">${k.prefix || ''}0${k.suffix || ''}</div>
+      <div class="kpi-bottom">
+        <div class="kpi-meta">
+          <span class="kpi-delta ${k.dir}">${k.dir === 'up' ? '▲' : '▼'} ${k.delta}</span>
+          <span class="kpi-forecast">${k.forecast}</span>
+        </div>
+        ${renderSparkline(k.spark, ACCENT_DARK)}
+      </div>
+    `;
+    row.appendChild(card);
+    const valEl = card.querySelector('.kpi-value');
+    setTimeout(() => animateNumber(valEl, 0, k.value, k.suffix || '', k.prefix || '', 1100 + i * 50), 200 + i * 50);
+  });
+}
+
+function renderSlicers(theme) {
+  const row = document.getElementById('slicers-row');
+  row.innerHTML = '';
+  activeFilters = {};
+  theme.slicers.forEach(s => {
+    activeFilters[s.id] = null;
+    const wrap = document.createElement('div');
+    wrap.className = 'slicer';
+    let pills = s.options.map(opt => `<button class="slicer-pill" data-slicer="${s.id}" data-value="${opt}">${opt}</button>`).join('');
+    wrap.innerHTML = `<span class="slicer-label">${s.label}</span><div class="slicer-pills">${pills}</div>`;
+    row.appendChild(wrap);
+  });
+  row.querySelectorAll('.slicer-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      const sid = pill.dataset.slicer;
+      const wasActive = pill.classList.contains('is-active');
+      row.querySelectorAll(`.slicer-pill[data-slicer="${sid}"]`).forEach(p => p.classList.remove('is-active'));
+      if (!wasActive) { pill.classList.add('is-active'); activeFilters[sid] = pill.dataset.value; }
+      else activeFilters[sid] = null;
+      applyFilters();
+    });
+  });
+}
+
+function applyFilters() {
+  const filterCount = Object.values(activeFilters).filter(v => v !== null).length;
+  if (filterCount === 0) { renderCharts(THEMES[currentTheme]); return; }
+  const scale = Math.max(0.18, 1 - filterCount * 0.22);
+  const seed = filterCount + Object.values(activeFilters).filter(Boolean).join('').length;
+  const themeCopy = JSON.parse(JSON.stringify(THEMES[currentTheme]));
+
+  themeCopy.kpis.forEach(k => {
+    const variation = ((seed * 7) % 11 - 5) / 100;
+    k.value = +(k.value * scale * (1 + variation)).toFixed(k.value < 100 ? 1 : 0);
+    k.spark = k.spark.map(s => +(s * scale * (1 + variation)).toFixed(1));
+  });
+  const mutate = (arr) => arr.map((v,i) => v === null ? null : +(v * scale * (1 + ((seed + i) % 9 - 4) / 100)).toFixed(2));
+  themeCopy.forecastChart.actual = mutate(themeCopy.forecastChart.actual);
+  themeCopy.forecastChart.forecast = mutate(themeCopy.forecastChart.forecast);
+  themeCopy.forecastChart.upper = mutate(themeCopy.forecastChart.upper);
+  themeCopy.forecastChart.lower = mutate(themeCopy.forecastChart.lower);
+  themeCopy.topChart.data = mutate(themeCopy.topChart.data);
+  themeCopy.distribChart.data = mutate(themeCopy.distribChart.data);
+
+  renderKPIs(themeCopy);
+  renderCharts(themeCopy);
+  // Update map regions colors
+  updateMapColors();
+}
+
+function renderCharts(theme) {
+  // Forecast chart
+  const fc = theme.forecastChart;
+  if (charts.c1) charts.c1.destroy();
+  charts.c1 = new Chart(document.getElementById('chart-1'), {
+    type: 'line',
+    data: {
+      labels: fc.labels,
+      datasets: [
+        { label: 'Real', data: fc.actual, borderColor: ACCENT_DARK, backgroundColor: 'transparent', borderWidth: 2.5, tension: 0.3, pointRadius: 3, pointHoverRadius: 6 },
+        { label: 'Forecast', data: fc.forecast, borderColor: ACCENT_2, borderDash: [5,5], borderWidth: 2, tension: 0.3, pointRadius: 3, pointStyle: 'rect' },
+        { label: 'Banda sup.', data: fc.upper, borderColor: 'rgba(74,139,106,0.3)', backgroundColor: 'rgba(74,139,106,0.13)', borderWidth: 1, tension: 0.3, pointRadius: 0, fill: '+1' },
+        { label: 'Banda inf.', data: fc.lower, borderColor: 'rgba(74,139,106,0.3)', backgroundColor: 'transparent', borderWidth: 1, tension: 0.3, pointRadius: 0 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: { legend: { position: 'bottom', labels: { filter: i => !i.text.includes('Banda inf.') }}},
+      scales: { y: { grid: { color: 'rgba(0,0,0,0.05)' }}, x: { grid: { display: false }}}
+    }
+  });
+
+  // Top chart
+  const tc = theme.topChart;
+  document.getElementById('chart-3-title').textContent = tc.labels[0].length > 8 ? 'Ranking dinámico' : 'Top 10';
+  const palette = [ACCENT_DARK, ACCENT, ACCENT_2, '#5fa483', '#7ab89d', '#95cab8'];
+  if (charts.c3) charts.c3.destroy();
+  charts.c3 = new Chart(document.getElementById('chart-3'), {
+    type: 'bar',
+    data: { labels: tc.labels, datasets: [{ data: tc.data, backgroundColor: tc.labels.map((_,i) => palette[i % palette.length]), borderRadius: 4 }]},
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      indexAxis: 'y', plugins: { legend: { display: false }},
+      scales: { x: { grid: { color: 'rgba(0,0,0,0.05)' }}, y: { grid: { display: false }}}
+    }
+  });
+
+  // Distrib chart
+  const dc = theme.distribChart;
+  if (charts.c4) charts.c4.destroy();
+  charts.c4 = new Chart(document.getElementById('chart-4'), {
+    type: 'doughnut',
+    data: { labels: dc.labels, datasets: [{ data: dc.data, backgroundColor: palette, borderColor: '#fff', borderWidth: 2, hoverOffset: 8 }]},
+    options: {
+      responsive: true, maintainAspectRatio: false, cutout: '64%',
+      plugins: { legend: { position: 'right', labels: { boxWidth: 12, padding: 10 }}}
+    }
+  });
+}
+
+function renderAlerts(theme) {
+  const list = document.getElementById('alerts-list');
+  list.innerHTML = theme.alerts.map(a =>
+    `<div class="alert-item ${a.type}">
+      <div class="alert-time">${a.time}</div>
+      <div class="alert-title">${a.title}</div>
+      <div class="alert-body">${a.body}</div>
+    </div>`
+  ).join('');
+}
+
+function updateMapColors() {
+  document.querySelectorAll('.map-region').forEach(r => {
+    const v = parseFloat(r.dataset.value);
+    const t = (v - 22) / (98 - 22);
+    const r1 = Math.round(216 + (47 - 216) * t);
+    const g = Math.round(232 + (111 - 232) * t);
+    const b = Math.round(222 + (78 - 222) * t);
+    r.setAttribute('fill', `rgb(${r1},${g},${b})`);
+  });
+}
+
+function renderDashboard(themeKey) {
+  currentTheme = themeKey;
+  const theme = THEMES[themeKey];
+  renderHeader(theme);
+  renderKPIs(theme);
+  renderSlicers(theme);
+  renderCharts(theme);
+  renderAlerts(theme);
+  updateMapColors();
+}
+
+// Tabs
+document.querySelectorAll('.theme-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.theme-tab').forEach(t => t.classList.remove('is-active'));
+    tab.classList.add('is-active');
+    renderDashboard(tab.dataset.theme);
+  });
+});
+
+document.querySelectorAll('.scenario-pill').forEach(pill => {
+  pill.addEventListener('click', () => {
+    document.querySelectorAll('.scenario-pill').forEach(p => p.classList.remove('is-active'));
+    pill.classList.add('is-active');
+    applyFilters();
+  });
+});
+
+// RLS user switcher (cycles through roles on click)
+const ROLES = [
+  { initials: 'CE', name: 'CEO · Vista global' },
+  { initials: 'CF', name: 'CFO · Solo finanzas' },
+  { initials: 'GN', name: 'Gerente Norte · Norte solo' },
+  { initials: 'GO', name: 'Gerente Operaciones · 5 plantas' },
+  { initials: 'AV', name: 'Vendedor · Su cartera' }
+];
+let roleIdx = 0;
+document.getElementById('rls-switcher').addEventListener('click', () => {
+  roleIdx = (roleIdx + 1) % ROLES.length;
+  document.getElementById('rls-avatar').textContent = ROLES[roleIdx].initials;
+  document.getElementById('rls-name').textContent = ROLES[roleIdx].name;
+  // Visual feedback: scale down KPIs slightly to simulate RLS filter applied
+  document.querySelectorAll('.kpi-card').forEach(c => {
+    c.style.transition = 'opacity 0.3s';
+    c.style.opacity = '0.5';
+    setTimeout(() => { c.style.opacity = '1'; }, 300);
+  });
+  setTimeout(applyFilters, 200);
+});
+
+// Map region click → drill-down simulation
+document.querySelectorAll('.map-region').forEach(r => {
+  r.addEventListener('click', () => {
+    const region = r.dataset.region;
+    const value = r.dataset.value;
+    document.getElementById('rls-name').textContent = `Drill-down: ${region}`;
+    document.getElementById('rls-avatar').textContent = region.slice(0, 2).toUpperCase();
+  });
+});
+
+// Executive mode toggle
+document.getElementById('exec-mode-toggle').addEventListener('click', () => {
+  document.body.classList.toggle('exec-mode');
+  const btn = document.getElementById('exec-mode-toggle');
+  if (document.body.classList.contains('exec-mode')) {
+    btn.textContent = '✕ Salir';
+    if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(()=>{});
+  } else {
+    btn.textContent = '▶ Modo Ejecutivo';
+    if (document.fullscreenElement) document.exitFullscreen().catch(()=>{});
+  }
+});
+
+// Real-time update simulation
+let updateSeconds = 12;
+setInterval(() => {
+  updateSeconds += Math.floor(Math.random() * 8) + 3;
+  if (updateSeconds > 60) updateSeconds = Math.floor(Math.random() * 15) + 8;
+  document.getElementById('last-update').textContent = `hace ${updateSeconds}s`;
+}, 5000);
+
+// Initial
+const urlParams = new URLSearchParams(location.search);
+const urlTheme = urlParams.get('theme');
+if (urlTheme && THEMES[urlTheme]) {
+  document.querySelectorAll('.theme-tab').forEach(t => t.classList.toggle('is-active', t.dataset.theme === urlTheme));
+  renderDashboard(urlTheme);
+} else {
+  renderDashboard('mantenimiento');
+}
+</script>
+</body>
+</html>

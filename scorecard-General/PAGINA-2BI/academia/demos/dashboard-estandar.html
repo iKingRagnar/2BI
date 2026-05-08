@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="es" data-page="academia-demo-estandar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a4a7c">
+<meta name="description" content="Demo Power BI Estándar 2BI: dashboard flagship con sparklines, calculation groups, narrativa automática, bookmarks y combo charts. Mantenimiento, Ventas, Finanzas, Inventario.">
+<title>Demo Estándar — Academia 2BI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Outfit:wght@300..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/theme.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --demo-accent: #d4ac4c;
+    --demo-accent-soft: rgba(212, 172, 76, 0.16);
+    --demo-accent-dark: #8a6d23;
+    --demo-accent-light: #f5e2a8;
+    --demo-tier-name: 'Estándar · Flagship';
+  }
+
+  /* ========== LAYOUT ========== */
+  .dash-shell {
+    max-width: 1480px;
+    margin: 0 auto;
+    padding: 1.5rem 1.25rem 4rem;
+    position: relative;
+    z-index: 1;
+  }
+  .dash-header {
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+  .tier-badge {
+    display: inline-block;
+    padding: 5px 14px;
+    background: linear-gradient(135deg, var(--demo-accent), var(--demo-accent-dark));
+    color: #fff;
+    font-size: 0.7rem; font-weight: 800;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    border-radius: 999px;
+    box-shadow: 0 4px 12px rgba(212, 172, 76, 0.4);
+    margin-bottom: 0.4rem;
+  }
+  .dash-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.75rem, 3vw, 2.6rem);
+    font-weight: 700; color: var(--ink); margin: 0;
+    line-height: 1.1;
+  }
+  .dash-subtitle { color: var(--muted); font-size: 0.92rem; margin: 0.3rem 0 0; }
+
+  /* ========== THEME TABS ========== */
+  .theme-tabs {
+    display: flex; gap: 0.45rem; flex-wrap: wrap;
+    margin-bottom: 1.2rem;
+    padding: 0.4rem;
+    background: var(--card-bg, rgba(255,255,255,0.7));
+    border-radius: 14px;
+    border: 1px solid rgba(0,0,0,0.06);
+    backdrop-filter: blur(10px);
+  }
+  .theme-tab {
+    flex: 1 1 auto; min-width: 140px;
+    padding: 0.65rem 1rem;
+    border: 1px solid transparent;
+    background: transparent;
+    border-radius: 10px;
+    font-family: inherit; font-size: 0.88rem; font-weight: 600;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(.2,.8,.2,1);
+    display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+  }
+  .theme-tab:hover {
+    background: rgba(0,0,0,0.04); color: var(--ink);
+  }
+  .theme-tab.is-active {
+    background: var(--demo-accent); color: #fff;
+    box-shadow: 0 6px 18px rgba(212, 172, 76, 0.35);
+    transform: translateY(-1px);
+  }
+
+  /* ========== CALCULATION GROUPS BAR (NEW) ========== */
+  .calc-groups-bar {
+    display: flex; align-items: center; gap: 0.6rem;
+    padding: 0.7rem 1rem;
+    background: linear-gradient(135deg, var(--demo-accent-soft), transparent);
+    border: 1px solid var(--demo-accent-soft);
+    border-radius: 12px;
+    margin-bottom: 1.2rem;
+    flex-wrap: wrap;
+  }
+  .calc-groups-label {
+    font-size: 0.72rem; font-weight: 700;
+    color: var(--demo-accent-dark);
+    letter-spacing: 0.15em; text-transform: uppercase;
+  }
+  .calc-groups-pills {
+    display: flex; gap: 0.3rem; flex-wrap: wrap;
+  }
+  .calc-pill {
+    padding: 0.32rem 0.85rem;
+    border: 1px solid rgba(212, 172, 76, 0.3);
+    background: rgba(255,255,255,0.6);
+    color: var(--ink-soft);
+    font-size: 0.78rem; font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.18s ease;
+  }
+  .calc-pill:hover { border-color: var(--demo-accent); color: var(--demo-accent-dark); }
+  .calc-pill.is-active {
+    background: var(--demo-accent); color: #fff;
+    border-color: var(--demo-accent);
+    box-shadow: 0 4px 10px var(--demo-accent-soft);
+  }
+  .field-param-selector {
+    margin-left: auto;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .field-param-selector label {
+    font-size: 0.72rem; font-weight: 700;
+    color: var(--demo-accent-dark);
+    letter-spacing: 0.12em; text-transform: uppercase;
+  }
+  .field-param-selector select {
+    padding: 0.3rem 0.7rem;
+    border: 1px solid rgba(212, 172, 76, 0.3);
+    border-radius: 8px;
+    background: rgba(255,255,255,0.8);
+    font-family: inherit; font-size: 0.82rem; font-weight: 600;
+    color: var(--ink);
+    cursor: pointer;
+  }
+
+  /* ========== KPI ROW (with sparklines) ========== */
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 0.85rem;
+    margin-bottom: 1.4rem;
+  }
+  .kpi-card {
+    background: var(--card-bg, #fff);
+    border: 1px solid var(--card-border, rgba(0,0,0,0.06));
+    border-radius: 14px;
+    padding: 1.05rem 1.15rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .kpi-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 36px rgba(0,0,0,0.08);
+  }
+  .kpi-card::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 4px; height: 100%; background: var(--demo-accent);
+  }
+  .kpi-header {
+    display: flex; align-items: center; gap: 0.5rem;
+    margin-bottom: 0.45rem;
+  }
+  .kpi-status-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .kpi-status-dot.green { background: #2f6f4e; box-shadow: 0 0 8px rgba(47,111,78,0.5); }
+  .kpi-status-dot.amber { background: #d4ac4c; box-shadow: 0 0 8px rgba(212,172,76,0.5); }
+  .kpi-status-dot.red { background: #b23a48; box-shadow: 0 0 8px rgba(178,58,72,0.5); }
+  .kpi-label {
+    font-size: 0.7rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.12em;
+    font-weight: 700;
+  }
+  .kpi-value {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.45rem, 2.4vw, 2rem);
+    font-weight: 700; color: var(--ink);
+    line-height: 1; margin-bottom: 0.3rem;
+  }
+  .kpi-bottom {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    gap: 0.5rem;
+  }
+  .kpi-delta {
+    font-size: 0.78rem;
+    display: flex; align-items: center; gap: 0.3rem;
+  }
+  .kpi-delta.up { color: #2f6f4e; }
+  .kpi-delta.down { color: #b23a48; }
+  .kpi-sparkline {
+    width: 70px; height: 28px;
+    overflow: visible;
+  }
+
+  /* ========== VIEW TABS (BOOKMARKS - NEW) ========== */
+  .view-tabs {
+    display: flex; gap: 0.35rem;
+    margin-bottom: 1rem;
+    align-items: center;
+  }
+  .view-label {
+    font-size: 0.72rem; font-weight: 700;
+    color: var(--muted);
+    letter-spacing: 0.12em; text-transform: uppercase;
+    margin-right: 0.5rem;
+  }
+  .view-tab {
+    padding: 0.4rem 0.9rem;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: var(--card-bg, #fff);
+    color: var(--ink-soft);
+    font-size: 0.8rem; font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .view-tab:hover { border-color: var(--demo-accent); color: var(--demo-accent-dark); }
+  .view-tab.is-active {
+    background: var(--ink); color: #fff;
+    border-color: var(--ink);
+  }
+
+  /* ========== SLICERS ========== */
+  .slicers-row {
+    display: flex; flex-wrap: wrap; gap: 0.8rem;
+    padding: 0.85rem 1.05rem;
+    margin-bottom: 1.2rem;
+    background: var(--card-bg, rgba(255,255,255,0.5));
+    border-radius: 14px;
+    border: 1px solid rgba(0,0,0,0.05);
+  }
+  .slicer { display: flex; flex-direction: column; gap: 0.35rem; }
+  .slicer-label {
+    font-size: 0.65rem; font-weight: 700; color: var(--muted);
+    letter-spacing: 0.18em; text-transform: uppercase;
+  }
+  .slicer-pills { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+  .slicer-pill {
+    padding: 0.32rem 0.7rem;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 999px;
+    background: #fff;
+    color: var(--ink-soft);
+    font-size: 0.76rem;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    user-select: none;
+    white-space: nowrap;
+  }
+  .slicer-pill:hover { border-color: var(--demo-accent); color: var(--demo-accent-dark); }
+  .slicer-pill.is-active {
+    background: var(--demo-accent); color: #fff;
+    border-color: var(--demo-accent);
+    box-shadow: 0 4px 12px var(--demo-accent-soft);
+    transform: scale(1.04);
+  }
+  .slicer-clear {
+    background: transparent; border: none;
+    color: var(--demo-accent-dark);
+    font-size: 0.78rem; cursor: pointer;
+    text-decoration: underline;
+    margin-left: auto;
+    align-self: flex-end;
+  }
+
+  /* ========== NARRATIVE CARD (NEW) ========== */
+  .narrative-card {
+    display: flex; gap: 0.9rem; align-items: flex-start;
+    padding: 1rem 1.2rem;
+    background: linear-gradient(135deg, rgba(212,172,76,0.08), rgba(255,255,255,0.4));
+    border: 1px solid rgba(212,172,76,0.25);
+    border-radius: 14px;
+    margin-bottom: 1.2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .narrative-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--demo-accent), transparent);
+    animation: slideShimmer 3s ease-in-out infinite;
+  }
+  @keyframes slideShimmer { 0%,100% { transform: translateX(-100%); } 50% { transform: translateX(100%); } }
+  .narrative-icon {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--demo-accent), var(--demo-accent-dark));
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 1.1rem; font-weight: 700;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px var(--demo-accent-soft);
+  }
+  .narrative-text { flex: 1; }
+  .narrative-tag {
+    display: inline-block;
+    font-size: 0.62rem; font-weight: 700;
+    color: var(--demo-accent-dark);
+    letter-spacing: 0.15em; text-transform: uppercase;
+    margin-bottom: 0.25rem;
+  }
+  .narrative-body { font-size: 0.9rem; color: var(--ink); line-height: 1.5; }
+  .narrative-body strong { color: var(--demo-accent-dark); font-weight: 700; }
+
+  /* ========== CHART GRID ========== */
+  .chart-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 1.1rem;
+    margin-bottom: 1.2rem;
+  }
+  .chart-card {
+    background: var(--card-bg, #fff);
+    border: 1px solid var(--card-border, rgba(0,0,0,0.06));
+    border-radius: 14px;
+    padding: 1rem 1.15rem;
+    transition: all 0.25s;
+  }
+  .chart-card:hover { box-shadow: 0 12px 32px rgba(0,0,0,0.06); }
+  .chart-card.full-row { grid-column: 1 / -1; }
+  .chart-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 0.85rem; gap: 0.5rem;
+  }
+  .chart-title {
+    font-family: 'Fraunces', serif;
+    font-size: 1rem; font-weight: 700;
+    color: var(--ink); margin: 0;
+  }
+  .chart-sub { font-size: 0.7rem; color: var(--muted); }
+  .chart-actions {
+    display: flex; gap: 0.3rem;
+  }
+  .chart-action-btn {
+    width: 26px; height: 26px;
+    border: 1px solid rgba(0,0,0,0.08);
+    background: transparent;
+    border-radius: 6px;
+    cursor: pointer;
+    color: var(--muted);
+    font-size: 0.85rem;
+    transition: all 0.15s;
+  }
+  .chart-action-btn:hover {
+    border-color: var(--demo-accent);
+    color: var(--demo-accent-dark);
+    background: var(--demo-accent-soft);
+  }
+  .chart-body { position: relative; height: 290px; }
+  .chart-card.tall .chart-body { height: 350px; }
+
+  /* ========== TABLE WITH CONDITIONAL FORMATTING ========== */
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
+  .data-table thead th {
+    text-align: left;
+    padding: 0.6rem 0.7rem;
+    background: var(--demo-accent-soft);
+    color: var(--demo-accent-dark);
+    font-size: 0.68rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    position: sticky; top: 0; z-index: 1;
+  }
+  .data-table tbody td {
+    padding: 0.55rem 0.7rem;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    color: var(--ink-soft);
+    position: relative;
+  }
+  .data-table tbody tr { transition: background 0.15s; }
+  .data-table tbody tr:hover { background: var(--demo-accent-soft); }
+  .data-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .data-table .badge {
+    display: inline-block;
+    padding: 2px 8px; border-radius: 999px;
+    font-size: 0.7rem; font-weight: 700;
+  }
+  .data-table .badge.green { background: rgba(47,111,78,0.15); color: #2f6f4e; }
+  .data-table .badge.red { background: rgba(178,58,72,0.15); color: #b23a48; }
+  .data-table .badge.amber { background: rgba(212,172,76,0.18); color: #8a6d23; }
+
+  /* Conditional formatting heatmap */
+  .data-table .heatmap-cell {
+    position: relative; z-index: 1;
+  }
+  .data-table .heatmap-cell::before {
+    content: ''; position: absolute; inset: 0;
+    border-radius: 4px; opacity: 0.35;
+    z-index: -1;
+  }
+
+  .detail-pane {
+    background: var(--card-bg, #fff);
+    border: 1px solid var(--card-border, rgba(0,0,0,0.06));
+    border-radius: 14px;
+    padding: 0.9rem 1rem;
+    max-height: 360px; overflow-y: auto;
+  }
+
+  /* ========== FOOTER STATS ========== */
+  .footer-stats {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem; margin-top: 1.5rem;
+    padding: 1.2rem; border-radius: 14px;
+    background: linear-gradient(135deg, rgba(212,172,76,0.06), transparent);
+    border: 1px dashed rgba(212,172,76,0.25);
+  }
+  .footer-stat {
+    display: flex; flex-direction: column;
+  }
+  .footer-stat__label {
+    font-size: 0.65rem; color: var(--muted);
+    letter-spacing: 0.15em; text-transform: uppercase;
+    margin-bottom: 0.2rem;
+  }
+  .footer-stat__value {
+    font-family: 'Fraunces', serif;
+    font-size: 1.15rem; font-weight: 700;
+    color: var(--demo-accent-dark);
+  }
+  .footer-stat__sub {
+    font-size: 0.72rem; color: var(--ink-soft);
+  }
+
+  /* ========== ANIMATIONS ========== */
+  @keyframes kpiPulse {
+    0% { transform: scale(0.92); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  .kpi-card.animate { animation: kpiPulse 0.6s cubic-bezier(.2,.9,.2,1) both; }
+  .kpi-card:nth-child(1) { animation-delay: 0.05s; }
+  .kpi-card:nth-child(2) { animation-delay: 0.12s; }
+  .kpi-card:nth-child(3) { animation-delay: 0.19s; }
+  .kpi-card:nth-child(4) { animation-delay: 0.26s; }
+  .kpi-card:nth-child(5) { animation-delay: 0.33s; }
+
+  @keyframes chartIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .chart-card { animation: chartIn 0.7s cubic-bezier(.2,.9,.2,1) both; }
+  .chart-card:nth-child(1) { animation-delay: 0.45s; }
+  .chart-card:nth-child(2) { animation-delay: 0.55s; }
+  .chart-card:nth-child(3) { animation-delay: 0.65s; }
+  .chart-card:nth-child(4) { animation-delay: 0.75s; }
+
+  @keyframes narrativeIn {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .narrative-card { animation: narrativeIn 0.6s cubic-bezier(.2,.9,.2,1) 0.35s both; }
+
+  /* CTA back */
+  .demo-back {
+    position: fixed; bottom: 1rem; left: 1rem; z-index: 50;
+    background: var(--demo-accent); color: #fff;
+    padding: 0.7rem 1.2rem; border-radius: 999px;
+    text-decoration: none; font-weight: 700; font-size: 0.85rem;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    transition: transform 0.2s;
+  }
+  .demo-back:hover { transform: translateY(-2px) scale(1.03); }
+
+  @media (max-width: 900px) {
+    .chart-grid { grid-template-columns: 1fr; }
+    .field-param-selector { margin-left: 0; }
+  }
+
+  .skip-link {
+    position: absolute; left: -9999px;
+  }
+</style>
+</head>
+<body>
+  <a class="skip-link" href="#dashboard">Saltar al contenido</a>
+  <div class="ambient ambient--rich" aria-hidden="true">
+    <div class="ambient__mesh"></div>
+    <div class="ambient__grid"></div>
+    <div class="ambient__shimmer"></div>
+    <div class="ambient__blob ambient__blob--1"></div>
+    <div class="ambient__blob ambient__blob--2"></div>
+    <div class="ambient__blob ambient__blob--3"></div>
+  </div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <main id="dashboard" class="dash-shell">
+    <div class="dash-header">
+      <div>
+        <span class="tier-badge">★ Estándar · Flagship</span>
+        <h1 class="dash-title" id="dash-title">Dashboard ejecutivo Estándar</h1>
+        <p class="dash-subtitle" id="dash-subtitle">Sparklines, calculation groups, narrativa automática y bookmarks. Lo que aprendes a construir en el programa Estándar.</p>
+      </div>
+      <div>
+        <a href="../../academia-estandar.html" class="btn btn--ghost btn--sm">← Volver al programa</a>
+      </div>
+    </div>
+
+    <nav class="theme-tabs" role="tablist" aria-label="Tema del dashboard">
+      <button class="theme-tab is-active" role="tab" data-theme="mantenimiento" aria-selected="true">
+        <span>⚙</span><span>Mantenimiento</span>
+      </button>
+      <button class="theme-tab" role="tab" data-theme="ventas" aria-selected="false">
+        <span>◭</span><span>Ventas</span>
+      </button>
+      <button class="theme-tab" role="tab" data-theme="finanzas" aria-selected="false">
+        <span>$</span><span>Finanzas</span>
+      </button>
+      <button class="theme-tab" role="tab" data-theme="inventario" aria-selected="false">
+        <span>▤</span><span>Inventario</span>
+      </button>
+    </nav>
+
+    <!-- CALCULATION GROUPS BAR (NEW vs Express) -->
+    <div class="calc-groups-bar">
+      <span class="calc-groups-label">Calculation Group · Tiempo</span>
+      <div class="calc-groups-pills" id="calc-pills">
+        <button class="calc-pill is-active" data-calc="real">Valor real</button>
+        <button class="calc-pill" data-calc="ytd">YTD</button>
+        <button class="calc-pill" data-calc="mtd">MTD</button>
+        <button class="calc-pill" data-calc="mom">vs Mes anterior</button>
+        <button class="calc-pill" data-calc="yoy">vs Año anterior</button>
+      </div>
+      <div class="field-param-selector">
+        <label for="field-param">Métrica:</label>
+        <select id="field-param">
+          <option value="primary">Métrica principal</option>
+          <option value="alt1">Métrica alterna 1</option>
+          <option value="alt2">Métrica alterna 2</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- VIEW TABS / BOOKMARKS (NEW vs Express) -->
+    <div class="view-tabs">
+      <span class="view-label">Vista</span>
+      <button class="view-tab is-active" data-view="general">General</button>
+      <button class="view-tab" data-view="detalle">Detalle</button>
+      <button class="view-tab" data-view="comparativa">Comparativa</button>
+    </div>
+
+    <!-- NARRATIVE CARD (NEW vs Express) -->
+    <div class="narrative-card" id="narrative">
+      <div class="narrative-icon">✦</div>
+      <div class="narrative-text">
+        <span class="narrative-tag">Insight automático</span>
+        <p class="narrative-body" id="narrative-body">Cargando análisis...</p>
+      </div>
+    </div>
+
+    <section class="kpi-row" id="kpi-row" aria-label="Indicadores clave"></section>
+
+    <section class="slicers-row" id="slicers-row" aria-label="Filtros"></section>
+
+    <section class="chart-grid">
+      <div class="chart-card tall">
+        <div class="chart-head">
+          <div>
+            <h3 class="chart-title" id="chart-1-title">Tendencia mensual</h3>
+            <span class="chart-sub" id="chart-1-sub">12 meses</span>
+          </div>
+          <div class="chart-actions">
+            <button class="chart-action-btn" title="Drill-through">⬇</button>
+            <button class="chart-action-btn" title="Exportar">↓</button>
+          </div>
+        </div>
+        <div class="chart-body"><canvas id="chart-1"></canvas></div>
+      </div>
+
+      <div class="chart-card tall">
+        <div class="chart-head">
+          <div>
+            <h3 class="chart-title" id="chart-2-title">Distribución</h3>
+            <span class="chart-sub" id="chart-2-sub">% del total</span>
+          </div>
+        </div>
+        <div class="chart-body"><canvas id="chart-2"></canvas></div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-head">
+          <div>
+            <h3 class="chart-title" id="chart-3-title">Top 10</h3>
+            <span class="chart-sub" id="chart-3-sub">Ranking dinámico</span>
+          </div>
+          <div class="chart-actions">
+            <button class="chart-action-btn" title="Ordenar">↕</button>
+          </div>
+        </div>
+        <div class="chart-body"><canvas id="chart-3"></canvas></div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-head">
+          <div>
+            <h3 class="chart-title" id="chart-4-title">Detalle con conditional formatting</h3>
+            <span class="chart-sub" id="chart-4-sub">heatmap por columna</span>
+          </div>
+        </div>
+        <div class="detail-pane">
+          <table class="data-table" id="detail-table">
+            <thead></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER STATS (NEW vs Express) -->
+    <section class="footer-stats">
+      <div class="footer-stat">
+        <span class="footer-stat__label">Modelo Power BI</span>
+        <span class="footer-stat__value">Star Schema · 4 dim · 1 hecho</span>
+        <span class="footer-stat__sub">Cardinalidades 1:* validadas</span>
+      </div>
+      <div class="footer-stat">
+        <span class="footer-stat__label">Calculation Groups</span>
+        <span class="footer-stat__value">1 grupo · 5 cálculos</span>
+        <span class="footer-stat__sub">Reemplaza 30 medidas duplicadas</span>
+      </div>
+      <div class="footer-stat">
+        <span class="footer-stat__label">Tiempo de carga</span>
+        <span class="footer-stat__value">2.4 s</span>
+        <span class="footer-stat__sub">Optimizado con DAX Studio</span>
+      </div>
+      <div class="footer-stat">
+        <span class="footer-stat__label">Refresh</span>
+        <span class="footer-stat__value">Diario · 06:00 CDMX</span>
+        <span class="footer-stat__sub">Dataflow Gen2 + RLS dinámico</span>
+      </div>
+    </section>
+
+    <p style="margin-top: 2rem; text-align: center; color: var(--muted); font-size: 0.88rem; line-height: 1.7;">
+      Demo del programa <strong>Estándar Flagship</strong> ($8,500 MXN). Construye un dashboard como este — con tus datos reales — en 8 sesiones de mentoría 1 a 1.<br>
+      <a href="../../academia-estandar.html" style="color: var(--demo-accent-dark); font-weight: 700;">Ver programa completo →</a>
+    </p>
+  </main>
+
+  <a href="../../academia-estandar.html" class="demo-back">← Volver al programa Estándar</a>
+
+<script>
+// ===========================================================================
+// DEMO ESTÁNDAR — Dashboard con sparklines, calc groups, narrative, bookmarks
+// ===========================================================================
+
+const THEMES = {
+  mantenimiento: {
+    title: 'OEE y disponibilidad de equipos',
+    subtitle: 'Operaciones de planta · KPIs con sparklines y narrativa automática.',
+    narrative: 'El <strong>OEE consolidado</strong> creció <strong>2.1pp</strong> este mes (87.3%), impulsado por <strong>Planta A</strong> tras reducir paros mecánicos en 18%. Sin embargo, <strong>EXT-04</strong> sigue siendo el equipo crítico con 24 hrs perdidas — recomendamos priorizar mantto. preventivo.',
+    kpis: [
+      { label: 'OEE',           value: 87.3, suffix: '%',     status: 'green', delta: '+2.1pp', dir: 'up', spark: [82.1,83.4,84.0,85.2,86.1,85.8,86.4,87.3,87.0,87.5,87.3,87.3] },
+      { label: 'MTBF',          value: 142,  suffix: ' hrs',  status: 'green', delta: '+8 hrs', dir: 'up', spark: [118,124,128,132,135,138,140,138,141,142,142,142] },
+      { label: 'MTTR',          value: 23,   suffix: ' min',  status: 'green', delta: '−4 min', dir: 'up', spark: [32,30,28,27,26,25,24,25,24,23,23,23] },
+      { label: 'Paros',         value: 47,   suffix: '',      status: 'amber', delta: '+5',     dir: 'down', spark: [38,42,40,44,42,45,43,40,42,44,46,47] },
+      { label: 'Disponibilidad', value: 94.2, suffix: '%',    status: 'green', delta: '+0.8pp', dir: 'up', spark: [89.5,90.2,91.4,92.0,92.5,92.8,93.2,93.0,93.5,93.8,94.0,94.2] }
+    ],
+    slicers: [
+      { id: 'planta', label: 'Planta',  options: ['Planta A','Planta B','Planta C'] },
+      { id: 'linea',  label: 'Línea',   options: ['L-01','L-02','L-03','L-04','L-05'] },
+      { id: 'mes',    label: 'Mes',     options: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'] },
+      { id: 'turno',  label: 'Turno',   options: ['Matutino','Vespertino','Nocturno'] }
+    ],
+    charts: {
+      c1: { title: 'OEE vs Meta vs Disponibilidad', sub: '12 meses · combo bar+line',
+            labels: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+            datasets: [
+              { label: 'OEE',           data: [82.1,83.4,84.0,85.2,86.1,85.8,86.4,87.3,87.0,87.5,87.3,87.3], type: 'bar' },
+              { label: 'Disponibilidad',data: [89.5,90.2,91.4,92.0,92.5,92.8,93.2,93.0,93.5,93.8,94.0,94.2], type: 'line' },
+              { label: 'Meta OEE',      data: [85,85,85,85,85,85,85,85,85,85,85,85], type: 'line', dashed: true }
+            ]},
+      c2: { title: 'Paros por causa', sub: 'horas paradas',
+            labels: ['Falla mecánica','Cambio molde','Materia prima','Energía','Mantto. preventivo','Otros'],
+            data: [38, 25, 14, 8, 10, 5] },
+      c3: { title: 'Top 10 equipos críticos', sub: 'horas paradas',
+            labels: ['EXT-04','INY-12','EMB-07','CTM-03','CTM-09','EXT-02','INY-08','TQ-15','EXT-11','MOL-06'],
+            data: [24,21,18,16,14,13,12,10,9,8] },
+      table: {
+        head: ['Equipo', 'Planta', 'Disponibilidad', 'OEE', 'Estado'],
+        cfCols: [2, 3], statusCol: 4,
+        rows: [
+          ['EXT-04', 'Planta A', 78, 72, 'Crítico'],
+          ['INY-12', 'Planta B', 82, 79, 'Riesgo'],
+          ['EMB-07', 'Planta A', 88, 84, 'OK'],
+          ['CTM-03', 'Planta C', 91, 87, 'OK'],
+          ['CTM-09', 'Planta C', 93, 89, 'OK'],
+          ['EXT-02', 'Planta A', 94, 91, 'OK'],
+          ['INY-08', 'Planta B', 95, 92, 'Excelente'],
+          ['TQ-15',  'Planta B', 96, 93, 'Excelente']
+        ]
+      }
+    }
+  },
+
+  ventas: {
+    title: 'Performance comercial',
+    subtitle: 'Ventas, márgenes y top productos · sparklines en cada KPI.',
+    narrative: 'Las <strong>ventas YTD ($48.2M)</strong> superan en <strong>+12.4%</strong> al año anterior. <strong>Acero P-42</strong> se mantiene como producto líder, pero el <strong>margen cayó 0.4pp</strong>; analiza si los costos del Norte están subiendo más rápido que el precio. Top 3 vendedores generan el <strong>61%</strong> del revenue.',
+    kpis: [
+      { label: 'Ventas YTD',     value: 48.2, suffix: 'M', prefix: '$', status: 'green', delta: '+12.4%', dir: 'up', spark: [3.1,3.4,3.8,4.2,4.5,4.7,4.6,4.8,4.9,5.1,5.0,5.1] },
+      { label: 'Crecimiento YoY', value: 12.4, suffix: '%',              status: 'green', delta: '+3.1pp', dir: 'up', spark: [8.1,9.2,10.5,11.0,11.5,11.8,12.0,12.1,12.2,12.3,12.4,12.4] },
+      { label: 'Clientes activos',value: 1247,suffix: '',                status: 'green', delta: '+89',    dir: 'up', spark: [1100,1130,1158,1170,1195,1210,1220,1225,1232,1238,1244,1247] },
+      { label: 'Ticket promedio', value: 38.7, suffix: 'K', prefix: '$', status: 'green', delta: '+$2.4K', dir: 'up', spark: [35.2,36.1,36.5,37.0,37.4,37.8,38.0,38.2,38.4,38.5,38.6,38.7] },
+      { label: 'Margen',         value: 32.1, suffix: '%',              status: 'amber', delta: '−0.4pp', dir: 'down', spark: [33.5,33.0,32.8,32.6,32.5,32.4,32.3,32.3,32.2,32.2,32.1,32.1] }
+    ],
+    slicers: [
+      { id: 'region',    label: 'Región',    options: ['Norte','Centro','Sur','Bajío'] },
+      { id: 'vendedor',  label: 'Vendedor',  options: ['Alvaro P.','Sofía R.','Memo C.','Jorge L.','Ana M.','Luis V.'] },
+      { id: 'categoria', label: 'Categoría', options: ['Industrial','Construcción','Retail','Servicios','Tecnología'] },
+      { id: 'mes',       label: 'Mes',       options: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'] }
+    ],
+    charts: {
+      c1: { title: 'Ventas vs costos vs margen', sub: 'combo bar+line',
+            labels: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+            datasets: [
+              { label: 'Ventas',  data: [3.1,3.4,3.8,4.2,4.5,4.7,4.6,4.8,4.9,5.1,5.0,5.1], type: 'bar' },
+              { label: 'Costos',  data: [2.1,2.3,2.6,2.8,3.0,3.2,3.1,3.3,3.4,3.5,3.4,3.5], type: 'bar' },
+              { label: 'Margen %',data: [32.3,32.4,31.6,33.3,33.3,31.9,32.6,31.3,30.6,31.4,32.0,31.4], type: 'line' }
+            ]},
+      c2: { title: 'Distribución por región', sub: '% del total',
+            labels: ['Norte','Centro','Sur','Bajío'],
+            data: [42, 28, 18, 12] },
+      c3: { title: 'Top 10 productos', sub: 'MXN miles',
+            labels: ['Acero P-42','Cemento Tipo I','Resina Epoxi','Tubería 4in','Lámina Galv.','Pintura Industrial','Ferretería Pack','Aislante Térmico','Tornillería','Soldadura'],
+            data: [842, 712, 658, 591, 547, 489, 432, 398, 367, 312] },
+      table: {
+        head: ['Vendedor', 'Región', 'Ventas (M)', 'Margen', 'vs Meta'],
+        cfCols: [2, 3], statusCol: 4,
+        rows: [
+          ['Alvaro P.', 'Norte',  12.4, 34, '+8%'],
+          ['Sofía R.',  'Centro', 10.8, 32, '+5%'],
+          ['Memo C.',   'Bajío',  9.2,  36, '+12%'],
+          ['Jorge L.',  'Sur',    7.6,  28, '−3%'],
+          ['Ana M.',    'Centro', 5.4,  31, '−1%'],
+          ['Luis V.',   'Norte',  2.8,  24, '−15%']
+        ]
+      }
+    }
+  },
+
+  finanzas: {
+    title: 'P&L y razones financieras',
+    subtitle: 'Revenue, EBITDA y ratios · vs presupuesto y benchmark.',
+    narrative: '<strong>EBITDA $14.7M</strong> supera presupuesto en <strong>+11.4%</strong>. El <strong>margen neto creció 1.4pp</strong> (28.1%), aunque <strong>gastos operativos están 5.6% sobre presupuesto</strong> — revisar si es por crecimiento sano o por ineficiencia. Quick ratio en 1.42 indica liquidez saludable.',
+    kpis: [
+      { label: 'Revenue',     value: 52.3, suffix: 'M', prefix: '$', status: 'green', delta: '+9.8%',  dir: 'up', spark: [3.8,4.0,4.2,4.4,4.5,4.6,4.5,4.7,4.8,4.9,4.7,4.2] },
+      { label: 'EBITDA',      value: 14.7, suffix: 'M', prefix: '$', status: 'green', delta: '+11.2%', dir: 'up', spark: [1.0,1.1,1.2,1.2,1.3,1.3,1.3,1.3,1.3,1.4,1.3,1.0] },
+      { label: 'Margen neto', value: 28.1, suffix: '%',              status: 'green', delta: '+1.4pp', dir: 'up', spark: [26.3,26.5,26.8,27.1,27.3,27.5,27.7,27.8,27.9,28.0,28.1,28.1] },
+      { label: 'Cash op.',    value: 3.2,  suffix: 'M', prefix: '$', status: 'green', delta: '+$0.4M', dir: 'up', spark: [2.4,2.5,2.6,2.7,2.8,2.9,3.0,3.0,3.1,3.1,3.2,3.2] },
+      { label: 'Quick ratio', value: 1.42, suffix: '',               status: 'green', delta: '+0.08',  dir: 'up', spark: [1.30,1.32,1.34,1.35,1.37,1.38,1.39,1.40,1.41,1.41,1.42,1.42] }
+    ],
+    slicers: [
+      { id: 'centro', label: 'Centro de costo', options: ['Operaciones','Comercial','Admin','TI'] },
+      { id: 'tipo',   label: 'Tipo',            options: ['Real','Presupuesto','Forecast'] },
+      { id: 'mes',    label: 'Mes',             options: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'] },
+      { id: 'moneda', label: 'Moneda',          options: ['MXN','USD'] }
+    ],
+    charts: {
+      c1: { title: 'Revenue vs Costos vs EBITDA %', sub: 'combo bar+line',
+            labels: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+            datasets: [
+              { label: 'Revenue',   data: [3.8,4.0,4.2,4.4,4.5,4.6,4.5,4.7,4.8,4.9,4.7,4.2], type: 'bar' },
+              { label: 'Costos',    data: [2.7,2.8,2.9,3.0,3.1,3.2,3.1,3.2,3.3,3.4,3.2,2.9], type: 'bar' },
+              { label: 'EBITDA %',  data: [28.0,28.5,29.0,29.5,30.0,30.4,30.8,31.3,31.5,31.8,32.1,32.1], type: 'line' }
+            ]},
+      c2: { title: 'Distribución de gastos', sub: '% del total',
+            labels: ['Nómina','Materia prima','Servicios','Logística','Mantto.','Otros'],
+            data: [42, 28, 12, 8, 6, 4] },
+      c3: { title: 'Razones financieras', sub: 'vs benchmark',
+            labels: ['Margen bruto','Margen op.','Margen neto','ROE','ROA','Quick ratio','Current ratio','Deuda/Equity','Días por cobrar','Rotación inv.'],
+            data: [42, 31, 28, 18, 12, 1.42, 1.85, 0.42, 38, 4.2] },
+      table: {
+        head: ['Cuenta', 'Real', 'Presup.', 'Var %', 'Status'],
+        cfCols: [1, 2, 3], statusCol: 4,
+        rows: [
+          ['Revenue',     52.3, 50.0,  4.6,  'OK'],
+          ['Costo ventas',32.1, 31.5,  1.9,  'OK'],
+          ['Margen bruto',20.2, 18.5,  9.2,  'Excelente'],
+          ['Gastos op.',  11.4, 10.8,  5.6,  'Riesgo'],
+          ['EBITDA',      14.7, 13.2,  11.4, 'Excelente'],
+          ['Cash op.',    3.2,  2.8,   14.3, 'Excelente'],
+          ['Quick ratio', 1.42, 1.30,  9.2,  'OK']
+        ]
+      }
+    }
+  },
+
+  inventario: {
+    title: 'Inventario y rotación',
+    subtitle: 'Valor, rotación, ABC y stockouts · análisis de obsolescencia.',
+    narrative: '<strong>Rotación 4.2x</strong> mejoró 0.4x este trimestre y <strong>obsoleto bajó a 6.2%</strong> (de 7.3%). Pero hay <strong>2 SKUs en stockout total</strong> en CDMX y GDL (categoría A) — riesgo de pérdida de venta inmediato. Días de stock bajaron a 87 (vs 96 hace 3 meses).',
+    kpis: [
+      { label: 'Valor inv.',  value: 8.4,  suffix: 'M', prefix: '$', status: 'green', delta: '−$0.3M',  dir: 'up', spark: [9.2,9.0,8.9,8.8,8.7,8.6,8.5,8.5,8.4,8.4,8.4,8.4] },
+      { label: 'Rotación',    value: 4.2,  suffix: 'x',              status: 'green', delta: '+0.4x',   dir: 'up', spark: [3.6,3.7,3.8,3.8,3.9,4.0,4.0,4.1,4.1,4.2,4.2,4.2] },
+      { label: 'Días stock',  value: 87,   suffix: '',               status: 'green', delta: '−9 días', dir: 'up', spark: [101,99,96,94,92,90,89,88,87,87,87,87] },
+      { label: 'SKUs activos',value: 1432, suffix: '',               status: 'green', delta: '+47',     dir: 'up', spark: [1340,1358,1370,1385,1400,1410,1418,1422,1426,1428,1430,1432] },
+      { label: 'Obsoleto',    value: 6.2,  suffix: '%',              status: 'green', delta: '−1.1pp',  dir: 'up', spark: [7.5,7.4,7.3,7.1,6.9,6.7,6.6,6.5,6.4,6.3,6.2,6.2] }
+    ],
+    slicers: [
+      { id: 'almacen',   label: 'Almacén',   options: ['CDMX','GDL','MTY','BAJ','VRZ'] },
+      { id: 'categoria', label: 'Categoría', options: ['Materia prima','Producto term.','Refacciones','Insumos'] },
+      { id: 'estado',    label: 'Estado',    options: ['Disponible','En tránsito','Reservado'] },
+      { id: 'abc',       label: 'Clase ABC', options: ['A','B','C'] }
+    ],
+    charts: {
+      c1: { title: 'Inventario por almacén', sub: 'clustered MXN millones',
+            labels: ['CDMX','GDL','MTY','BAJ','VRZ'],
+            datasets: [
+              { label: 'Materia prima',  data: [1.2, 0.9, 0.7, 0.5, 0.4], type: 'bar' },
+              { label: 'Producto term.', data: [0.8, 0.7, 0.6, 0.4, 0.3], type: 'bar' },
+              { label: 'Rotación promedio', data: [4.5, 4.2, 4.0, 3.8, 3.5], type: 'line' }
+            ]},
+      c2: { title: 'Distribución ABC', sub: '% del valor',
+            labels: ['Clase A','Clase B','Clase C'],
+            data: [78, 16, 6] },
+      c3: { title: 'Top 10 stockouts', sub: 'unidades faltantes',
+            labels: ['SKU-04821','SKU-12903','SKU-07712','SKU-44102','SKU-99812','SKU-11203','SKU-67721','SKU-23410','SKU-88210','SKU-01910'],
+            data: [142,128,114,98,92,87,71,68,52,41] },
+      table: {
+        head: ['SKU', 'Almacén', 'Stock', 'Rotación', 'Estado'],
+        cfCols: [2, 3], statusCol: 4,
+        rows: [
+          ['SKU-04821', 'CDMX', 0,    8.2, 'Stockout'],
+          ['SKU-12903', 'GDL',  0,    6.8, 'Stockout'],
+          ['SKU-77821', 'MTY',  14,   0.4, 'Lento'],
+          ['SKU-44102', 'CDMX', 120,  5.1, 'OK'],
+          ['SKU-99812', 'BAJ',  85,   4.7, 'OK'],
+          ['SKU-11203', 'CDMX', 210,  4.2, 'OK'],
+          ['SKU-67721', 'GDL',  342,  3.8, 'OK'],
+          ['SKU-23410', 'MTY',  456,  3.2, 'OK']
+        ]
+      }
+    }
+  }
+};
+
+const ACCENT = '#d4ac4c';
+const ACCENT_DARK = '#8a6d23';
+const ACCENT_LIGHT = '#f5e2a8';
+
+Chart.defaults.font.family = "'Outfit', system-ui, sans-serif";
+Chart.defaults.font.size = 11;
+Chart.defaults.color = '#475569';
+Chart.defaults.animation.duration = 1000;
+Chart.defaults.animation.easing = 'easeOutCubic';
+
+let currentTheme = 'mantenimiento';
+let currentCalc = 'real';
+let currentView = 'general';
+let activeFilters = {};
+let charts = { c1: null, c2: null, c3: null };
+
+// Animated counter
+function animateNumber(el, from, to, suffix, prefix, duration = 1100) {
+  const start = performance.now();
+  function tick(now) {
+    const t = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - t, 3);
+    const value = from + (to - from) * eased;
+    let display;
+    if (Number.isInteger(to) && Math.abs(to) < 10000) display = Math.round(value).toLocaleString('es-MX');
+    else if (Math.abs(to) < 100) display = value.toFixed(1);
+    else display = value.toFixed(0);
+    el.textContent = (prefix || '') + display + (suffix || '');
+    if (t < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+// Sparkline SVG renderer (NEW vs Express)
+function renderSparkline(values, color) {
+  const w = 70, h = 28;
+  const min = Math.min(...values);
+  const max = Math.max(...values);
+  const range = max - min || 1;
+  const points = values.map((v, i) => {
+    const x = (i / (values.length - 1)) * w;
+    const y = h - ((v - min) / range) * (h - 4) - 2;
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  }).join(' ');
+  const lastX = w; const lastY = h - ((values[values.length - 1] - min) / range) * (h - 4) - 2;
+
+  return `
+    <svg class="kpi-sparkline" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="sg-${Math.random().toString(36).slice(2,8)}" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0%" stop-color="${color}" stop-opacity="0.4"/>
+          <stop offset="100%" stop-color="${color}" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <polyline points="${points}" fill="none" stroke="${color}" stroke-width="1.6" stroke-linejoin="round"/>
+      <circle cx="${lastX.toFixed(1)}" cy="${lastY.toFixed(1)}" r="2.2" fill="${color}"/>
+    </svg>
+  `;
+}
+
+function renderHeader(theme) {
+  document.getElementById('dash-title').textContent = 'Dashboard Estándar · ' + theme.title;
+  document.getElementById('dash-subtitle').textContent = theme.subtitle;
+}
+
+function renderNarrative(theme) {
+  document.getElementById('narrative-body').innerHTML = theme.narrative;
+}
+
+function renderKPIs(theme) {
+  const row = document.getElementById('kpi-row');
+  row.innerHTML = '';
+  theme.kpis.forEach((k, i) => {
+    const card = document.createElement('div');
+    card.className = 'kpi-card animate';
+    card.innerHTML = `
+      <div class="kpi-header">
+        <span class="kpi-status-dot ${k.status}"></span>
+        <span class="kpi-label">${k.label}</span>
+      </div>
+      <div class="kpi-value" data-target="${k.value}">${k.prefix || ''}0${k.suffix || ''}</div>
+      <div class="kpi-bottom">
+        <span class="kpi-delta ${k.dir}">${k.dir === 'up' ? '▲' : '▼'} ${k.delta}</span>
+        ${renderSparkline(k.spark, ACCENT_DARK)}
+      </div>
+    `;
+    row.appendChild(card);
+    const valEl = card.querySelector('.kpi-value');
+    setTimeout(() => animateNumber(valEl, 0, k.value, k.suffix || '', k.prefix || '', 1100 + i * 60), 200 + i * 60);
+  });
+}
+
+function renderSlicers(theme) {
+  const row = document.getElementById('slicers-row');
+  row.innerHTML = '';
+  activeFilters = {};
+  theme.slicers.forEach(s => {
+    activeFilters[s.id] = null;
+    const wrap = document.createElement('div');
+    wrap.className = 'slicer';
+    let pillsHtml = s.options.map(opt =>
+      `<button class="slicer-pill" data-slicer="${s.id}" data-value="${opt}">${opt}</button>`
+    ).join('');
+    wrap.innerHTML = `<span class="slicer-label">${s.label}</span><div class="slicer-pills">${pillsHtml}</div>`;
+    row.appendChild(wrap);
+  });
+  const clear = document.createElement('button');
+  clear.className = 'slicer-clear'; clear.type = 'button'; clear.textContent = 'Limpiar filtros';
+  clear.addEventListener('click', clearAllFilters);
+  row.appendChild(clear);
+
+  row.querySelectorAll('.slicer-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      const sid = pill.dataset.slicer;
+      const val = pill.dataset.value;
+      const wasActive = pill.classList.contains('is-active');
+      row.querySelectorAll(`.slicer-pill[data-slicer="${sid}"]`).forEach(p => p.classList.remove('is-active'));
+      if (!wasActive) { pill.classList.add('is-active'); activeFilters[sid] = val; }
+      else activeFilters[sid] = null;
+      applyFilters();
+    });
+  });
+}
+
+function clearAllFilters() {
+  Object.keys(activeFilters).forEach(k => activeFilters[k] = null);
+  document.querySelectorAll('.slicer-pill.is-active').forEach(p => p.classList.remove('is-active'));
+  applyFilters();
+}
+
+function applyFilters() {
+  const filterCount = Object.values(activeFilters).filter(v => v !== null).length;
+  // Apply both filters AND calc group transformation
+  const calcMultiplier = { real: 1, ytd: 1, mtd: 0.65, mom: 0.12, yoy: 0.18 }[currentCalc] || 1;
+  if (filterCount === 0 && currentCalc === 'real') {
+    renderCharts(THEMES[currentTheme]);
+    return;
+  }
+  const scale = filterCount === 0 ? 1 : Math.max(0.18, 1 - filterCount * 0.22);
+  const seed = filterCount + Object.values(activeFilters).filter(Boolean).join('').length + currentCalc.length;
+  const themeCopy = JSON.parse(JSON.stringify(THEMES[currentTheme]));
+
+  themeCopy.kpis.forEach(k => {
+    const variation = ((seed * 7) % 11 - 5) / 100;
+    k.value = +(k.value * scale * calcMultiplier * (1 + variation)).toFixed(k.value < 100 ? 1 : 0);
+    k.spark = k.spark.map(s => +(s * scale * calcMultiplier * (1 + variation)).toFixed(1));
+  });
+
+  const mutate = (arr) => arr.map((v,i) => +(v * scale * calcMultiplier * (1 + ((seed + i) % 9 - 4) / 100)).toFixed(2));
+  themeCopy.charts.c1.datasets.forEach(ds => ds.data = mutate(ds.data));
+  themeCopy.charts.c2.data = mutate(themeCopy.charts.c2.data);
+  themeCopy.charts.c3.data = mutate(themeCopy.charts.c3.data);
+
+  renderKPIs(themeCopy);
+  renderCharts(themeCopy);
+  renderTable(themeCopy);
+  renderNarrative(themeCopy);
+}
+
+function renderCharts(theme) {
+  const palette = [ACCENT, ACCENT_DARK, '#a87f1f', ACCENT_LIGHT, '#bfa050', '#9a7a32'];
+
+  // Chart 1: COMBO chart (bar + line dual axis) — NEW vs Express
+  const c1 = theme.charts.c1;
+  document.getElementById('chart-1-title').textContent = c1.title;
+  document.getElementById('chart-1-sub').textContent = c1.sub;
+  if (charts.c1) charts.c1.destroy();
+
+  const datasets = c1.datasets.map((ds, i) => ({
+    label: ds.label,
+    data: ds.data,
+    type: ds.type,
+    yAxisID: ds.type === 'line' && i > 0 ? 'y1' : 'y',
+    backgroundColor: ds.type === 'bar' ? palette[i] : 'transparent',
+    borderColor: ds.type === 'line' ? (i === 1 ? '#2f6f4e' : '#b23a48') : palette[i],
+    borderDash: ds.dashed ? [6, 4] : [],
+    borderWidth: ds.type === 'line' ? 2.5 : 0,
+    borderRadius: ds.type === 'bar' ? 4 : 0,
+    tension: 0.3,
+    pointRadius: ds.type === 'line' ? 3 : 0,
+    pointHoverRadius: ds.type === 'line' ? 6 : 0
+  }));
+  charts.c1 = new Chart(document.getElementById('chart-1'), {
+    type: 'bar',
+    data: { labels: c1.labels, datasets },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: { legend: { position: 'bottom' }},
+      scales: {
+        y: { position: 'left', grid: { color: 'rgba(0,0,0,0.05)' }},
+        y1: { position: 'right', grid: { display: false }, ticks: { callback: v => v + (v < 100 ? '%' : '') }}
+      }
+    }
+  });
+
+  // Chart 2: doughnut
+  const c2 = theme.charts.c2;
+  document.getElementById('chart-2-title').textContent = c2.title;
+  document.getElementById('chart-2-sub').textContent = c2.sub;
+  if (charts.c2) charts.c2.destroy();
+  charts.c2 = new Chart(document.getElementById('chart-2'), {
+    type: 'doughnut',
+    data: { labels: c2.labels, datasets: [{ data: c2.data, backgroundColor: palette, borderColor: '#fff', borderWidth: 2, hoverOffset: 8 }]},
+    options: {
+      responsive: true, maintainAspectRatio: false, cutout: '64%',
+      plugins: { legend: { position: 'right', labels: { boxWidth: 12, padding: 10 }}}
+    }
+  });
+
+  // Chart 3: horizontal bar
+  const c3 = theme.charts.c3;
+  document.getElementById('chart-3-title').textContent = c3.title;
+  document.getElementById('chart-3-sub').textContent = c3.sub;
+  if (charts.c3) charts.c3.destroy();
+  charts.c3 = new Chart(document.getElementById('chart-3'), {
+    type: 'bar',
+    data: {
+      labels: c3.labels,
+      datasets: [{ data: c3.data, backgroundColor: c3.labels.map((_,i) => palette[i % palette.length]), borderRadius: 4 }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      indexAxis: 'y',
+      plugins: { legend: { display: false }},
+      scales: { x: { grid: { color: 'rgba(0,0,0,0.05)' }}, y: { grid: { display: false }}}
+    }
+  });
+}
+
+// Conditional formatting for table — NEW vs Express
+function colorScale(value, min, max) {
+  if (max === min) return 'rgba(212,172,76,0.1)';
+  const t = (value - min) / (max - min);
+  // gradient from light cream → gold
+  const r = Math.round(245 + (212 - 245) * t);
+  const g = Math.round(226 + (172 - 226) * t);
+  const b = Math.round(168 + (76 - 168) * t);
+  return `rgba(${r},${g},${b},${0.18 + 0.4 * t})`;
+}
+
+function renderTable(theme) {
+  document.getElementById('chart-4-title').textContent = 'Drill-through con conditional formatting';
+  document.getElementById('chart-4-sub').textContent = `${theme.charts.table.rows.length} registros · heatmap por columna`;
+  const t = theme.charts.table;
+  const thead = document.querySelector('#detail-table thead');
+  const tbody = document.querySelector('#detail-table tbody');
+  thead.innerHTML = '<tr>' + t.head.map((h, i) =>
+    `<th class="${(t.cfCols && t.cfCols.includes(i)) || i === t.statusCol ? 'num' : ''}">${h}</th>`
+  ).join('') + '</tr>';
+
+  // Compute min/max per CF column for heatmap
+  const colMinMax = {};
+  if (t.cfCols) {
+    t.cfCols.forEach(ci => {
+      const vals = t.rows.map(r => typeof r[ci] === 'number' ? r[ci] : parseFloat(r[ci])).filter(v => !isNaN(v));
+      colMinMax[ci] = { min: Math.min(...vals), max: Math.max(...vals) };
+    });
+  }
+
+  tbody.innerHTML = t.rows.map(row =>
+    '<tr>' + row.map((cell, i) => {
+      if (i === t.statusCol) {
+        const txt = String(cell);
+        const lc = txt.toLowerCase();
+        let cls = 'amber';
+        if (['ok','excelente','+8','+5','+12','+11','+9','+14','+4'].some(k => lc.includes(k.toLowerCase()))) cls = 'green';
+        if (['crítico','stockout','riesgo','−','-','15%','3%','1%'].some(k => lc.includes(k.toLowerCase()))) cls = 'red';
+        return `<td class="num"><span class="badge ${cls}">${txt}</span></td>`;
+      }
+      if (t.cfCols && t.cfCols.includes(i) && typeof cell === 'number') {
+        const mm = colMinMax[i];
+        const bg = colorScale(cell, mm.min, mm.max);
+        const formatted = cell < 10 ? cell.toFixed(1) : cell.toLocaleString('es-MX');
+        return `<td class="num heatmap-cell" style="background:${bg}">${formatted}</td>`;
+      }
+      return `<td class="${i >= 2 ? 'num' : ''}">${cell}</td>`;
+    }).join('') + '</tr>'
+  ).join('');
+}
+
+function renderDashboard(themeKey) {
+  currentTheme = themeKey;
+  const theme = THEMES[themeKey];
+  renderHeader(theme);
+  renderNarrative(theme);
+  renderKPIs(theme);
+  renderSlicers(theme);
+  renderCharts(theme);
+  renderTable(theme);
+}
+
+// Theme tabs
+document.querySelectorAll('.theme-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.theme-tab').forEach(t => { t.classList.remove('is-active'); t.setAttribute('aria-selected', 'false'); });
+    tab.classList.add('is-active'); tab.setAttribute('aria-selected', 'true');
+    renderDashboard(tab.dataset.theme);
+  });
+});
+
+// Calculation Group pills (NEW)
+document.querySelectorAll('.calc-pill').forEach(pill => {
+  pill.addEventListener('click', () => {
+    document.querySelectorAll('.calc-pill').forEach(p => p.classList.remove('is-active'));
+    pill.classList.add('is-active');
+    currentCalc = pill.dataset.calc;
+    applyFilters();
+  });
+});
+
+// View tabs / bookmarks (NEW)
+document.querySelectorAll('.view-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.view-tab').forEach(t => t.classList.remove('is-active'));
+    tab.classList.add('is-active');
+    currentView = tab.dataset.view;
+    // Simulate bookmark transition
+    const grid = document.querySelector('.chart-grid');
+    grid.style.transition = 'opacity 0.3s';
+    grid.style.opacity = '0.4';
+    setTimeout(() => {
+      // For demo, slightly mutate chart data based on view
+      applyFilters();
+      grid.style.opacity = '1';
+    }, 200);
+  });
+});
+
+// Field parameter selector
+document.getElementById('field-param').addEventListener('change', () => applyFilters());
+
+// Initial
+const urlParams = new URLSearchParams(location.search);
+const urlTheme = urlParams.get('theme');
+if (urlTheme && THEMES[urlTheme]) {
+  document.querySelectorAll('.theme-tab').forEach(t => {
+    t.classList.toggle('is-active', t.dataset.theme === urlTheme);
+    t.setAttribute('aria-selected', t.dataset.theme === urlTheme);
+  });
+  renderDashboard(urlTheme);
+} else {
+  renderDashboard('mantenimiento');
+}
+</script>
+</body>
+</html>
