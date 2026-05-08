@@ -9,9 +9,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Outfit:wght@300..900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./assets/theme.css">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<link rel="stylesheet" href="./assets/theme.css?v=1778213427">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="./assets/portafolio_data.js"></script>
+<script src="./assets/portafolio_data.js?v=1778213427"></script>
 <style>
   :root {
     --d-accent: #0F4C81;
@@ -363,7 +366,8 @@
 // PARSE URL PARAMS
 // ============================================================
 const params = new URLSearchParams(location.search);
-const dashKey = params.get('d') || 'mantenimiento';
+const dashKey = params.get('d');
+if (!dashKey) { document.body.innerHTML = '<div style="padding:3rem;text-align:center"><h2>Sin dashboard especificado</h2><p>Falta parámetro <code>?d=...</code> en la URL.</p><p><a href="portafolio.html">← Volver al portafolio</a></p></div>'; throw new Error('No dashKey'); }
 const initialView = params.get('v') || 'web';
 
 const data = window.PORTAFOLIO_DASHBOARDS[dashKey];
