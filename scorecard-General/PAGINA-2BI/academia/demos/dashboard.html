@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="es" data-page="academia-demo">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a4a7c">
+<meta name="description" content="Demo interactivo 2BI: dashboards Power BI ejemplo en Mantenimiento, Ventas, Finanzas e Inventario. Filtros funcionales, KPIs animados, charts en vivo.">
+<title>Demo Interactivo — Academia 2BI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Outfit:wght@300..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/theme.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  /* ========== TIER ACCENTS via URL ?tier= ========== */
+  :root {
+    --demo-accent: #0a4a7c;
+    --demo-accent-soft: rgba(10, 74, 124, 0.15);
+    --demo-accent-dark: #06365a;
+  }
+  body[data-tier="express"] { --demo-accent: #00a8a8; --demo-accent-soft: rgba(0,168,168,0.15); --demo-accent-dark: #007f7f; }
+  body[data-tier="estandar"] { --demo-accent: #d4ac4c; --demo-accent-soft: rgba(212,172,76,0.18); --demo-accent-dark: #8a6d23; }
+  body[data-tier="premium"] { --demo-accent: #6b4d8a; --demo-accent-soft: rgba(107,77,138,0.15); --demo-accent-dark: #4f3868; }
+  body[data-tier="vip"] { --demo-accent: #2f6f4e; --demo-accent-soft: rgba(47,111,78,0.15); --demo-accent-dark: #1f4e37; }
+
+  /* ========== DASHBOARD LAYOUT ========== */
+  .dash-shell {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1.5rem 1.25rem 4rem;
+    position: relative;
+    z-index: 1;
+  }
+  .dash-header {
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .dash-title-row { display: flex; align-items: baseline; gap: 0.8rem; flex-wrap: wrap; }
+  .dash-eyebrow {
+    font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--demo-accent-dark); font-weight: 800;
+  }
+  .dash-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-weight: 700; color: var(--ink); margin: 0;
+    line-height: 1.1;
+  }
+  .dash-subtitle { color: var(--muted); font-size: 0.9rem; margin: 0.3rem 0 0; }
+
+  /* ========== THEME TABS ========== */
+  .theme-tabs {
+    display: flex; gap: 0.5rem; flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+    padding: 0.4rem;
+    background: var(--card-bg, rgba(255,255,255,0.6));
+    border-radius: 14px;
+    border: 1px solid rgba(0,0,0,0.06);
+    backdrop-filter: blur(10px);
+  }
+  .theme-tab {
+    flex: 1 1 auto;
+    min-width: 130px;
+    padding: 0.7rem 1rem;
+    border: 1px solid transparent;
+    background: transparent;
+    border-radius: 10px;
+    font-family: inherit; font-size: 0.85rem; font-weight: 600;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(.2,.8,.2,1);
+    display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+  }
+  .theme-tab:hover {
+    background: rgba(0,0,0,0.04);
+    color: var(--ink);
+  }
+  .theme-tab.is-active {
+    background: var(--demo-accent);
+    color: #fff;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    transform: translateY(-1px);
+  }
+  .theme-tab .icon { font-size: 1.1rem; }
+
+  /* ========== KPI ROW ========== */
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.85rem;
+    margin-bottom: 1.5rem;
+  }
+  .kpi-card {
+    background: var(--card-bg, #fff);
+    border: 1px solid var(--card-border, rgba(0,0,0,0.06));
+    border-radius: 14px;
+    padding: 1.1rem 1.2rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .kpi-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 36px rgba(0,0,0,0.08);
+  }
+  .kpi-card::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 4px; height: 100%; background: var(--demo-accent);
+  }
+  .kpi-card .kpi-label {
+    font-size: 0.72rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.12em;
+    margin-bottom: 0.4rem;
+  }
+  .kpi-card .kpi-value {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.5rem, 2.5vw, 2.1rem);
+    font-weight: 700; color: var(--ink);
+    line-height: 1; margin-bottom: 0.3rem;
+  }
+  .kpi-card .kpi-delta {
+    font-size: 0.78rem; color: var(--muted);
+    display: flex; align-items: center; gap: 0.3rem;
+  }
+  .kpi-card .kpi-delta.up { color: #2f6f4e; }
+  .kpi-card .kpi-delta.down { color: #b23a48; }
+
+  /* ========== SLICERS ========== */
+  .slicers-row {
+    display: flex; flex-wrap: wrap; gap: 0.8rem;
+    padding: 0.9rem 1.1rem;
+    margin-bottom: 1.2rem;
+    background: var(--card-bg, rgba(255,255,255,0.5));
+    border-radius: 14px;
+    border: 1px solid rgba(0,0,0,0.05);
+  }
+  .slicer {
+    display: flex; flex-direction: column; gap: 0.35rem;
+    flex: 0 1 auto;
+  }
+  .slicer-label {
+    font-size: 0.65rem; font-weight: 700; color: var(--muted);
+    letter-spacing: 0.18em; text-transform: uppercase;
+  }
+  .slicer-pills {
+    display: flex; flex-wrap: wrap; gap: 0.3rem;
+  }
+  .slicer-pill {
+    padding: 0.35rem 0.75rem;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 999px;
+    background: #fff;
+    color: var(--ink-soft);
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    user-select: none;
+    white-space: nowrap;
+  }
+  .slicer-pill:hover {
+    border-color: var(--demo-accent);
+    color: var(--demo-accent-dark);
+  }
+  .slicer-pill.is-active {
+    background: var(--demo-accent);
+    color: #fff;
+    border-color: var(--demo-accent);
+    box-shadow: 0 4px 12px var(--demo-accent-soft);
+    transform: scale(1.04);
+  }
+  .slicer-clear {
+    background: transparent; border: none;
+    color: var(--demo-accent-dark);
+    font-size: 0.78rem; cursor: pointer;
+    text-decoration: underline;
+    margin-left: auto;
+    align-self: flex-end;
+  }
+
+  /* ========== CHART GRID ========== */
+  .chart-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 1.1rem;
+  }
+  .chart-card {
+    background: var(--card-bg, #fff);
+    border: 1px solid var(--card-border, rgba(0,0,0,0.06));
+    border-radius: 14px;
+    padding: 1.1rem 1.2rem;
+    transition: all 0.25s;
+  }
+  .chart-card:hover { box-shadow: 0 12px 32px rgba(0,0,0,0.06); }
+  .chart-card.full-row { grid-column: 1 / -1; }
+  .chart-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 0.85rem;
+  }
+  .chart-title {
+    font-family: 'Fraunces', serif;
+    font-size: 1.05rem; font-weight: 700;
+    color: var(--ink); margin: 0;
+  }
+  .chart-sub { font-size: 0.7rem; color: var(--muted); }
+  .chart-body { position: relative; height: 280px; }
+  .chart-card.tall .chart-body { height: 340px; }
+
+  /* ========== TABLE ========== */
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
+  .data-table thead th {
+    text-align: left;
+    padding: 0.7rem 0.8rem;
+    background: var(--demo-accent-soft);
+    color: var(--demo-accent-dark);
+    font-size: 0.7rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    position: sticky; top: 0; z-index: 1;
+  }
+  .data-table tbody td {
+    padding: 0.6rem 0.8rem;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    color: var(--ink-soft);
+  }
+  .data-table tbody tr { transition: background 0.15s; }
+  .data-table tbody tr:hover { background: var(--demo-accent-soft); }
+  .data-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .data-table .badge {
+    display: inline-block;
+    padding: 2px 8px; border-radius: 999px;
+    font-size: 0.7rem; font-weight: 700;
+  }
+  .data-table .badge.green { background: rgba(47,111,78,0.15); color: #2f6f4e; }
+  .data-table .badge.red { background: rgba(178,58,72,0.15); color: #b23a48; }
+  .data-table .badge.amber { background: rgba(212,172,76,0.18); color: #8a6d23; }
+
+  /* ========== DETAIL PANE ========== */
+  .detail-pane {
+    background: var(--card-bg, #fff);
+    border: 1px solid var(--card-border, rgba(0,0,0,0.06));
+    border-radius: 14px;
+    padding: 1rem;
+    max-height: 380px; overflow-y: auto;
+  }
+
+  /* ========== ANIMATIONS ========== */
+  @keyframes kpiPulse {
+    0% { transform: scale(0.95); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  .kpi-card.animate { animation: kpiPulse 0.6s cubic-bezier(.2,.9,.2,1) both; }
+  .kpi-card:nth-child(1) { animation-delay: 0.05s; }
+  .kpi-card:nth-child(2) { animation-delay: 0.12s; }
+  .kpi-card:nth-child(3) { animation-delay: 0.19s; }
+  .kpi-card:nth-child(4) { animation-delay: 0.26s; }
+  .kpi-card:nth-child(5) { animation-delay: 0.33s; }
+
+  @keyframes chartIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .chart-card { animation: chartIn 0.7s cubic-bezier(.2,.9,.2,1) both; }
+  .chart-card:nth-child(1) { animation-delay: 0.4s; }
+  .chart-card:nth-child(2) { animation-delay: 0.5s; }
+  .chart-card:nth-child(3) { animation-delay: 0.6s; }
+  .chart-card:nth-child(4) { animation-delay: 0.7s; }
+  .chart-card:nth-child(5) { animation-delay: 0.8s; }
+
+  /* Top accent bar in tier mode */
+  body[data-tier] .dash-shell::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, transparent, var(--demo-accent), transparent);
+    border-radius: 2px;
+  }
+
+  /* CTA back to academia */
+  .demo-back {
+    position: fixed; bottom: 1rem; left: 1rem; z-index: 50;
+    background: var(--demo-accent); color: #fff;
+    padding: 0.7rem 1.2rem; border-radius: 999px;
+    text-decoration: none; font-weight: 700; font-size: 0.85rem;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    transition: transform 0.2s;
+  }
+  .demo-back:hover { transform: translateY(-2px) scale(1.03); }
+
+  @media (max-width: 900px) {
+    .chart-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Hint banner */
+  .hint-banner {
+    margin-bottom: 1.2rem;
+    padding: 0.85rem 1.1rem;
+    background: var(--demo-accent-soft);
+    border-left: 3px solid var(--demo-accent);
+    border-radius: 8px;
+    font-size: 0.85rem;
+    color: var(--demo-accent-dark);
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .hint-banner strong { font-weight: 700; }
+</style>
+</head>
+<body>
+  <a class="skip-link" href="#dashboard">Saltar al contenido</a>
+  <div class="ambient ambient--rich" aria-hidden="true">
+    <div class="ambient__mesh"></div>
+    <div class="ambient__grid"></div>
+    <div class="ambient__shimmer"></div>
+    <div class="ambient__blob ambient__blob--1"></div>
+    <div class="ambient__blob ambient__blob--2"></div>
+    <div class="ambient__blob ambient__blob--3"></div>
+  </div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <main id="dashboard" class="dash-shell">
+    <div class="dash-header">
+      <div>
+        <p class="dash-eyebrow" id="dash-eyebrow">Demo · Academia 2BI</p>
+        <h1 class="dash-title" id="dash-title">Dashboard ejecutivo en vivo</h1>
+        <p class="dash-subtitle" id="dash-subtitle">Filtros funcionales, KPIs animados, cross-filtering. Igual que un dashboard Power BI real.</p>
+      </div>
+      <div>
+        <a href="../../academia.html" class="btn btn--ghost btn--sm" id="back-link">← Volver a Academia</a>
+      </div>
+    </div>
+
+    <div class="hint-banner">
+      <span>↓</span>
+      <span><strong>Cómo funciona:</strong> los pills de abajo son slicers funcionales. Al hacer clic en cualquiera, los KPIs y todos los visuales se recalculan al instante — el mismo cross-filtering nativo de Power BI.</span>
+    </div>
+
+    <nav class="theme-tabs" role="tablist" aria-label="Tema del dashboard">
+      <button class="theme-tab is-active" role="tab" data-theme="mantenimiento" aria-selected="true">
+        <span class="icon">⚙</span><span>Mantenimiento</span>
+      </button>
+      <button class="theme-tab" role="tab" data-theme="ventas" aria-selected="false">
+        <span class="icon">◭</span><span>Ventas</span>
+      </button>
+      <button class="theme-tab" role="tab" data-theme="finanzas" aria-selected="false">
+        <span class="icon">$</span><span>Finanzas</span>
+      </button>
+      <button class="theme-tab" role="tab" data-theme="inventario" aria-selected="false">
+        <span class="icon">▤</span><span>Inventario</span>
+      </button>
+    </nav>
+
+    <section class="kpi-row" id="kpi-row" aria-label="Indicadores clave"></section>
+
+    <section class="slicers-row" id="slicers-row" aria-label="Filtros"></section>
+
+    <section class="chart-grid">
+      <div class="chart-card tall">
+        <div class="chart-head">
+          <h3 class="chart-title" id="chart-1-title">Tendencia mensual</h3>
+          <span class="chart-sub" id="chart-1-sub">12 meses</span>
+        </div>
+        <div class="chart-body"><canvas id="chart-1"></canvas></div>
+      </div>
+
+      <div class="chart-card tall">
+        <div class="chart-head">
+          <h3 class="chart-title" id="chart-2-title">Distribución</h3>
+          <span class="chart-sub" id="chart-2-sub">% del total</span>
+        </div>
+        <div class="chart-body"><canvas id="chart-2"></canvas></div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-head">
+          <h3 class="chart-title" id="chart-3-title">Top 10</h3>
+          <span class="chart-sub" id="chart-3-sub">Ranking</span>
+        </div>
+        <div class="chart-body"><canvas id="chart-3"></canvas></div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-head">
+          <h3 class="chart-title" id="chart-4-title">Detalle</h3>
+          <span class="chart-sub" id="chart-4-sub">Drill-through</span>
+        </div>
+        <div class="detail-pane">
+          <table class="data-table" id="detail-table">
+            <thead></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <p style="margin-top: 2rem; text-align: center; color: var(--muted); font-size: 0.88rem; line-height: 1.7;">
+      Este demo usa datos sintéticos pero replica el comportamiento exacto de un dashboard productivo construido bajo el método 2BI.<br>
+      <a href="../../academia.html" style="color: var(--demo-accent-dark); font-weight: 700;">Ver los programas de Academia →</a>
+    </p>
+  </main>
+
+  <a href="../../academia.html" class="demo-back">← Academia</a>
+
+<script>
+// ===========================================================================
+// 2BI DEMO INTERACTIVE DASHBOARD
+// 4 temas con datos sintéticos pero realistas. Filtros con cross-filtering.
+// ===========================================================================
+
+// Helper: leer ?tier= de URL
+const urlParams = new URLSearchParams(location.search);
+const tier = urlParams.get('tier');
+if (tier && ['express','estandar','premium','vip'].includes(tier)) {
+  document.body.dataset.tier = tier;
+}
+
+// ===========================================================================
+// THEMES (datos sintéticos)
+// ===========================================================================
+const THEMES = {
+  mantenimiento: {
+    eyebrow: 'Demo · Mantenimiento de Equipos',
+    title: 'Operaciones y disponibilidad',
+    subtitle: 'OEE, MTBF, MTTR y paros por causa. Filtros por planta, línea, mes y turno.',
+    kpis: [
+      { label: 'OEE',           value: 87.3, suffix: '%',     delta: '+2.1pp vs mes anterior', dir: 'up' },
+      { label: 'MTBF',          value: 142,  suffix: ' hrs',  delta: '+8 hrs vs target',         dir: 'up' },
+      { label: 'MTTR',          value: 23,   suffix: ' min',  delta: '−4 min vs mes anterior',   dir: 'up' },
+      { label: 'Paros mes',     value: 47,   suffix: '',      delta: '+5 vs mes anterior',       dir: 'down' },
+      { label: 'Disponibilidad', value: 94.2, suffix: '%',    delta: '+0.8pp vs target',         dir: 'up' }
+    ],
+    slicers: [
+      { id: 'planta',   label: 'Planta',  options: ['Planta A','Planta B','Planta C'] },
+      { id: 'linea',    label: 'Línea',   options: ['L-01','L-02','L-03','L-04','L-05'] },
+      { id: 'mes',      label: 'Mes',     options: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'] },
+      { id: 'turno',    label: 'Turno',   options: ['Matutino','Vespertino','Nocturno'] }
+    ],
+    charts: {
+      c1: { type: 'line', title: 'OEE últimos 12 meses', sub: 'meta: 85%',
+            labels: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+            datasets: [
+              { label: 'OEE Real',   data: [82.1,83.4,84.0,85.2,86.1,85.8,86.4,87.3,87.0,87.5,87.3,87.3], type: 'line' },
+              { label: 'Meta',       data: [85,85,85,85,85,85,85,85,85,85,85,85], type: 'line', dashed: true }
+            ]},
+      c2: { type: 'doughnut', title: 'Paros por causa', sub: 'horas paradas',
+            labels: ['Falla mecánica','Cambio de molde','Materia prima','Energía','Mantto. preventivo','Otros'],
+            datasets: [{ data: [38, 25, 14, 8, 10, 5] }] },
+      c3: { type: 'horizontalBar', title: 'Top 10 equipos con más paros', sub: 'horas',
+            labels: ['EXT-04','INY-12','EMB-07','CTM-03','CTM-09','EXT-02','INY-08','TQ-15','EXT-11','MOL-06'],
+            datasets: [{ data: [24,21,18,16,14,13,12,10,9,8] }] },
+      table: {
+        head: ['Equipo', 'Planta', 'Disponibilidad', 'OEE', 'Estado'],
+        rows: [
+          ['EXT-04', 'Planta A', '78%', '72%', 'Crítico'],
+          ['INY-12', 'Planta B', '82%', '79%', 'Riesgo'],
+          ['EMB-07', 'Planta A', '88%', '84%', 'OK'],
+          ['CTM-03', 'Planta C', '91%', '87%', 'OK'],
+          ['CTM-09', 'Planta C', '93%', '89%', 'OK'],
+          ['EXT-02', 'Planta A', '94%', '91%', 'OK'],
+          ['INY-08', 'Planta B', '95%', '92%', 'Excelente'],
+          ['TQ-15',  'Planta B', '96%', '93%', 'Excelente']
+        ],
+        statusCol: 4
+      }
+    }
+  },
+
+  ventas: {
+    eyebrow: 'Demo · Ventas y Comercial',
+    title: 'Performance de ventas YTD',
+    subtitle: 'Ingresos, márgenes, ticket promedio. Filtros por región, vendedor, categoría y mes.',
+    kpis: [
+      { label: 'Ventas YTD',     value: 48.2, suffix: 'M', prefix: '$', delta: '+12.4% YoY',     dir: 'up' },
+      { label: 'Crecimiento',    value: 12.4, suffix: '%',              delta: '+3.1pp vs Q3',  dir: 'up' },
+      { label: 'Clientes activos',value: 1247,suffix: '',               delta: '+89 nuevos',     dir: 'up' },
+      { label: 'Ticket promedio', value: 38.7, suffix: 'K', prefix: '$', delta: '+$2.4K',         dir: 'up' },
+      { label: 'Margen',         value: 32.1, suffix: '%',              delta: '−0.4pp',         dir: 'down' }
+    ],
+    slicers: [
+      { id: 'region',    label: 'Región',     options: ['Norte','Centro','Sur','Bajío'] },
+      { id: 'vendedor',  label: 'Vendedor',   options: ['Alvaro P.','Sofía R.','Memo C.','Jorge L.','Ana M.','Luis V.'] },
+      { id: 'categoria', label: 'Categoría',  options: ['Industrial','Construcción','Retail','Servicios','Tecnología'] },
+      { id: 'mes',       label: 'Mes',        options: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'] }
+    ],
+    charts: {
+      c1: { type: 'line', title: 'Ventas mensuales vs año anterior', sub: 'MXN millones',
+            labels: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+            datasets: [
+              { label: '2026 (actual)', data: [3.1,3.4,3.8,4.2,4.5,4.7,4.6,4.8,4.9,5.1,5.0,5.1], type: 'line', filled: true },
+              { label: '2025',          data: [2.8,3.0,3.3,3.6,3.9,4.0,4.0,4.1,4.2,4.3,4.4,4.5], type: 'line', dashed: true }
+            ]},
+      c2: { type: 'doughnut', title: 'Ventas por región', sub: '% del total',
+            labels: ['Norte','Centro','Sur','Bajío'],
+            datasets: [{ data: [42, 28, 18, 12] }] },
+      c3: { type: 'horizontalBar', title: 'Top 10 productos', sub: 'MXN miles',
+            labels: ['Acero P-42','Cemento Tipo I','Resina Epoxi','Tubería 4in','Lámina Galv.','Pintura Industrial','Ferretería Pack','Aislante Térmico','Tornillería','Soldadura'],
+            datasets: [{ data: [842, 712, 658, 591, 547, 489, 432, 398, 367, 312] }] },
+      table: {
+        head: ['Vendedor', 'Región', 'Ventas (M)', 'Margen', 'vs Meta'],
+        rows: [
+          ['Alvaro P.', 'Norte',  '$12.4', '34%', '+8%'],
+          ['Sofía R.',  'Centro', '$10.8', '32%', '+5%'],
+          ['Memo C.',   'Bajío',  '$9.2',  '36%', '+12%'],
+          ['Jorge L.',  'Sur',    '$7.6',  '28%', '−3%'],
+          ['Ana M.',    'Centro', '$5.4',  '31%', '−1%'],
+          ['Luis V.',   'Norte',  '$2.8',  '24%', '−15%']
+        ],
+        statusCol: 4
+      }
+    }
+  },
+
+  finanzas: {
+    eyebrow: 'Demo · Finanzas Corporativas',
+    title: 'P&L y ratios financieros',
+    subtitle: 'Revenue, EBITDA, margen, cash flow y razones. Filtros por centro, tipo y mes.',
+    kpis: [
+      { label: 'Revenue',     value: 52.3, suffix: 'M', prefix: '$', delta: '+9.8% YoY',  dir: 'up' },
+      { label: 'EBITDA',      value: 14.7, suffix: 'M', prefix: '$', delta: '+11.2% YoY', dir: 'up' },
+      { label: 'Margen neto', value: 28.1, suffix: '%',              delta: '+1.4pp',     dir: 'up' },
+      { label: 'Cash op.',    value: 3.2,  suffix: 'M', prefix: '$', delta: '+$0.4M',     dir: 'up' },
+      { label: 'Quick ratio', value: 1.42, suffix: '',               delta: '+0.08',      dir: 'up' }
+    ],
+    slicers: [
+      { id: 'centro', label: 'Centro de costo', options: ['Operaciones','Comercial','Admin','TI'] },
+      { id: 'tipo',   label: 'Tipo',            options: ['Real','Presupuesto','Forecast'] },
+      { id: 'mes',    label: 'Mes',             options: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'] },
+      { id: 'moneda', label: 'Moneda',          options: ['MXN','USD'] }
+    ],
+    charts: {
+      c1: { type: 'bar', title: 'Revenue vs Costos por mes', sub: 'MXN millones',
+            labels: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+            datasets: [
+              { label: 'Revenue', data: [3.8,4.0,4.2,4.4,4.5,4.6,4.5,4.7,4.8,4.9,4.7,4.2], type: 'bar' },
+              { label: 'Costos',  data: [2.7,2.8,2.9,3.0,3.1,3.2,3.1,3.2,3.3,3.4,3.2,2.9], type: 'bar' }
+            ]},
+      c2: { type: 'doughnut', title: 'Distribución de gastos', sub: '% del total',
+            labels: ['Nómina','Materia prima','Servicios','Logística','Mantto.','Otros'],
+            datasets: [{ data: [42, 28, 12, 8, 6, 4] }] },
+      c3: { type: 'horizontalBar', title: 'Razones financieras', sub: 'vs benchmark',
+            labels: ['Margen bruto','Margen op.','Margen neto','ROE','ROA','Quick ratio','Current ratio','Deuda/Equity','Días por cobrar','Rotación inv.'],
+            datasets: [{ data: [42, 31, 28, 18, 12, 1.42, 1.85, 0.42, 38, 4.2] }] },
+      table: {
+        head: ['Cuenta', 'Real', 'Presup.', 'Var %', 'Status'],
+        rows: [
+          ['Revenue',     '$52.3M', '$50.0M',  '+4.6%',  'OK'],
+          ['Costo ventas','$32.1M', '$31.5M',  '+1.9%',  'OK'],
+          ['Margen bruto','$20.2M', '$18.5M',  '+9.2%',  'Excelente'],
+          ['Gastos op.',  '$11.4M', '$10.8M',  '+5.6%',  'Riesgo'],
+          ['EBITDA',      '$14.7M', '$13.2M',  '+11.4%', 'Excelente'],
+          ['Cash op.',    '$3.2M',  '$2.8M',   '+14.3%', 'Excelente'],
+          ['Quick ratio', '1.42',   '1.30',    '+9.2%',  'OK']
+        ],
+        statusCol: 4
+      }
+    }
+  },
+
+  inventario: {
+    eyebrow: 'Demo · Gestión de Inventarios',
+    title: 'Inventario y rotación',
+    subtitle: 'Valor, rotación, ABC y stockouts. Filtros por almacén, categoría, estado y clase.',
+    kpis: [
+      { label: 'Valor inventario', value: 8.4,  suffix: 'M', prefix: '$', delta: '−$0.3M',  dir: 'up' },
+      { label: 'Rotación',         value: 4.2,  suffix: 'x',              delta: '+0.4x',   dir: 'up' },
+      { label: 'Días stock',       value: 87,   suffix: '',               delta: '−9 días', dir: 'up' },
+      { label: 'SKUs activos',     value: 1432, suffix: '',               delta: '+47',     dir: 'up' },
+      { label: 'Obsoleto',         value: 6.2,  suffix: '%',              delta: '−1.1pp',  dir: 'up' }
+    ],
+    slicers: [
+      { id: 'almacen',   label: 'Almacén',   options: ['CDMX','GDL','MTY','BAJ','VRZ'] },
+      { id: 'categoria', label: 'Categoría', options: ['Materia prima','Producto term.','Refacciones','Insumos'] },
+      { id: 'estado',    label: 'Estado',    options: ['Disponible','En tránsito','Reservado'] },
+      { id: 'abc',       label: 'Clase ABC', options: ['A','B','C'] }
+    ],
+    charts: {
+      c1: { type: 'bar', title: 'Inventario por almacén y categoría', sub: 'MXN millones',
+            labels: ['CDMX','GDL','MTY','BAJ','VRZ'],
+            datasets: [
+              { label: 'Materia prima',  data: [1.2, 0.9, 0.7, 0.5, 0.4], type: 'bar' },
+              { label: 'Producto term.', data: [0.8, 0.7, 0.6, 0.4, 0.3], type: 'bar' },
+              { label: 'Refacciones',    data: [0.4, 0.3, 0.2, 0.2, 0.1], type: 'bar' }
+            ]},
+      c2: { type: 'doughnut', title: 'Distribución ABC', sub: '% del valor',
+            labels: ['Clase A','Clase B','Clase C'],
+            datasets: [{ data: [78, 16, 6] }] },
+      c3: { type: 'horizontalBar', title: 'Top 10 SKUs faltantes (stockouts)', sub: 'unidades',
+            labels: ['SKU-04821','SKU-12903','SKU-07712','SKU-44102','SKU-99812','SKU-11203','SKU-67721','SKU-23410','SKU-88210','SKU-01910'],
+            datasets: [{ data: [142,128,114,98,92,87,71,68,52,41] }] },
+      table: {
+        head: ['SKU', 'Almacén', 'Stock', 'Rotación', 'Estado'],
+        rows: [
+          ['SKU-04821', 'CDMX', '0',    '8.2x', 'Stockout'],
+          ['SKU-12903', 'GDL',  '0',    '6.8x', 'Stockout'],
+          ['SKU-77821', 'MTY',  '14',   '0.4x', 'Lento'],
+          ['SKU-44102', 'CDMX', '120',  '5.1x', 'OK'],
+          ['SKU-99812', 'BAJ',  '85',   '4.7x', 'OK'],
+          ['SKU-11203', 'CDMX', '210',  '4.2x', 'OK'],
+          ['SKU-67721', 'GDL',  '342',  '3.8x', 'OK'],
+          ['SKU-23410', 'MTY',  '456',  '3.2x', 'OK']
+        ],
+        statusCol: 4
+      }
+    }
+  }
+};
+
+// ===========================================================================
+// CHART.JS GLOBAL CONFIG
+// ===========================================================================
+Chart.defaults.font.family = "'Outfit', system-ui, sans-serif";
+Chart.defaults.font.size = 11;
+Chart.defaults.color = '#475569';
+Chart.defaults.animation.duration = 900;
+Chart.defaults.animation.easing = 'easeOutCubic';
+Chart.defaults.plugins.legend.labels.boxWidth = 12;
+Chart.defaults.plugins.legend.labels.padding = 14;
+
+// ===========================================================================
+// STATE
+// ===========================================================================
+let currentTheme = 'mantenimiento';
+let activeFilters = {}; // {slicerId: value or null}
+let charts = { c1: null, c2: null, c3: null };
+
+// ===========================================================================
+// HELPERS
+// ===========================================================================
+function getAccent() {
+  return getComputedStyle(document.body).getPropertyValue('--demo-accent').trim();
+}
+function getAccentRGB() {
+  const hex = getAccent();
+  const r = parseInt(hex.slice(1,3), 16);
+  const g = parseInt(hex.slice(3,5), 16);
+  const b = parseInt(hex.slice(5,7), 16);
+  return `${r}, ${g}, ${b}`;
+}
+
+// Generate a palette around the accent color
+function genPalette(n) {
+  const accent = getAccent();
+  const hex = accent.replace('#','');
+  const r = parseInt(hex.substr(0,2),16);
+  const g = parseInt(hex.substr(2,2),16);
+  const b = parseInt(hex.substr(4,2),16);
+  // Generate n shades from light to accent
+  const out = [];
+  for (let i = 0; i < n; i++) {
+    const t = i / Math.max(1, n - 1);
+    const factor = 0.35 + (t * 0.65);
+    out.push(`rgba(${Math.round(r*factor + 255*(1-factor))}, ${Math.round(g*factor + 255*(1-factor))}, ${Math.round(b*factor + 255*(1-factor))}, 0.92)`);
+  }
+  return out;
+}
+
+// Animated counter
+function animateNumber(el, from, to, suffix, prefix, duration = 1100) {
+  const start = performance.now();
+  function tick(now) {
+    const elapsed = now - start;
+    const t = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - t, 3); // easeOutCubic
+    const value = from + (to - from) * eased;
+    let display;
+    if (Number.isInteger(to) && Math.abs(to) < 10000) {
+      display = Math.round(value).toLocaleString('es-MX');
+    } else if (Math.abs(to) < 100) {
+      display = value.toFixed(1);
+    } else {
+      display = value.toFixed(0);
+    }
+    el.textContent = (prefix || '') + display + (suffix || '');
+    if (t < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+// ===========================================================================
+// RENDER HEADER
+// ===========================================================================
+function renderHeader(theme) {
+  document.getElementById('dash-eyebrow').textContent = theme.eyebrow;
+  document.getElementById('dash-title').textContent = theme.title;
+  document.getElementById('dash-subtitle').textContent = theme.subtitle;
+}
+
+// ===========================================================================
+// RENDER KPIS (with counter animation)
+// ===========================================================================
+function renderKPIs(theme) {
+  const row = document.getElementById('kpi-row');
+  row.innerHTML = '';
+  theme.kpis.forEach((k, i) => {
+    const card = document.createElement('div');
+    card.className = 'kpi-card animate';
+    card.innerHTML = `
+      <div class="kpi-label">${k.label}</div>
+      <div class="kpi-value" data-target="${k.value}">${k.prefix || ''}0${k.suffix || ''}</div>
+      <div class="kpi-delta ${k.dir}">${k.dir === 'up' ? '▲' : '▼'} ${k.delta}</div>
+    `;
+    row.appendChild(card);
+    // Animate counter after a tiny delay
+    const el = card.querySelector('.kpi-value');
+    setTimeout(() => {
+      animateNumber(el, 0, k.value, k.suffix || '', k.prefix || '', 1200 + i * 80);
+    }, 200 + i * 70);
+  });
+}
+
+// ===========================================================================
+// RENDER SLICERS
+// ===========================================================================
+function renderSlicers(theme) {
+  const row = document.getElementById('slicers-row');
+  row.innerHTML = '';
+  activeFilters = {};
+  theme.slicers.forEach(s => {
+    activeFilters[s.id] = null;
+    const wrap = document.createElement('div');
+    wrap.className = 'slicer';
+    let pillsHtml = s.options.map(opt =>
+      `<button class="slicer-pill" data-slicer="${s.id}" data-value="${opt}">${opt}</button>`
+    ).join('');
+    wrap.innerHTML = `
+      <span class="slicer-label">${s.label}</span>
+      <div class="slicer-pills">${pillsHtml}</div>
+    `;
+    row.appendChild(wrap);
+  });
+  const clear = document.createElement('button');
+  clear.className = 'slicer-clear';
+  clear.type = 'button';
+  clear.textContent = 'Limpiar filtros';
+  clear.addEventListener('click', clearAllFilters);
+  row.appendChild(clear);
+
+  // Event delegation
+  row.querySelectorAll('.slicer-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      const sid = pill.dataset.slicer;
+      const val = pill.dataset.value;
+      // Toggle: if already active, deactivate
+      const wasActive = pill.classList.contains('is-active');
+      // Deactivate all pills in same slicer group
+      row.querySelectorAll(`.slicer-pill[data-slicer="${sid}"]`).forEach(p => p.classList.remove('is-active'));
+      if (!wasActive) {
+        pill.classList.add('is-active');
+        activeFilters[sid] = val;
+      } else {
+        activeFilters[sid] = null;
+      }
+      applyFilters();
+    });
+  });
+}
+
+function clearAllFilters() {
+  Object.keys(activeFilters).forEach(k => activeFilters[k] = null);
+  document.querySelectorAll('.slicer-pill.is-active').forEach(p => p.classList.remove('is-active'));
+  applyFilters();
+}
+
+// Apply filters: simulate cross-filter by mutating chart data subtly
+function applyFilters() {
+  const filterCount = Object.values(activeFilters).filter(v => v !== null).length;
+  if (filterCount === 0) {
+    // Restore original data
+    renderCharts(THEMES[currentTheme]);
+    return;
+  }
+  // Simulate: scale data based on filter count (more filters = more focused = smaller numbers)
+  const scale = Math.max(0.18, 1 - filterCount * 0.22);
+  const seed = filterCount + Object.values(activeFilters).filter(Boolean).join('').length;
+
+  const themeCopy = JSON.parse(JSON.stringify(THEMES[currentTheme]));
+
+  // Mutate KPIs
+  themeCopy.kpis.forEach(k => {
+    const variation = ((seed * 7) % 11 - 5) / 100; // -5% to +5% deterministic
+    k.value = +(k.value * scale * (1 + variation)).toFixed(k.value < 100 ? 1 : 0);
+  });
+
+  // Mutate chart data
+  const mutate = (arr) => arr.map((v,i) => +(v * scale * (1 + ((seed + i) % 9 - 4) / 100)).toFixed(2));
+  themeCopy.charts.c1.datasets.forEach(ds => ds.data = mutate(ds.data));
+  themeCopy.charts.c2.datasets.forEach(ds => ds.data = mutate(ds.data));
+  themeCopy.charts.c3.datasets.forEach(ds => ds.data = mutate(ds.data));
+
+  renderKPIs(themeCopy);
+  renderCharts(themeCopy);
+  renderTable(themeCopy);
+}
+
+// ===========================================================================
+// RENDER CHARTS
+// ===========================================================================
+function renderCharts(theme) {
+  const accent = getAccent();
+  const palette = genPalette(8);
+
+  // Chart 1: trend
+  const c1Cfg = theme.charts.c1;
+  document.getElementById('chart-1-title').textContent = c1Cfg.title;
+  document.getElementById('chart-1-sub').textContent = c1Cfg.sub;
+  const c1Datasets = c1Cfg.datasets.map((ds, i) => {
+    const color = i === 0 ? accent : 'rgba(120, 120, 130, 0.7)';
+    return {
+      label: ds.label,
+      data: ds.data,
+      borderColor: color,
+      backgroundColor: i === 0 && ds.filled ? `rgba(${getAccentRGB()}, 0.18)` : 'transparent',
+      borderDash: ds.dashed ? [6, 4] : [],
+      borderWidth: 2.5,
+      tension: 0.3,
+      pointRadius: 3,
+      pointHoverRadius: 6,
+      fill: !!ds.filled
+    };
+  });
+  if (charts.c1) charts.c1.destroy();
+  charts.c1 = new Chart(document.getElementById('chart-1'), {
+    type: 'line',
+    data: { labels: c1Cfg.labels, datasets: c1Datasets },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: c1Cfg.datasets.length > 1, position: 'bottom' }},
+      scales: {
+        y: { beginAtZero: false, grid: { color: 'rgba(0,0,0,0.05)' }},
+        x: { grid: { display: false }}
+      }
+    }
+  });
+
+  // Chart 2: doughnut/distribution
+  const c2Cfg = theme.charts.c2;
+  document.getElementById('chart-2-title').textContent = c2Cfg.title;
+  document.getElementById('chart-2-sub').textContent = c2Cfg.sub;
+  if (charts.c2) charts.c2.destroy();
+  charts.c2 = new Chart(document.getElementById('chart-2'), {
+    type: 'doughnut',
+    data: {
+      labels: c2Cfg.labels,
+      datasets: [{
+        data: c2Cfg.datasets[0].data,
+        backgroundColor: palette,
+        borderColor: '#fff',
+        borderWidth: 2,
+        hoverOffset: 8
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      cutout: '62%',
+      plugins: {
+        legend: { position: 'right', labels: { boxWidth: 12, padding: 10 }}
+      }
+    }
+  });
+
+  // Chart 3: horizontal bar OR clustered bar (mantenimiento, ventas, inventario use horizontalBar; finanzas + inventario c1 use bar)
+  const c3Cfg = theme.charts.c3;
+  document.getElementById('chart-3-title').textContent = c3Cfg.title;
+  document.getElementById('chart-3-sub').textContent = c3Cfg.sub;
+  if (charts.c3) charts.c3.destroy();
+
+  // Multiple datasets => clustered. Single => horizontal bar with palette.
+  if (c3Cfg.datasets.length > 1) {
+    charts.c3 = new Chart(document.getElementById('chart-3'), {
+      type: 'bar',
+      data: {
+        labels: c3Cfg.labels,
+        datasets: c3Cfg.datasets.map((ds, i) => ({
+          label: ds.label,
+          data: ds.data,
+          backgroundColor: palette[i*2 % palette.length],
+          borderRadius: 4
+        }))
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { position: 'bottom' }},
+        scales: { y: { stacked: false }, x: { stacked: false }}
+      }
+    });
+  } else {
+    // Horizontal bar with gradient palette
+    charts.c3 = new Chart(document.getElementById('chart-3'), {
+      type: 'bar',
+      data: {
+        labels: c3Cfg.labels,
+        datasets: [{
+          data: c3Cfg.datasets[0].data,
+          backgroundColor: c3Cfg.labels.map((_, i) => palette[Math.min(i, palette.length-1)]),
+          borderRadius: 4
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        indexAxis: 'y',
+        plugins: { legend: { display: false }},
+        scales: {
+          x: { grid: { color: 'rgba(0,0,0,0.05)' }},
+          y: { grid: { display: false }}
+        }
+      }
+    });
+  }
+}
+
+// Override chart 1 for finanzas (it's bar not line)
+const originalRenderCharts = renderCharts;
+function renderChartsSmart(theme) {
+  // Chart 1: line OR bar based on theme config
+  const c1Cfg = theme.charts.c1;
+  if (c1Cfg.type === 'bar') {
+    document.getElementById('chart-1-title').textContent = c1Cfg.title;
+    document.getElementById('chart-1-sub').textContent = c1Cfg.sub;
+    if (charts.c1) charts.c1.destroy();
+    const palette = genPalette(8);
+    charts.c1 = new Chart(document.getElementById('chart-1'), {
+      type: 'bar',
+      data: {
+        labels: c1Cfg.labels,
+        datasets: c1Cfg.datasets.map((ds, i) => ({
+          label: ds.label,
+          data: ds.data,
+          backgroundColor: palette[i*3 % palette.length],
+          borderRadius: 4
+        }))
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { position: 'bottom' }},
+        scales: { y: { grid: { color: 'rgba(0,0,0,0.05)' }}, x: { grid: { display: false }}}
+      }
+    });
+    // Render the rest normally but skip chart 1 in originalRenderCharts
+    const themeCopy = JSON.parse(JSON.stringify(theme));
+    themeCopy.charts.c1 = { ...themeCopy.charts.c1, _skip: true };
+    // call rest of original (c2, c3) - simplest: re-render them inline
+    const c2Cfg = theme.charts.c2;
+    document.getElementById('chart-2-title').textContent = c2Cfg.title;
+    document.getElementById('chart-2-sub').textContent = c2Cfg.sub;
+    if (charts.c2) charts.c2.destroy();
+    charts.c2 = new Chart(document.getElementById('chart-2'), {
+      type: 'doughnut',
+      data: {
+        labels: c2Cfg.labels,
+        datasets: [{
+          data: c2Cfg.datasets[0].data,
+          backgroundColor: palette,
+          borderColor: '#fff', borderWidth: 2, hoverOffset: 8
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        cutout: '62%',
+        plugins: { legend: { position: 'right', labels: { boxWidth: 12, padding: 10 }}}
+      }
+    });
+
+    const c3Cfg = theme.charts.c3;
+    document.getElementById('chart-3-title').textContent = c3Cfg.title;
+    document.getElementById('chart-3-sub').textContent = c3Cfg.sub;
+    if (charts.c3) charts.c3.destroy();
+    charts.c3 = new Chart(document.getElementById('chart-3'), {
+      type: 'bar',
+      data: {
+        labels: c3Cfg.labels,
+        datasets: [{
+          data: c3Cfg.datasets[0].data,
+          backgroundColor: c3Cfg.labels.map((_, i) => palette[Math.min(i, palette.length-1)]),
+          borderRadius: 4
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        indexAxis: 'y',
+        plugins: { legend: { display: false }},
+        scales: { x: { grid: { color: 'rgba(0,0,0,0.05)' }}, y: { grid: { display: false }}}
+      }
+    });
+  } else {
+    originalRenderCharts(theme);
+  }
+}
+
+// ===========================================================================
+// RENDER TABLE
+// ===========================================================================
+function renderTable(theme) {
+  document.getElementById('chart-4-title').textContent = 'Drill-through detalle';
+  document.getElementById('chart-4-sub').textContent = `${theme.charts.table.rows.length} registros`;
+  const t = theme.charts.table;
+  const thead = document.querySelector('#detail-table thead');
+  const tbody = document.querySelector('#detail-table tbody');
+  thead.innerHTML = '<tr>' + t.head.map((h, i) =>
+    `<th class="${i === t.statusCol || i >= 2 ? 'num' : ''}">${h}</th>`
+  ).join('') + '</tr>';
+  tbody.innerHTML = t.rows.map(row =>
+    '<tr>' + row.map((cell, i) => {
+      if (i === t.statusCol) {
+        const cellLower = String(cell).toLowerCase();
+        let cls = 'amber';
+        if (['ok','excelente','+12%','+8%','+5%','+9%','+11%','+14%','+4.6%','+9.2%','+11.4%'].some(k => cellLower.includes(k.toLowerCase()))) cls = 'green';
+        if (['crítico','stockout','riesgo','−','-','15%','3%','1%'].some(k => cellLower.includes(k.toLowerCase()))) cls = 'red';
+        return `<td class="num"><span class="badge ${cls}">${cell}</span></td>`;
+      }
+      return `<td class="${i >= 2 ? 'num' : ''}">${cell}</td>`;
+    }).join('') + '</tr>'
+  ).join('');
+}
+
+// ===========================================================================
+// RENDER FULL DASHBOARD
+// ===========================================================================
+function renderDashboard(themeKey) {
+  currentTheme = themeKey;
+  const theme = THEMES[themeKey];
+  renderHeader(theme);
+  renderKPIs(theme);
+  renderSlicers(theme);
+  renderChartsSmart(theme);
+  renderTable(theme);
+}
+
+// ===========================================================================
+// THEME TAB SWITCHING
+// ===========================================================================
+document.querySelectorAll('.theme-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.theme-tab').forEach(t => {
+      t.classList.remove('is-active');
+      t.setAttribute('aria-selected', 'false');
+    });
+    tab.classList.add('is-active');
+    tab.setAttribute('aria-selected', 'true');
+    renderDashboard(tab.dataset.theme);
+  });
+});
+
+// Initial render
+// Pre-select theme from URL if present
+const urlTheme = urlParams.get('theme');
+if (urlTheme && THEMES[urlTheme]) {
+  document.querySelectorAll('.theme-tab').forEach(t => {
+    t.classList.toggle('is-active', t.dataset.theme === urlTheme);
+    t.setAttribute('aria-selected', t.dataset.theme === urlTheme);
+  });
+  renderDashboard(urlTheme);
+} else {
+  renderDashboard('mantenimiento');
+}
+
+// Update back link if tier passed
+if (tier) {
+  document.getElementById('back-link').href = `../../academia-${tier}.html`;
+  document.querySelector('.demo-back').href = `../../academia-${tier}.html`;
+  document.querySelector('.demo-back').textContent = `← ${tier.charAt(0).toUpperCase() + tier.slice(1)}`;
+}
+</script>
+</body>
+</html>
